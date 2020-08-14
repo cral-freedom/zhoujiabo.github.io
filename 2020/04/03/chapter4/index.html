@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>chapter4: 熟悉使用有棱有角的内存 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="【程序是怎么跑起来的】">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>chapter4: 熟悉使用有棱有角的内存</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">chapter4: 熟悉使用有棱有角的内存</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-03T15:46:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-chapter4"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">chapter4: 熟悉使用有棱有角的内存</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-03 23:46:00" datetime="2020-04-03T15:46:00.000Z"  itemprop="datePublished">2020-04-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/03/chapter4/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/03/chapter4/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>问题：<br>    &emsp;1. 有十个地址信号引脚的内存IC可以指定的地址范围是多少？<br>    &emsp;2. 高级编程语言中的数据类型表示的是什么？<br>    &emsp;3. 在32位内存地址的环境中，指针变量的长度是多少位？<br>    &emsp;4. 与物理内存有着相同构造的数组的数据类型长度是多少？<br>    &emsp;5. 用LIFO方式进行数据读写的数据结构称为什么？<br>    &emsp;6. 根据数据的大小链表分叉成两个方向的数据结构称为什么？</p>
+<p>答案：<br>    &emsp;1. 0~1023<br>    &emsp;2. 占据内存区域的大小和存储在该内存区域的数据类型<br>    &emsp;3. 32位，4字节<br>    &emsp;4. 1字节（物理地址是以字节为单位进行数据存储的）<br>    &emsp;5. 栈（LIFO = Last In First Out）<br>    &emsp;6. 二叉查找树</p>
+<p>4.1 内存的物理机制很简单<br>&emsp;内存实际上是一种名为内存IC的电子元件。内存IC包括DRAM、SRAM、ROM等多种形式，但从外部来看，其基本机制都是一样的。内存IC中有电源、地址信号、数据信号、控制信号等用于输入输出的大量引脚，通过为其指定地址，来进行数据的读写。</p>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/aa0601616e49ce91cf689938fa198a3f1cde2fcebebd60e0.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/aa0601616e49ce91cf689938fa198a3f1cde2fcebebd60e0.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p><strong>问题1：上图中的内存IC中能存储多少数据？<br>解析：数据信号引脚有D0-D7共八个，表示一次可以输入输出8位（即一个字节）的数据。此外，地址信号引脚有A0-A9共十个，表示可以指定0000000000-1111111111共1024个地址。而地址用来表示数据的存储场所，因此我们可以得出这个内存IC中可以存储1024个1byte的数据。所以内存IC的容量就是1KB。</strong><br>问题2：如何向内存IC中写入1字节的数据？<br>解析：先通电，给VCC接入+5V，GND接入0V的电源；使用A0-A9的地址信号指定数据的存储场所，然后把数据的值输入给D0-D7的数据信号，最后把WR信号设定成1使能写模式。</p>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/1799c43c67501406fb5649eab5c5678f89d040c7f7a0af02.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/1799c43c67501406fb5649eab5c5678f89d040c7f7a0af02.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>总体来讲，内存IC内部有大量可以存储8位数据的地方，通过地址指定这些场所之后即可进行数据的读写。</p>
+<p>4.2 内存的逻辑模型是楼房 </p>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/e93ff135ef3ad213c5af007e9c2eeb9a5ded0594707ab01a.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/e93ff135ef3ad213c5af007e9c2eeb9a5ded0594707ab01a.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/2b58c1f5da55a4660944578c579e2832f73352d0ea701666.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/2b58c1f5da55a4660944578c579e2832f73352d0ea701666.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>根据程序中所指定的变量的数据类型的不同，读写的物理内存大小也会随之发生变化。</p>
+<p>4.3 简单的指针<br>&emsp;指针是一种变量，存储着数据的内存的地址。window上使用的程序通常是32位的内存地址，这种情况下，指针变量的长度也是32位。</p>
+<p>char *d; short *e; long *f; //假设d,e,f的值都是100.</p>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/0cf78aa2b00b13024fc3e7dc25bc2bfdeb5fa5f4dcd14fc5.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/0cf78aa2b00b13024fc3e7dc25bc2bfdeb5fa5f4dcd14fc5.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p><strong>char、short、long这些数据类型在指针中表示的是，从指针存储的地址中一次能够读写的数据字节数</strong>。</p>
+<p>4.4 数组是高效使用内存的基础<br>&emsp;数组是指多个同样数据类型的数据在内存中连续排列的形式。作为数组元素的各个数据会通过连续的编号被区分开来，这个编号称为索引（index）。（索引和内存地址的变换工作由编译器自动实现，有借助CPU中的的基址和变址寄存器）</p>
+<p>&emsp;虽然是通过索引来使用数组，但这种内存的物理读写并没有特别在区别，因此很多程序都会在数组的使用上花费大量工夫。所以我们接下来了解一下栈、队列、代码清单和二叉查找树这些数组的变形方法，当然还要会灵活使用这些方法。</p>
+<p>4.5 栈、队列以及环形缓冲区</p>
+<figure class="image-box">
+                <a rel=chapter4: 熟悉使用有棱有角的内存 href="https://file.moetu.org/images/2020/04/03/9f686c3360201428d5154fd3dcc652f64241ecd86a87b6aa.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/03/9f686c3360201428d5154fd3dcc652f64241ecd86a87b6aa.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>4.6 链表使元素的追加和删除更加容易<br>4.7 二叉查找树使数据搜索更有效<br>（4.6和4.7将放在数据结构和算法中，这里就不论述了）</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-03T16:02:52.918Z" itemprop="dateUpdated">2020-04-04 00:02:52</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/03/chapter4/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/03/chapter4/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E3%80%90%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%E3%80%91/" rel="tag">【程序是怎么跑起来的】</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/03/chapter4/&title=《chapter4: 熟悉使用有棱有角的内存》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/03/chapter4/&title=《chapter4: 熟悉使用有棱有角的内存》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【算法】渐近符号</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/04/03/%E3%80%90%E8%8B%B1%E8%AF%AD%E3%80%91%E8%AE%A1%E5%88%92/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【英语】计划</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/03/chapter4/&title=《chapter4: 熟悉使用有棱有角的内存》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/03/chapter4/&title=《chapter4: 熟悉使用有棱有角的内存》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACp0lEQVR42u3awY4aMRAE0P3/n06uiXaBqm6bEOnNaQWsx89I06bcX1/x9euP6/sr3999Pk47Zj7+8MLDw8NbTP3RcI9ukE/i+2jPkbPF/eHueHh4eNd4swklC5GwNwv0woKHh4f3AbznkztVDJLCgIeHh/e/8JLCkOBnUQUeHh7e5/DaSbepaRJq7ENkPDw8vPfw8lOkz/n7yvkeHh4e3vpUvX24J8dX+UHabIZ/jYCHh4d3gZc/cJNpJYHCLHpYzRMPDw/vLbz8IL+9ZTtmUipeFCc8PDy8o7wZbBOwztoUkvlEJ3t4eHh4h3j5cVd+g7zVIOfVXwkeHh7eZV5bGDbhbxsNt4UEDw8P7x6vfYjPCkM70baEFAdgeHh4eGtee6zVAvZNAMfCCDw8PLxDvDxKmEW3LTtvwKqjZzw8PLwLvM32t51WGx9vwmU8PDy8s7z8sds2ECRTPNV09XCZ8PDw8C7wWsap+rNvzGpbsvDw8PBu8JKf9y2sbUF4UxiBh4eHt+DNfvzn2+h8hHaBos/j4eHhXeDNNrvPAacOw9pjtiLYxcPDw1vwNuuRY2ab71kEHH1XeHh4eAvebJO6b6vaf/JYSo2Hh4e35rVDnwoa8sKTRB4vaiAeHh7eUd4sLGgPumbRRg7Dw8PDu81rb3w29s0LTxtP4OHh4b2TN3s9b6J6vglOGEVYjIeHh3eZty8DM+TFCw8PD+8arA0acli7y51Fwz+8i4eHh3eBty8e+Va4xeThxYECg4eHh1fyZjFu3hawWcS2MERZCx4eHt4hXv5QzlujNiWhXZT6bTw8PLx/ysuLx2yTnZeBVTcZHh4e3mVeHt3m/5svR7Flx8PDw7vG27RG5RNqt8gH7oKHh4d3gbe55fPCMNtMHysJeHh4eOd5vwEFiCvwpfOyEgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】令牌桶封装 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="vim 多标签">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】令牌桶封装</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】令牌桶封装</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-25T14:37:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】令牌桶封装"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】令牌桶封装</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-25 22:37:00" datetime="2020-07-25T14:37:00.000Z"  itemprop="datePublished">2020-07-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>将令牌桶封装成一个库，以便满足多个用户或进程的不同流控需求。</p>
+<p>mkdir mytbf<br>cd mytbf<br>touch main.c mytbf.c mytbf.h makefile</p>
+<blockquote>
+<p>补充vim多标签：同时打开编辑多个文件<br>vim * -p //打开当前目录下所有文件<br><br>切换标签<br>    :tabr    跳到第一个标签<br>    :tabl    跳到最后一个标签<br>    :tabn    下一个标签，快捷方式gt<br>    :tabp    上一个标签，快捷方式gT<br><br>关闭与保存<br>    :wall    保存所有标签<br>    :qall    退出所有标签<br>    :q        关闭当前标签<br>    :only    只保留当前标签<br><br>新建文件<br>    :tabnew</p>
+</blockquote>
+<p>makefile文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">all:mytbf</span><br><span class="line"></span><br><span class="line">mytbf:main.o mytbf.o</span><br><span class="line">    gcc $^ -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line">clean: </span><br><span class="line">    rm -rf *.o mytbf</span><br></pre></td></tr></table></figure>
+<p>可能遇到的问题：makefile:3: *** missing separator (did you mean TAB instead of 8 spaces?).  Stop.</p>
+<blockquote>
+<p>原因：vimrc中设置了用4个空格替换tab键。<br>解决：非编辑模式下输入:%s/^[ ]+/\t/g</p>
+</blockquote>
+<p>mytbf.h文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> main.c  makefile  mytbf.c  mytbf.h                                          X</span><br><span class="line"><span class="comment">#ifndef MYTBF_H__</span></span><br><span class="line"><span class="comment">#define MYTBF_H__</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define MYTBF_MAX 1024</span></span><br><span class="line"></span><br><span class="line">typedef void mytbf_t;</span><br><span class="line"></span><br><span class="line">mytbf_t *mytbf_init(int cps,int burst);</span><br><span class="line"></span><br><span class="line">int mytbf_fetchtoken(mytbf_t *ptr,int size);</span><br><span class="line"></span><br><span class="line">int mytbf_returntoken(mytbf_t *ptr,int size);</span><br><span class="line"></span><br><span class="line">int mytbf_destory(mytbf_t *ptr);</span><br><span class="line"></span><br><span class="line"><span class="comment">#endif</span></span><br></pre></td></tr></table></figure>
+
+<p>mytbf.c文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include "mytbf.h"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">typedef void (*sighandler_t) (int);</span><br><span class="line"></span><br><span class="line">struct mytbf_st</span><br><span class="line">&#123;</span><br><span class="line">    int cps;</span><br><span class="line">    int burst;</span><br><span class="line">    int token;</span><br><span class="line">    int pos;</span><br><span class="line">&#125;;</span><br><span class="line">static int inited = 0;</span><br><span class="line">static struct mytbf_st *job[MYTBF_MAX];//static,默认初始化为0</span><br><span class="line"></span><br><span class="line">sighandler_t alrm_handler_save;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void alrm_handler(int s)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line"></span><br><span class="line">    alarm(1);//设置下一秒的时钟</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(job[i] != NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            job[i]-&gt;token += job[i]-&gt;cps;</span><br><span class="line">            <span class="keyword">if</span>(job[i]-&gt;token &gt; job[i]-&gt;burst)</span><br><span class="line">                job[i]-&gt;token = job[i]-&gt;burst;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void module_unload(void)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    signal(SIGALRM,alrm_handler_save);//恢复原来的行为</span><br><span class="line">    alarm(0);//将闹钟关掉</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        free(job[i]);</span><br><span class="line">        job[i] = NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void module_load(void)</span><br><span class="line">&#123;</span><br><span class="line">    alrm_handler_save = signal(SIGALRM,alrm_handler);</span><br><span class="line">    alarm(1);</span><br><span class="line"></span><br><span class="line">    atexit(module_unload);</span><br><span class="line">&#125;</span><br><span class="line">static int get_free_pos(void)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(job[i] == NULL)</span><br><span class="line">            <span class="built_in">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mytbf_t *mytbf_init(int cps,int burst)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me;</span><br><span class="line">    int pos;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!inited)</span><br><span class="line">    &#123;</span><br><span class="line">        module_load();</span><br><span class="line">        inited = 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pos = get_free_pos();</span><br><span class="line">    <span class="keyword">if</span>(pos &lt; 0)</span><br><span class="line">        <span class="built_in">return</span> NULL;//令牌桶个数达到上限</span><br><span class="line"></span><br><span class="line">    me = malloc(sizeof(*me));</span><br><span class="line">        <span class="keyword">if</span>(me == NULL)</span><br><span class="line">        <span class="built_in">return</span> NULL;//malloc失败</span><br><span class="line"></span><br><span class="line">    me-&gt;cps = cps;</span><br><span class="line">    me-&gt;burst = burst;</span><br><span class="line">    me-&gt;token = 0;</span><br><span class="line">    me-&gt;pos = pos;</span><br><span class="line"></span><br><span class="line">    job[pos] = me;</span><br><span class="line">    <span class="built_in">return</span> me;</span><br><span class="line">&#125;</span><br><span class="line">static int min(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(a &lt; b) <span class="built_in">return</span> a;</span><br><span class="line">    <span class="built_in">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//size为想要取的token数，返回值为实际取得的token数</span><br><span class="line">int mytbf_fetchtoken(mytbf_t *ptr,int size)</span><br><span class="line">&#123;</span><br><span class="line">    int n;</span><br><span class="line">    struct mytbf_st *me = ptr;</span><br><span class="line">    <span class="keyword">if</span>(size &lt;= 0)</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(me-&gt;token &lt;= 0)</span><br><span class="line">        pause();</span><br><span class="line"></span><br><span class="line">    n = min(me-&gt;token,size);</span><br><span class="line"></span><br><span class="line">    me-&gt;token -= n;</span><br><span class="line">    <span class="built_in">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//归还未使用的token</span><br><span class="line">int mytbf_returntoken(mytbf_t *ptr,int size)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me = ptr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(size &lt;= 0)</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line"></span><br><span class="line">    me-&gt;token += size;</span><br><span class="line">    <span class="keyword">if</span>(me-&gt;token &gt; me-&gt;burst)</span><br><span class="line">        me-&gt;token = me-&gt;burst;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int mytbf_destory(mytbf_t *ptr)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me = ptr;//转换</span><br><span class="line"></span><br><span class="line">    job[me-&gt;pos] = NULL;</span><br><span class="line">    free(ptr);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>main.c文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/stat.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;fcntl.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include "mytbf.h"</span></span><br><span class="line"><span class="comment">#define CPS 10 //流控制，每秒10个字符    </span></span><br><span class="line"><span class="comment">#define BUFSIZE 1024</span></span><br><span class="line"><span class="comment">#define BURST 100   //最多只能攒100次权限</span></span><br><span class="line"></span><br><span class="line">//令牌桶：没有数据到来，就攒权限；数据来时，连续读写token次。</span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    mytbf_t *tbf;</span><br><span class="line">    int fd;</span><br><span class="line">    char buf[BUFSIZE];</span><br><span class="line">    long len,ret,pos;</span><br><span class="line">    int size;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span>(argc &lt; 2)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"usage ...\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tbf = mytbf_init(CPS,BURST);//初始化一个令牌桶</span><br><span class="line">    <span class="keyword">if</span>(tbf == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"mytbf_init() fail\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        fd = open(argv[1],O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span>(fd &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(errno != EINTR)</span><br><span class="line">            &#123;</span><br><span class="line">                perror(<span class="string">"open()"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">while</span>(fd &lt; 0);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        size  = mytbf_fetchtoken(tbf,BUFSIZE);</span><br><span class="line">        <span class="keyword">if</span>(size &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            fprintf(stderr,<span class="string">"mytbf_fetchtoken() fail:%s\n"</span>,strerror(-size));</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>( (len = <span class="built_in">read</span>(fd,buf,size)) &lt;= 0 )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(errno == EINTR)</span><br><span class="line">                <span class="built_in">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(len == 0)//没有数据到来或已读取完成，继续等待新数据</span><br><span class="line">                <span class="built_in">continue</span>;</span><br><span class="line">            perror(<span class="string">"read()"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(size - len &gt; 0)//有可能没消耗完token，，文件尾</span><br><span class="line">            mytbf_returntoken(tbf,size-len);</span><br><span class="line"></span><br><span class="line">        pos = 0;</span><br><span class="line">        <span class="keyword">while</span>(len &gt; 0) //防止漏写</span><br><span class="line">        &#123;</span><br><span class="line">            ret = write(1,buf+pos,len);</span><br><span class="line">            <span class="keyword">if</span>(ret &lt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(errno == EINTR)</span><br><span class="line">                    <span class="built_in">continue</span>;</span><br><span class="line">                perror(<span class="string">"write()"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(1);</span><br><span class="line">            &#125;</span><br><span class="line">            pos += ret; //这次又写了ret个字节，pos是已写的字节数</span><br><span class="line">            len -= ret; //还剩多少个字节没写</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    close(fd);</span><br><span class="line">    mytbf_destory(tbf);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-25T14:59:26.236Z" itemprop="dateUpdated">2020-07-25 22:59:26</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/vim-%E5%A4%9A%E6%A0%87%E7%AD%BE/" rel="tag">vim 多标签</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/&title=《【apue】令牌桶封装》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/&title=《【apue】令牌桶封装》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7%E8%BF%9B%E9%98%B6/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】信号进阶</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E6%BC%8F%E6%A1%B6%E4%B8%8E%E4%BB%A4%E7%89%8C%E6%A1%B6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】漏桶与令牌桶</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/&title=《【apue】令牌桶封装》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BB%A4%E7%89%8C%E6%A1%B6%E5%B0%81%E8%A3%85/&title=《【apue】令牌桶封装》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEiElEQVR42u3ay47iMBAF0Pn/n+6RZtsduLcqjDB9skIEHPuA5Hr4z5/4+vp3JXe/f/L73at3rp5y9a18zMczvO3ChAkTJkxvyfT18MofnCwyHz8ZOUFMftTHc8OECRMmTJ/B1A7XTmITEDwmu3on+XyydkyYMGHC9HuYkuE223yS4rYj53cxYcKECROm5MGrTTcuMc/CAkyYMGHC9JuZ8uHaIulmg7+rPdkWrzFhwoQJ0ycxtVvyJ71+4fkmTJgwYcL0Bkxf5dWmwXmjcd+A3AQHT1aNCRMmTJiOZUqm3h6gydPLzV6cI7bPLSoEmDBhwoTpEKbZFPNJz7iT9Lst/m5CFkyYMGHCdCJTMtCsnZmHDvlmnHPPgpvLETBhwoQJ07FMs+M7M8rHC54ltG1mOisKY8KECROmc5lyiBYxmVDbIt3Qt4Xmy0YmJkyYMGE6kCkfetb+HNaYR63KWVn5ScKMCRMmTJiOZdocjsmbhZtjN5si775AjAkTJkyYTmfKk8BZiptvwK9IZWcp+g9PxIQJEyZMhzPlBdl9ApwvY9Nwnb2+XC8mTJgwYTqWKafJj+/MlpSnu/ufpP1DYMKECROmT2Jq08j82M1scpumaYteBASYMGHChOlApnzZ+6M5s8W3YUFO35anMWHChAnTiUz5YdA20Z01FNsjrZtyc3FhwoQJE6bDmWbHTBOyZNPdhxR5At8m55gwYcKE6VymfNOdFUw3bchZArxpnV5CY8KECROmY5nuTT43C863+aRhmSCu2pmYMGHChOntmdo0NV/YpiB7Vzl483qVzWPChAkTpqOYNkuaHQlti7N5A3VYzsaECRMmTIczbc6u3LUxz9LpTRhR7PuYMGHChOkjmPJUtl1eQrMJLPIUPQfFhAkTJkyfxFR/bXSYZra8PCyYfSb6c2DChAkTpmOZ2o05P0yTT71dTFK0zUfOu5aYMGHChOlEprYdOHvMbLNvC7WbdmaR+mLChAkTpqOYksndmzS2cPvUehMiFB1dTJgwYcL0lkx3beFtANFuyXkDdcZU1MIxYcKECdNRTHnJNZn0LDjYhCk5aD63J6NhwoQJE6ajmNqS7iyrnk3urp8tz2cvR8CECRMmTMcy/Z+AIHm/bZcmM98XlzFhwoQJ02cwtYMmiWjSYsy35/bnSYKSPEXHhAkTJkyfwTRLg9tm5/5b+8+3qTgmTJgwYTqXqT3mkifGbdKbg67y+/juD7VwTJgwYcJ0ONNmM863//wITt6ebAvQSWp9GRBgwoQJE6ajmO4ariiVjg4A5U/JQ5z2oA8mTJgwYTqRaZO+vqLYelc7cxayXN7FhAkTJkzHMuVXmwC3RdhNu7H9OfPXmDBhwoTpM5g2bcg2EZ0d7sk58nChbnliwoQJE6bDmWbb+QvTyDIcmYUsRRkaEyZMmDD9AqaWJm9kttBJWNCmzU/mjwkTJkyYfg1Tm9zelSrPysr58aMn42PChAkTpsOZZttkPolZEfZ1AUpe6sWECRMmTKcztWXWfHLtd/O0uT2skx8JWl2YMGHChOm9mP4C1saqO+Fgf3QAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

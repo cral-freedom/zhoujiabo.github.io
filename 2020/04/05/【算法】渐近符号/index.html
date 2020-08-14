@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【算法】渐近符号 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【算法】渐近符号</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【算法】渐近符号</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-05T04:17:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E7%AE%97%E6%B3%95%E7%B1%BB/">算法类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【算法】渐近符号"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【算法】渐近符号</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-05 12:17:00" datetime="2020-04-05T04:17:00.000Z"  itemprop="datePublished">2020-04-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E7%AE%97%E6%B3%95%E7%B1%BB/">算法类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p><strong>Asymptotic Notation</strong>：<br>    &emsp;• O —— big-oh：upper bound<br>    &emsp;• Ω —— big-omega：lower bound<br>    &emsp;• θ  —— big-theta：average bound</p>
+<p>big-oh:<br>&emsp;The function f(n) = O(g(n))，存在constant c and n0，such that f(n) &lt;= c*g(n)，对于所有n &gt;= n0成立。<br>&emsp;eg: f(n) = 2n + 3<br>因为2n + 3 &lt;= 10n (n &gt;= 1)    — c为10，g(n)为n，n0为1，<br>所以f(n) = O(g(n)) = O(n)<br>补充：推出O(n^2)，O(n^3)，，，也不能说错，不过O(n)是最接近的。</p>
+<p>big-theta：<br>&emsp;The function f(n) = θ(g(n))，存在constant c1, c2, n0；使得c1<em>g(n) &lt;= f(n) &lt;= c2</em>g(n)，对于n &gt;= n0成立。<br>&emsp;eg: f(n) = 2n + 3<br>因为 2n &lt;= 2n + 3 &lt;= 5n    — c1=2, c2=5, n0=1, g(n)=n<br>所以f(n) = θ(g(n)) = θ(n)</p>
+<p>big-omega：<br>&emsp;The function f(n) = Ω(g(n))，存在constant c , n0；使得f(n) &gt;= c<em>g(n)，对于n &gt;= n0成立。<br>&emsp;eg: f(n) = 2n + 3<br>因为 2n + 3 &gt;= 1</em>n &gt;= 1*logn   — c=1,n0=1, g(n)=n或logn<br>所以f(n) = θ(g(n)) = Ω(n) 或 Ω(logn) ，n &gt;= 1<br>补充：一般写最接近的，即Ω(n)</p>
+<p><strong>Analysis</strong>:<br>①f(n) = 2n^2 + 3n + 4<br>2n^2 + 3n + 4&lt;= 2n^2 + 3n^2+4n^2 = 9n^2，n &gt;= 1    —f(n) = O(n^2)<br>2n^2 + 3n + 4 &gt;= n^2，n &gt;= 0    —f(n) = Ω(n^2)<br>n^2 &lt;= 2n^2 + 3n + 4 &lt;= 9n^2    —f(n) = θ(n^2)</p>
+<p>②f(n) = (n^2)logn + n<br>(n^2)logn &lt;= (n^2)logn + n &lt;= 10*(n^2)logn<br> —O( (n^2)logn ), θ( (n^2)logn ), Ω( (n^2)logn )</p>
+<p>③ f(n) = (n!) = n<em>(n-1)</em>(n-2)……<em>2</em>1<br>1<em>1……<em>1 &lt; 1</em>2*3……</em>(n-1)<em>n &lt;= n</em>n<em>n……</em>n<br>—Ω(1)，O(n^n)，不存在θ</p>
+<p><strong>General properties</strong>：<br>①f(n)乘上常数，其对应的O(g(n))不变 —Ω和θ同样适用</p>
+<blockquote>
+<p>if f(n) is O(g(n)), then a<em>f(n) also is O(g(n))<br>eg: f(n) = 2n^2+5，is O(n^2)，<br>      7</em>f(n) = 14n^2+35，also is (O^2)</p>
+</blockquote>
+<p>②reflexive（反身的）</p>
+<blockquote>
+<p>if f(n) is given, then f(n) is O(f(n))<br>eg: f(n) = n^2 → f(n) = O(n^2)</p>
+</blockquote>
+<p>③trasitive（传递性质）</p>
+<blockquote>
+<p>if f(n) is O(g(n)) and g(n) is O(h(n)),<br>then f(n) is O(h(n)).<br>eg:f(n) = n, g(n) = n^2, h(n) = n^3<br>f(n) = O(n^2) &amp;&amp; g(n) = O(n^3) → f(n) = O(n^3)</p>
+</blockquote>
+<p>④symmetric（对称的）</p>
+<blockquote>
+<p>if f(n) is θ(g(n)), then g(n) is θ(f(n))<br>eg:f(n) = n^2, g(n^2)<br>f(n) = θ(n), is θ(g(n))<br>g(n) = θ(n), is θ(f(n))</p>
+</blockquote>
+<p>⑤tranpose symmetric（转置对称）</p>
+<blockquote>
+<p>if f(n) is O(g(n))，then g(n) is Ω(f(n))</p>
+</blockquote>
+<p>⑥</p>
+<blockquote>
+<p>if f(n) is O(g(n))，and f(n) is Ω(g(n))<br>then f(n) = θ(g(n))</p>
+</blockquote>
+<p>⑦</p>
+<blockquote>
+<p>if f(n) = O(g(n)), d(n) = O(e(n))<br>then f(n) + d(n) = O{max[g(n),e(n)]}<br>eg:f(n) = n = O(n)<br>   d(n) = n^2 = O(n^2)<br>f(n) + d(n) = n + n^2 = O(n^2）</p>
+</blockquote>
+<p>⑧</p>
+<blockquote>
+<p>if f(n) = O(g(n)), d(n) = O(e(n)),<br>then f(n)<em>d(n) = O{g(n)</em>e(n)}</p>
+</blockquote>
+<p><strong>比较大小</strong>：<br>① f(n) = (n^2)logn    g(n) = n(logn)^10<br>两边取对数，2logn+loglogn    logn+10loglogn<br>∴ (n^2)logn &gt; n(logn)^10</p>
+<p>② f(n) = 3n^(n^1/2)    g(n) = 2^{(n^1/2)* logn}<br>两边取对数，(根号n)* log3n    (根号n)logn<br>n →无穷时，f(n) = g(n)</p>
+<p>③f(n) = n^(logn)    g(n) = 2^(根号n)<br>apply log:    logn<em>logn=(logn)^2    根号n<br>apply log again:    2loglogn    0.5</em>logn<br>∴  n^(logn) &lt; 2^(根号n)</p>
+<p>④f(n) = 2^(logn)    g(n) = n^(根号n)<br>apply log:    logn    (根号n)logn<br>∴f(n) &lt; g(n)</p>
+<p>⑤f(n) = 2n    g(n) = 3n<br>n →无穷，f(n) = g(n)</p>
+<p>⑥f(n) = 2^n    g(n) = 2^(2n)<br>f(n) &lt; g(n)=4^n    —常数和底数不同</p>
+<p>⑦如果f(n)和g(n)都是分段函数，我们可以分段讨论，但在算法分析中，我们更关注无穷时的情况。</p>
+<p><strong>判断</strong>：</p>
+<p>①(n+k)^m = θ(n^m)    (√)    —级数展开，只保留底数最大次幂最高的项</p>
+<p>②2^(n+1) = O(2^n)    （√） —相比只是多乘了个2，系数可以忽略</p>
+<p>③2^(2n) = O(2^n)        (×)    —4^n与2^n在n趋于无穷时，相去甚远</p>
+<p>④(logn)^1/2 = O(loglogn)    （×）    — 0.5loglogn &gt;logloglogn</p>
+<p>⑤n^(logn) = O(2^n)     (√)    — 两次log后，2loglogn &lt; logn</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-05T04:27:09.062Z" itemprop="dateUpdated">2020-04-05 12:27:09</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/&title=《【算法】渐近符号》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/&title=《【算法】渐近符号》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">优先级队列(by max_heap)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/04/03/chapter4/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">chapter4: 熟悉使用有棱有角的内存</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/&title=《【算法】渐近符号》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/&title=《【算法】渐近符号》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEnUlEQVR42u3b207bUBAF0P7/T1OpT0WQsPeMaXPM8hNCiS/LSHPl16/4ePtz/P3zxyP5bn62R2f++N2P53l05kf3c9mBCRMmTJhekim5xec3nX8ywdq8qmvPgwkTJkyY7sTUni6/iRYreYWzFCG54sPfY8KECROmH8CUl5RJAvH8u5vX1pbHmDBhwoQJU95OzVuuSbM1f4w8mcCECRMmTD+TKT/dLJznreEct+XOz48JEyZMmO7ENFvcucfP377fhAkTJkyY/ivTW3nMFm7axZ3ZAHKWjkRPjQkTJkyYjmXKR4z75uksJCflaLsq1JblmDBhwoTpXKZ81WY/tmzR28WdzSLRFy8GEyZMmDAdyxTlC8Fn8kHjpgmbQCcD19nrx4QJEyZMJzIl4TBvquapwOzMm2WdzWcwYcKECdM9mNoHy4mfl6ZXlayz9CVKSjBhwoQJ0+FMmzZufut1OzUeVbYpSP5KPtlvwoQJEyZMxzLlEPtx5ibMt/XpBW1iTJgwYcJ0LFMSLPdt3KvGnEkbul3NyekxYcKECdOJTLOB4izEzgaKm8Fn0p6OymBMmDBhwnQs076snZXKbaGbpyaz0Wbxx4EJEyZMmI5iSkrHtrW6D/yz5CAvyOsRLCZMmDBhOpapDcbRmkt8nrrsjB8mb0C3A1FMmDBhwnQiUy23KFbz0N4G5u9YA8KECRMmTKczte3Rq1ZI25RiVsTOVmw/+S4mTJgwYTqWKW+htpefnbltIucDznaFqFjcwYQJEyZML8zU/tvDvwnVs3//eM6arB99UfpiwoQJE6bDmdpgvGm55qurm+L8qp8xYcKECdO5TEmjMykjZ8s9eZCeLafurxV1xDFhwoQJ0wsz7VdkZiXl7FqzO9k0lDFhwoQJ0+lM+Xjv+e/bQeOmVM6TjLzkblMQTJgwYcJ0ItO+SbofhV6bOswov7giJkyYMGE6kKktVvOCM1nE2T9GstaTl8F1LxwTJkyYML0w02xFZtZg3RPnw9R80afuhWPChAkTpqOYZiH/+c3lXeScZlZ+b17tw9IXEyZMmDAdxTQLz3lI3jRqN4uqmzFn9HeECRMmTJgOYdq0TdvQPtskSl5JO85MBrF19oQJEyZMmF6YaTaGnDV5ZyV0G+b3a0OYMGHChOlOTG0rNg+osyI2WaaZFdVt2YwJEyZMmO7ElAfRNtjP2sSzu8oL2hYaEyZMmDCdyNSWl1eNKlvc/DVv1nei3gAmTJgwYTqQaZ8QtI+Xh/9Zsbp/inefwYQJEyZMt2Bqh4Lt6HETnpOzbcrjL5q8mDBhwoTpWKbZJROm2QO3hWvezP3GNR1MmDBhwvTCTG/lMRsf5qlAHrCTcL6fTr7LmzBhwoQJ04FM+5CcM+WrM/n588J79jMmTJgwYboHU5sE5Cj5w7cDzuevYZN8YMKECROmuzJtkoD8AepMZJRebK6FCRMmTJh+MtO1EG+j4/l321FlkfpgwoQJE6YfzLQJ1fnn84bvBeF/M6HFhAkTJkwvyTRr8l4L0Ra9bbt5tX6ECRMmTJiOZdq0WWelabJqk4fqdhFnkzpgwoQJE6ajmH4DCvZXSK+1LOgAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】socket - DGRAM | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="socket,报式套接字">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】socket - DGRAM</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】socket - DGRAM</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-08-13T16:06:00.000Z" itemprop="datePublished" class="page-time">
+  2020-08-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】socket"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】socket - DGRAM</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-08-14 00:06:00" datetime="2020-08-13T16:06:00.000Z"  itemprop="datePublished">2020-08-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>3、网络套接字sockekt<br><strong>讨论：跨主机的传输要注意的问题</strong></p>
+<blockquote>
+<p>   1、字节序问题：<br>        大端：低地址处放高字节<br>        小端：低地址处放低字节<br>        解决：<br>        主机字节序：host<br>        网络字节序：network<br>        _ to _ _ : htons,htonl,ntohs,ntohl（最后的字符指长度short, long）<br>        （纯文本传输不用转换）</p>
+</blockquote>
+<blockquote>
+<p>   2、对齐：<br>        struct<br>        {<br>            int i;<br>            float f;<br>            char ch;<br>        };    //占12个字节<br>        解决：不对齐</p>
+</blockquote>
+<blockquote>
+<p>   3、类型长度问题<br>        int<br>        char<br>        解决：int32_t, uint32_t, int8_t, int64_t</p>
+</blockquote>
+<p><strong>报式套接字(DGRAM)</strong></p>
+<blockquote>
+<pre><code>被动端（先运行）
+     socket();
+     bind();
+     recvfrom();//addrlen要初始化，不然第一次发送会失败
+     close();            
+ 主动端：
+     socket();
+     bind();（可省略，不绑定端口，直接使用本机随意可用的端口）
+     sndto();
+     close();</code></pre></blockquote>
+<p>相关函数：</p>
+<blockquote>
+<p>int socket(int domain, int type, int protocol);<br>inet_pton();//转换ip4或ipv6地址（点分式）为整型数<br>inet_ntop();//将大整数转换成点分式的ip地址<br>int bind(int sockfd, const struct sockaddr *addr,socklen_t addrlen);<br>ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,const struct sockaddr *dest_addr, socklen_t addrlen);<br>ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,struct sockaddr *src_addr, socklen_t *addrlen);</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">man 7 ip	(ipv4)</span><br><span class="line">	struct sockaddr_in &#123;</span><br><span class="line">    	sa_family_t    sin_family; /* address family: AF_INET */</span><br><span class="line">        in_port_t      sin_port;   /* port <span class="keyword">in</span> network byte order */</span><br><span class="line">        struct in_addr sin_addr;   /* internet address */</span><br><span class="line">        &#125;;</span><br><span class="line">与struct sockaddr *src_addr不同，用(void *)转化；</span><br><span class="line"></span><br><span class="line">/***************************************************</span><br><span class="line">	laddr.sin_family = AF_INET;</span><br><span class="line">    laddr.sin_port = htons(atoi(RCV_PORT));</span><br><span class="line">    inet_pton(AF_INET,<span class="string">"0.0.0.0"</span>,&amp;laddr.sin_addr);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">bind</span>(sd,(void *)&amp;laddr,sizeof(laddr)) &lt; 0)//<span class="built_in">bind</span> a name to socket</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"bind()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">****************************************************/</span><br></pre></td></tr></table></figure>
+<br>
+
+<p>例程1：（basic）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">//proto.h</span><br><span class="line"><span class="comment">#ifndef PROTO_H__</span></span><br><span class="line"><span class="comment">#define PROTO_H__</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define RCV_PORT "1999"</span></span><br><span class="line"><span class="comment">#define NAMESIZE 11</span></span><br><span class="line">struct msg_st</span><br><span class="line">&#123;</span><br><span class="line">    uint8_t name[NAMESIZE];</span><br><span class="line">    int32_t math;</span><br><span class="line">    int32_t chinese;</span><br><span class="line">&#125;__attribute__((packed));//cancel align</span><br><span class="line"></span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//rcver.c</span><br><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#include "proto.h"</span></span><br><span class="line"><span class="comment">#define IPSTRSIZE 40</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int sd;</span><br><span class="line">    char ipstr[IPSTRSIZE];</span><br><span class="line">    struct msg_st rbuf;</span><br><span class="line">    struct sockaddr_in laddr,raddr;//<span class="built_in">local</span> / remote  address</span><br><span class="line">    socklen_t addrlen;</span><br><span class="line">    sd = socket(AF_INET,SOCK_DGRAM,0);//ipv4,datagrams,default protocol:UDP</span><br><span class="line">    <span class="keyword">if</span>(sd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"socket()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    laddr.sin_family = AF_INET;</span><br><span class="line">    laddr.sin_port = htons(atoi(RCV_PORT));</span><br><span class="line">    inet_pton(AF_INET,<span class="string">"0.0.0.0"</span>,&amp;laddr.sin_addr);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">bind</span>(sd,(void *)&amp;laddr,sizeof(laddr)) &lt; 0)//<span class="built_in">bind</span> a name to socket</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"bind()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //!!!! addrlen must be initialized</span><br><span class="line">    addrlen = sizeof(raddr);</span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(recvfrom(sd,&amp;rbuf,sizeof(rbuf),0,(void *)&amp;raddr,&amp;addrlen) &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            perror(<span class="string">"recvfrom()"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line">        inet_ntop(AF_INET,&amp;raddr.sin_addr,ipstr,IPSTRSIZE);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"----Message from %s:%d----\n"</span>,ipstr,raddr.sin_port);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"name:%s\n"</span>,rbuf.name);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"math:%d\n"</span>,ntohl(rbuf.math));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"chinese:%d\n"</span>,ntohl(rbuf.chinese));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    close(sd);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//snder.c</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include "proto.h"</span></span><br><span class="line"></span><br><span class="line">int main(int argc,char **argv)</span><br><span class="line">&#123;</span><br><span class="line">    int sd;</span><br><span class="line">    struct msg_st sbuf;</span><br><span class="line">    struct sockaddr_in raddr;//remote  address</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc &lt; 2)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"usag...\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    sd = socket(AF_INET,SOCK_DGRAM,0);//ipv4,datagrams,default protocol:UDP</span><br><span class="line">    <span class="keyword">if</span>(sd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"socket()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">//  <span class="built_in">bind</span>();     //ignore</span><br><span class="line">    memset(&amp;sbuf,<span class="string">'\0'</span>,sizeof(sbuf));</span><br><span class="line">    strcpy(sbuf.name,<span class="string">"Alan"</span>);</span><br><span class="line">    sbuf.math = htonl(rand()%100);</span><br><span class="line">    sbuf.chinese = htonl(rand()%100);</span><br><span class="line"></span><br><span class="line">    raddr.sin_family = AF_INET;</span><br><span class="line">    raddr.sin_port = htons(atoi(RCV_PORT));</span><br><span class="line">    inet_pton(AF_INET,argv[1],&amp;raddr.sin_addr);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(sendto(sd,&amp;sbuf,sizeof(sbuf),0,(void *)&amp;raddr,sizeof(raddr)) &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"recvfrom()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    close(sd);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多点通讯：广播（全网广播，子网广播），多播/组播</p>
+<blockquote>
+<pre><code>setsockopt();
+getsockopt();        
+广播：(man 7 socket)
+level：SOL_SOCKET
+optname：SO_BROADCAST    
+多播组：（man 7 ip）
+level：IPPROTO_IP
+主动端创建多播组，被动端加入多播组。
+optname：IP_MULTICAST_IF，创建多播组
+         IP_ADD_MEMBERSHIP，加入多播组</code></pre></blockquote>
+<blockquote>
+<pre><code>UDP: 丢包 -- 原因：阻塞        解决：闭环流控（停等式流控）    
+ 漏桶、令牌桶：没有校验，开环流控
+ 停等式流控：闭环流控，确保能够收到包，但并没有降低丢包率
+ TTL：能够经过的路由的个数（Linux环境下默认为64，Windows下默认为128）</code></pre></blockquote>
+<p>例程2：尝试用setsockopt设置广播/多播组通信。（自行实现）</p>
+<p>例程3：用变长的方式组织结构体数据<br>修改提示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">①proto.h</span><br><span class="line"></span><br><span class="line">//512 is UDP recommend size</span><br><span class="line">//two 8 is masthead and (sizeof(msg_st) - 1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#define NAMEMAX (512-8-8)   </span></span><br><span class="line"></span><br><span class="line">struct msg_st</span><br><span class="line">&#123;</span><br><span class="line">    int32_t math;</span><br><span class="line">    int32_t chinese;</span><br><span class="line">    uint8_t name[1]; //variable</span><br><span class="line">&#125;__attribute__((packed));//cancel align</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">②snder.c和rcver.c中，定义struct msg_st *bufp;结构体指针，再malloc内存空间。</span><br><span class="line">    size = sizeof(struct msg_st) + NAMEMAX -1;</span><br><span class="line">    rbufp = malloc(size);   //其实就是512-8</span><br></pre></td></tr></table></figure>
+
+<p>例程4：实现myftp_udp（简易检验client收到数据后回复ack，不加流控算法，用有限状态机思想编程）</p>
+<p>例程5：实现myftp_udp_verify(在例程4的基础上完善，①在RTT时间内未收到Ack，防server丢包；②给数据包加编号，如果收到的两个数据包编号相同，说明Ack包丢了；给Ack包加编号校验，防Ack包延迟到达)</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-08-14T01:46:31.493Z" itemprop="dateUpdated">2020-08-14 09:46:31</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/socket/" rel="tag">socket</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%8A%A5%E5%BC%8F%E5%A5%97%E6%8E%A5%E5%AD%97/" rel="tag">报式套接字</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/&title=《【apue】socket - DGRAM》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/&title=《【apue】socket - DGRAM》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket-STREAM/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】socket - STREAM</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/08/13/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1-XSI/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】进程间通信 - 消息队列、信号量数组，共享内存</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/&title=《【apue】socket - DGRAM》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/08/14/%E3%80%90apue%E3%80%91socket/&title=《【apue】socket - DGRAM》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADIklEQVR42u3aQY7CQAwEQP7/6d0HrELa9iARb+WEQCRTw8HYPa9XfP38uf5+evVO8t3319V6rp5+7MLGxsZ+CDt5ZHW57/Hv73DqKTfbh42Njb2OXS0SVWT+rF4JrN4fGxsbGztvISaFp7dB2NjY2Nh5QcqnN++LX76V2NjY2NiToVJSYJI7R8tqFdePzNKwsbGxv55dLULf/Poj+TY2Njb2F7N/ilce354qQsmxobICGxsbexF7cmSnGsrm25HEycnW3DQ22NjY2CvYycDl1IGePB6ovi4PwrCxsbEXsfPSMjmaU66oh8LjmyKKjY2NvZTdGyHlxaw3GPpI64KNjY29gp0faukFBr2jP6fiisIZJWxsbOyHs+dj/XyENL/mbQw2Njb2JnYeAOR/+pMN6m1iUvby+AEbGxt7B7vafkwA1fFTjikHz9jY2Njr2GdD3MlW9qLcZgHDxsbGXsTOB0y9v/55WJtseq9Zukm2sbGxsR/Lnox18ncmZSxpMw5kI9jY2NgPZyePrMauvTYmKavV1/nmYmNjYz+XndyiWvwmyXM1Qm62LtjY2Ngr2NVSlH86aSeqjGrzg42Njb2PnY/aT0Ww1UJY/fRma7CxsbEXsfOhTA+cD3ryA0PVMnn5LWxsbOwV7N4xnWS5+YHOvMmprvDyidjY2NiL2POBzqSQ5JFwr4GJQg5sbGzsFez8y72mIu8CqoVz1EphY2NjL2L3jsIkWzPZxGozk2xccxaFjY2N/Sj2pFHpHbKpbmW+Wa/5hY2Njf0o9jyCrS6o9341qMbGxsb+n+zereeNSjWW6I2osLGxsfex5+1E3mxMCk8vhL5cAzY2NvY6dnWgn5TDvFhOAuN8DdjY2Nj72PN4NT8cU116HtlWCyo2Njb2JnYv6K0e9Jk0NtVqnLcx2NjY2JvYvVC2t6/5IOls2HzZgWFjY2MvYn+iLM3HTK/BdfMjYWNjY/9jdr646tKrkUAvosbGxsbGrsYD1bZhUlALW4mNjY29jp0Pbqrj+2rjUR1sJcX1shXBxsbGXsHOm4RJ+9HbxDxUqA6tsLGxsVewfwGQAtmFwwy4wgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】系统数据文件和信息 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="密码校验例程,时间戳例程">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】系统数据文件和信息</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】系统数据文件和信息</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-08T15:21:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-apue】系统数据文件和信息"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】系统数据文件和信息</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-08 23:21:00" datetime="2020-07-08T15:21:00.000Z"  itemprop="datePublished">2020-07-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>1、/etc/passwd<br>不能人为地打开这个文件来获取字段，因为标准不一样，在其它版本的系统中不一定存在/etc/passwd。</p>
+<p>根据xx获取pwd字段<br>    getpwuid();<br>    getpwname();</p>
+<p>2、/etc/group<br>    getgrgid();<br>    getgrnam();</p>
+<p>3、/etc/shadow</p>
+<p>hash  混淆    不可逆    如原串相同，所得串也相同，防备管理员监守自盗<br>加密  -  解密<br>加密： 安全 ：攻击成本 &gt; 收益<br>安全？ 穷举        口令随机校验（防脚本攻击）</p>
+<p>getspnam(); //通过user-name获取该用户的pwd字段。<br>char *crypt(const char *key, const char *salt);<br>//参数为输入的口令和杂串（其包括加密方式，crypt只当识别第三个$前的内容），返回经过加密后得到的串<br>getspnam(); //参数为用户名，返回值为shadow当中的一行<br>getpass();    ////参数为提示符，返回值为输入的口令原文</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;shadow.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">/************口令校验例程*************/</span><br><span class="line"></span><br><span class="line">//注意事项：-lcrypt在<span class="string">"末尾"</span>添加才不会报<span class="string">"crypt未定义"</span></span><br><span class="line">//获取shadow文件的内容，需要root权限</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">    char *input_pass;</span><br><span class="line">    char *crypted_pass;</span><br><span class="line">    struct spwd *shadowline;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(argc &lt; 2)</span><br><span class="line">    &#123;   </span><br><span class="line">        fprintf(stderr,<span class="string">"usage ...\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;   </span><br><span class="line">    </span><br><span class="line">    input_pass = getpass(<span class="string">"password:"</span>); //参数为提示符，返回值为输入的口令原文</span><br><span class="line"></span><br><span class="line">    shadowline = getspnam(argv[1]); //根据命令行输入的name，获取shadow中的某一</span><br><span class="line">行</span><br><span class="line">    </span><br><span class="line">    crypted_pass = crypt(input_pass,shadowline-&gt;sp_pwdp);//根据输入的口令和杂串，生成经过加密的串 </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(crypted_pass == NULL)</span><br><span class="line">    &#123;   </span><br><span class="line">        fprintf(stderr,<span class="string">"crypt() error\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">       <span class="keyword">if</span>(strcmp(crypted_pass,shadowline-&gt;sp_pwdp) == 0)</span><br><span class="line">        puts(<span class="string">"Right,welcome!"</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        puts(<span class="string">"Error,input again!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】系统数据文件和信息 href="https://file.moetu.org/images/2020/07/08/b41083c6350a1a6179b1a8efd737f3f50573fc036d42d4ba.png" target="_blank" title="chkpass测试" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/08/b41083c6350a1a6179b1a8efd737f3f50573fc036d42d4ba.png" alt="chkpass测试" title="" class=""></a>
+                <p>chkpass测试</p>
+            </figure>
+
+
+<p>4、时间戳：time_t、char *、struct tm<br>    time();//获取当前的时间戳，<br>    struct tm *localtime(const time_t *timep);//时间表示方式转换，time_t转换成结构体形式<br>    time_t mktime(struct tm *tm); 结构体转换成时间戳，附加可以自动调整时间格式<br>    strftime();//strftime - format date and time</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;time.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">/*************每隔1s在文件尾写当前时间******************/</span><br><span class="line"><span class="comment">#define FNAME       "/tmp/out"</span></span><br><span class="line"><span class="comment">#define BUFSIZE     1024</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int count = 0;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    char buf[BUFSIZE];</span><br><span class="line">    time_t stamp;</span><br><span class="line">    struct tm *tm;</span><br><span class="line"></span><br><span class="line">    fp = fopen(FNAME,<span class="string">"a+"</span>);//无则创建，追加写</span><br><span class="line">    <span class="keyword">if</span>(fp == NULL)</span><br><span class="line">    &#123;   </span><br><span class="line">        perror(<span class="string">"fopen()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    //获取已有的行数</span><br><span class="line">    <span class="keyword">while</span>( fgets(buf,BUFSIZE,fp) != NULL )</span><br><span class="line">        count++;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;   </span><br><span class="line">        time(&amp;stamp); //获取时间戳</span><br><span class="line">        tm = localtime(&amp;stamp);//转换成结构体</span><br><span class="line"></span><br><span class="line">        //在文件尾续写时间串</span><br><span class="line">        fprintf(fp,<span class="string">"%4d %d-%d-%d %d:%d:%d\n"</span>,++count,\</span><br><span class="line">        tm-&gt;tm_year+1900,tm-&gt;tm_mon+1,tm-&gt;tm_mday,\</span><br><span class="line">                tm-&gt;tm_hour,tm-&gt;tm_min,tm-&gt;tm_sec);//按一定的格式将时间写入到文件中,tm_year是从1900开始算的，tm_mon取值0-11。</span><br><span class="line"></span><br><span class="line">        fflush(fp);</span><br><span class="line">        sleep(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fclose(fp);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】系统数据文件和信息 href="https://file.moetu.org/images/2020/07/08/6bc467ab2e7b09225c2abe8f241e294d3d198a50707418e8.png" target="_blank" title="timelog测试" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/08/6bc467ab2e7b09225c2abe8f241e294d3d198a50707418e8.png" alt="timelog测试" title="" class=""></a>
+                <p>timelog测试</p>
+            </figure>
+<blockquote>
+<p>补充：测试时可以不ctrl+C终止进程，而新建终端，用tail -f /tmp/out 动态查看文件</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;time.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define STRSIZE 1024</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char timestr[STRSIZE];</span><br><span class="line">    time_t stamp;    </span><br><span class="line">    struct tm *tm;</span><br><span class="line"></span><br><span class="line">    stamp = time(NULL);</span><br><span class="line">    tm = localtime(&amp;stamp);</span><br><span class="line">    strftime(timestr,STRSIZE,<span class="string">"now:%Y-%m-%d"</span>,tm);//从tm结构体中按一定格式提取时</span><br><span class="line">间字符串，放到timestr中</span><br><span class="line">    puts(timestr);</span><br><span class="line"></span><br><span class="line">    tm-&gt;tm_mday += 100;</span><br><span class="line"></span><br><span class="line">    mktime(tm);//借助mktime函数的附加功能，自动调整格式</span><br><span class="line">    strftime(timestr,STRSIZE,<span class="string">"100days later:%Y-%m-%d"</span>,tm);</span><br><span class="line">    puts(timestr);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】系统数据文件和信息 href="https://file.moetu.org/images/2020/07/08/4edcc031d0337b43506c83f0dd2b0d32e6d8a9cfef798390.png" target="_blank" title="mktime除了转换格式外，还能自动调整" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/08/4edcc031d0337b43506c83f0dd2b0d32e6d8a9cfef798390.png" alt="mktime除了转换格式外，还能自动调整" title="" class=""></a>
+                <p>mktime除了转换格式外，还能自动调整</p>
+            </figure>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-08-03T02:28:52.363Z" itemprop="dateUpdated">2020-08-03 10:28:52</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E5%AF%86%E7%A0%81%E6%A0%A1%E9%AA%8C%E4%BE%8B%E7%A8%8B/" rel="tag">密码校验例程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%97%B6%E9%97%B4%E6%88%B3%E4%BE%8B%E7%A8%8B/" rel="tag">时间戳例程</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/&title=《【apue】系统数据文件和信息》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/&title=《【apue】系统数据文件和信息》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2%E4%B8%8E%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】进程的终止与钩子函数</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/07/%E3%80%90apue%E3%80%91mydup%E5%AE%9E%E7%8E%B0/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】mydup实现</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/&title=《【apue】系统数据文件和信息》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/apue%E3%80%91%E7%B3%BB%E7%BB%9F%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E5%92%8C%E4%BF%A1%E6%81%AF/&title=《【apue】系统数据文件和信息》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFKklEQVR42u3aQW4cMQwEQP//08k1gbPrbpJjIHDtKdjYM1LpYKrJj4/48+vFJ/mtz0949czk+2Q979eWvOv4gw8fPnz48AU0yXLfb+/9W1r6/DntYc/2iw8fPnz48G342g3kB5CXIPnmk29y+rz0wYcPHz58+L6fL/nfW9bNMbQxBD58+PDhw/e/8M1KkCReb7HyqKKN+/Hhw4cPH74rvqvGc9vGnrXPZ8HBplV/0OvAhw8fPnz4yimsn/PvR+b78OHDhw/fj+f7VX5mscLsmbMRtPy3ZgJ/PQEfPnz48OEbaeRB+WZZCfGmqJqtcNYwwIcPHz58+GYO7ThXGyXMUBLiWZHUPvmL9+LDhw8fPnwjvn3psOHIj/A9QXucswb8F4kLPnz48OHDF9+s8zG1JwKCdsQt/8nZ4dUNdXz48OHDh2/Bl4TX+fYSpveLbgOC23VGJR0+fPjw4cMXOMwu7U9c+zeN7c2Y3WoUDx8+fPjw4RvxzYbA2mXt/+4nW5rtaDgGhw8fPnz48I34kmjg/TebmCBvfrdBf/v2vETDhw8fPnz4Znw5yqxkmUXhyTM37fb2mdHu8OHDhw8fvoCvhcj/zCfly/4y364wL5Ki9ePDhw8fPnwjvqvy5aqMSMqLNqzfN++jNjk+fPjw4cMX8+Vbapd7VbjMYv28KKmLG3z48OHDh290L56VBbPGdlt25ONrm5IlP7Z//Aw+fPjw4cMX8+WPm704L2iuWu/tEeZt+6jXgQ8fPnz48MVDaVfbaDfWFj1PvD1vVESJCz58+PDhwxenzVeX/+NAPC6GNtxtoYYPHz58+PC1fO2QVhs3XA2HPdFQ33zw4cOHDx++J/hut5eXFJuQfd9IKOjx4cOHDx++Ed+seZzH7rfBQc56FXx8MaCGDx8+fPjwxXz7V7Zt77xEyIfS2lCgbc9HT8aHDx8+fPjKO+8mtt78yd+PnW1CgZUAPnz48OHD99jm8/Zzzte2z/MAoi198jYAPnz48OHDd8WXwLVX8bwRvm9mt1jv1xYFCvjw4cOHD98RX07Qbi8vOJKDaYuqNjrBhw8fPnz4nuBrU+g29G+Didlz2t/drxwfPnz48OGb8c0i9Tw4aCOGZA2zuH82KPDyZ/Dhw4cPH741X/6IWXHTjq9t1rBp3kejAPjw4cOHD98RX4KyL3dyviu4fUw/7Evgw4cPHz58R1fofKwtb423rJsxu6QBn48O4MOHDx8+fAlfW1LkC2rR8wt8fngt38GsAT58+PDhw7fgy2n2Q2Azjn1zPT+qunDBhw8fPnz4/viZ2SX56trfPqENJj5OP8MpA3z48OHDh+8TXx4EJItLCpc2xG8j9edWUqQg+PDhw4cP31u+q4A732oezeehw6wEaRv8+PDhw4cP34xvNpo2u6K3wcHsaPfN/rbNjw8fPnz48OV8s83Mvt+023PcerxsVBjhw4cPHz58G768Fb2/Wkch+KJ1vQk48tC/OG18+PDhw4cvLlM2l+19M3sWENRJSTwK8DJlwYcPHz58+Ca95qhEaCOGfMPtqFwSBySg+XpWxRY+fPjw4cP3aUytLVaSaCC/qM+aAXlTIWnq5016fPjw4cOHb883u2zvo4GDC/kiyj+4++PDhw8fPnzfwpfHBznibcO7JZu1LvDhw4cPH76n+ZJtJN9vAvp92ZEf8xdvxIcPHz58+EZ8s+A7v1q3DYCr5sGsVVCUcfjw4cOHD988ex8WN3lj+zboT7aRN+Dzog0fPnz48OEb8f0GWoZUU9M18YIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

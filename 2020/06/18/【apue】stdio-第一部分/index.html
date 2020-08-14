@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】  fopen和fclose | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="stdio">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】  fopen和fclose</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】  fopen和fclose</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-06-18T15:18:00.000Z" itemprop="datePublished" class="page-time">
+  2020-06-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】stdio-第一部分"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】  fopen和fclose</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-06-18 23:18:00" datetime="2020-06-18T15:18:00.000Z"  itemprop="datePublished">2020-06-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>I/O: input&amp;output，是一切实现的基础<br>&emsp;stdio，标准io，移植性好，实质是依赖于sysio实现的<br>&emsp;sysio，系统调用io（文件io）</p>
+<p>stdio函数:    FILE类型贯穿始终<br>    fopen    fclose    fgetc    fputc    fgets    fputs    fread    fwrite<br>    printf    scanf    fseek    ftell    rewind    fflush</p>
+<p>函数原型：FILE <em>fopen(const char *path, const char *mode);<br>mode:<br>&emsp;r / r+    *</em>文件必须存在，不然会报错**<br>&emsp;w / w+ / a / a+ <strong>文件如果不存在则创建</strong></p>
+<p><strong>the ‘b’ is ignored on all PHSIX comforming systems, including linux.<br>linux环境下只有一个流（stream）的概念。windows下有二进制流和文本流的区分。</strong></p>
+<p><strong>例程1：fopen.c</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line">//perror和strerror功能类似</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    FILE *fp;</span><br><span class="line">    fp = fopen(<span class="string">"tmp"</span>,<span class="string">"r"</span>);</span><br><span class="line">    <span class="keyword">if</span>(fp == NULL)</span><br><span class="line">    &#123;   </span><br><span class="line">    //  perror(<span class="string">"fopen()"</span>);</span><br><span class="line">        //errno is a global number</span><br><span class="line">        fprintf(stderr,<span class="string">"fopen():%s\n"</span>,strerror(errno));</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    puts(<span class="string">"OK!"</span>);</span><br><span class="line">    fclose(fp);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>①The argument mode points to a string beginning with one of the following sequences.<br><strong>mode参数位置只能识别一个串开头的内容</strong>，如”readwrite”，只能看懂r；如”r+write”，只能看懂r+。</p>
+<p>②errno是一个全局变量，需要的话要包含&lt;errno.h&gt;的头文件，并及时打印。errno数字对应的错误信息在/usr/include/asm-generic/errno-base.h中可以查看。当然程序中可以用void perror(const char *s);或char *strerror(int errnum);来打印错误信息。</p>
+<p>③调用fopen创建FILE后返回其地址，问题：FILE结构体本身存放在哪<br>&emsp;&emsp;栈（F）    因为调用fopen后，局部变量会被释放<br>&emsp;&emsp;静态区（F）    因为静态变量，定义声明只有一次，只有一块空间，后面会被覆盖。<br>&emsp;&emsp;堆（T）    使用malloc创建新文件</p>
+<p><strong>例程2：maxfopen.c</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int count = 0;</span><br><span class="line">    FILE *fp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;    </span><br><span class="line">        fp = fopen(<span class="string">"tmp"</span>,<span class="string">"w"</span>);</span><br><span class="line">        <span class="keyword">if</span>(fp == NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            perror(<span class="string">"fopen()"</span>);</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"count = %d\n"</span>,count);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>④一个进程能打开的文件数量最大为1024个，但为什么maxfopen程序中打印的是1021，因为<strong>进程已经默认打开了三个流（stdin,stdout,stderr）</strong>。<br>ulimit -a可以查看系统限制。</p>
+<p>⑤ls -l tmp 查看fopen创建的文件权限，发现是664，fopen没有开放给用户去指定文件的权限，那<strong>664这个权限是怎么来的？</strong><br>依据的是一个公式 ：** 0666 &amp; ~umask **    (权限中的数为8进制，最大值为’111’)<br>直接命令行输入umask，发现umask为0002</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-08-03T02:31:22.711Z" itemprop="dateUpdated">2020-08-03 10:31:22</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/stdio/" rel="tag">stdio</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/&title=《【apue】  fopen和fclose》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/&title=《【apue】  fopen和fclose》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91%E5%88%A9%E7%94%A8fgetc-fgets%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】利用fgetc/fgets实现文件复制功能</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】环境搭建</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/&title=《【apue】  fopen和fclose》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/06/18/%E3%80%90apue%E3%80%91stdio-%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/&title=《【apue】  fopen和fclose》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEn0lEQVR42u3aS27bQBAFQN3/0s42gSPrvW4a4EjFVUDH5EzRwPTv8Yivr7+uZ3eS///9p9+v2UrydSZvGV6YMGHChOmWTMmiv8rr+/N/xs3X8PMu8k9YfzBMmDBhwnQ4U/K49kDNt5oTzD5tsq8X68GECRMmTB/DdG3OuElck7R5lgZjwoQJE6ZPZkoKu3ki2oYUyRuTj4QJEyZMmD6NKX9czpc3LNvi8qbs++u1cEyYMGHCdDOm/GB+v3//ynwTJkyYMGG6DdNsHCcZvrnqwJ61PNs0+MWuMWHChAnTsUz5AblJifM7s8GdTeBSFJcxYcKECdOBTG3RMxmgmY3OtCM7eeOzDWVexE2YMGHChOkoptlh36aj+ebbY74NAvKm5gUxESZMmDBhug3TJt3NUTbJ6rUEyXoKMkyYMGHCdGOmtn04ayjOCr6z9mT+mfPEHhMmTJgwnc60aRBuFpenx22DcxYuPN0vJkyYMGE6nGnWmGwR2yM5aVXOhnXaZBgTJkyYMJ3OlMAVx+eoELwpyF47FPt0ZAcTJkyYMB3LlLcth6njKFltE908uKn3hQkTJkyY3oIpL+PmqWmb4ra/Nfuo+RuHURImTJgwYboNU37l7cmcr01H9x8gH/d5zC5MmDBhwnQzprbAmrc5rx3umY3m5AHBiwAIEyZMmDAdy9QOwSRbysu+s5XM0uM86X1sFocJEyZMmG7GlG9ydlQn7cmcfnaQz8KaqBaOCRMmTJhuzzSr/uasbVvx94rLs1IyJkyYMGF6P6Z2QfkB3Kay7Xra9Lvu+mLChAkTpmOZNmXW2XjNpqSb32kT79VMEyZMmDBhuiVTfqwmZdZ8EbPm6D6kyAOCf36KCRMmTJiOZboqjsiTzFnhtSXYF6/r+AgTJkyYMB3C1LYMZ4XaWTDRjs9eFWpgwoQJE6b3YNo39mZhQfKc2dP2A0OYMGHChOl0pk05dR9A7Fuh7fqTRul/7mPChAkTpmOZkgN4VnKdYSXvmh3qF5SGMWHChAnTsUyzJDY/kjdF4X2LNA8majJMmDBhwnQgU3v0tkXYdkt5sJLQtKEJJkyYMGE6nWmW4s6ahV/B1abfm3DhK74wYcKECdM7Mc0ak5uwIA9KNuM+yTqjRiYmTJgwYTqKaV/0zGlmqWwbsuxHfF58GEyYMGHCdBTT7DXtwE17hG9akm1YEP1BYMKECROmw5naRefHf37Mt4FFfrS3I0T/uYMJEyZMmN6IadNKbA/pfaMxX+csrHns/4IwYcKECdNtmGaDO/thmlkpOQ8vZiHIqtKMCRMmTJhuwzQr0SaLrgdigvXsR4IuuzBhwoQJ0yFM+ySz3dIG96oQJL8fDe5gwoQJE6YbM117JuYHfz40M/uE7fM3IQsmTJgwYbo/U7752fG/T5iT9DtffzvWgwkTJkyY3oOpLeZeNZrTptOzknT+rqe/hQkTJkyYPoZphrJpdraJdP4h84QZEyZMmDB9DlOeDLfJar6e+jiPw5qLU19MmDBhwnQbprZJmTcUN0Bt4XjWRo1GdjBhwoQJ07FM+eDOVQ3F/Dk5X7u9dp2YMGHChOlApj/47CYGTEXFBQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

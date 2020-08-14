@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】命令行参数分析 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="命令行选项，选项参数及非选项参数的获取与解析">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】命令行参数分析</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】命令行参数分析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-08T15:54:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】命令行参数分析"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】命令行参数分析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-08 23:54:00" datetime="2020-07-08T15:54:00.000Z"  itemprop="datePublished">2020-07-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>命令行参数的分析用到的两个函数:<br>    getopt();    //获取短选项，如ls -a<br>    getopt_long(); //获取长选项，如ls –all</p>
+<p>ch=getopt(argc,argv,”-y:mdH:MS”);//从命令行中获取选项，如果不是可选项中的字符，则返回-1；</p>
+<blockquote>
+<p>如果optstring中字符后面跟着’:’，则还可以传入选项参数<br>case ‘H’:<br>     if(strcmp(optarg,”12”) == 0)<br>         strcat(timeformat,”%I(%P) “);<br>     else if(strcmp(optarg,”24”) == 0)<br>         strcat(timeformat,”%H “);<br>     else<br>         fprintf(stderr,”H argument invalid\n”);<br>     break;</p>
+</blockquote>
+<blockquote>
+<p>optstring第一个字符为’-‘，则返回1，进行识别非选项传参（如路径），文件名所对应的argv的下标为argind-1。<br>//非选项参数有多个时的策略：①先入为主，要第一个，后面的不管；②后入为主，要最后一个；③全部都处理。<br>case 1  :<br>     if(fp == stdout)//当非选项参数有多个时先入为主，后面的不管<br>     {<br>         fp = fopen(argv[optind-1],”w”);//无则创建，覆写<br>         if(fp == NULL)<br>         {<br>             perror(“fopen()”);<br>             fp = stdout;<br>          }<br>     }<br>     break;</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;time.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">/**********命令行选项，选项参数及非选项参数的获取与解析******************/</span><br><span class="line"></span><br><span class="line"><span class="comment">#define BUFSIZE 1024</span></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">    FILE *fp = stdout;</span><br><span class="line">    time_t stamp;</span><br><span class="line">    struct tm *tm;</span><br><span class="line">    char timestr[BUFSIZE];</span><br><span class="line">    char timeformat[BUFSIZE];</span><br><span class="line">    char ch;</span><br><span class="line">    timeformat[0] = <span class="string">'\0'</span>;</span><br><span class="line"></span><br><span class="line">    stamp = time(NULL);</span><br><span class="line">    tm = localtime(&amp;stamp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        ch = getopt(argc,argv,<span class="string">"-y:mdH:MS"</span>);//从命令行中获取选项，如果不是可选&gt;项中的字符，则返回-1；如果optstring中有<span class="string">":"</span>，则还可以传入选项参数</span><br><span class="line">        <span class="keyword">if</span>(ch &lt; 0)</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line"></span><br><span class="line">        switch(ch)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> 1  ://optstring中有<span class="string">'-'</span>，则识别非选项传参</span><br><span class="line">                <span class="keyword">if</span>(fp == stdout)//先入为主，后面的不管</span><br><span class="line">                &#123;</span><br><span class="line">                    fp = fopen(argv[optind-1],<span class="string">"w"</span>);//无则创建，覆写</span><br><span class="line">                    <span class="keyword">if</span>(fp == NULL)</span><br><span class="line">                    &#123;</span><br><span class="line">                        perror(<span class="string">"fopen()"</span>);</span><br><span class="line">                        fp = stdout;</span><br><span class="line">                     &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'y'</span>:</span><br><span class="line">                <span class="keyword">if</span>(strcmp(optarg,<span class="string">"4"</span>) == 0)</span><br><span class="line">                    strcat(timeformat,<span class="string">"%Y "</span>);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(strcmp(optarg,<span class="string">"2"</span>) == 0)</span><br><span class="line">                    strcat(timeformat,<span class="string">"%y "</span>);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    fprintf(stderr,<span class="string">"y argument invalid\n"</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'m'</span>:</span><br><span class="line">                strcat(timeformat,<span class="string">"%m "</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'d'</span>:</span><br><span class="line">                strcat(timeformat,<span class="string">"%d "</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'H'</span>:</span><br><span class="line">                <span class="keyword">if</span>(strcmp(optarg,<span class="string">"12"</span>) == 0)</span><br><span class="line">                    strcat(timeformat,<span class="string">"%I(%P) "</span>);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(strcmp(optarg,<span class="string">"24"</span>) == 0)</span><br><span class="line">                    strcat(timeformat,<span class="string">"%H "</span>);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    fprintf(stderr,<span class="string">"H argument invalid\n"</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'M'</span>:</span><br><span class="line">                strcat(timeformat,<span class="string">"%M "</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'S'</span>:</span><br><span class="line">                strcat(timeformat,<span class="string">"%S "</span>);</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">            default:</span><br><span class="line">                <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    strftime(timestr,BUFSIZE,timeformat,tm);</span><br><span class="line">    strcat(timestr,<span class="string">"\n"</span>);</span><br><span class="line">    fputs(timestr,fp);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(fp != stdout)</span><br><span class="line">        fclose(fp);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】命令行参数分析 href="https://file.moetu.org/images/2020/07/09/34fe63ae3e68d2d4a33b0628ccfb0ff2ab5478468f00c801.png" target="_blank" title="命令行解析例程测试" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/09/34fe63ae3e68d2d4a33b0628ccfb0ff2ab5478468f00c801.png" alt="命令行解析例程测试" title="" class=""></a>
+                <p>命令行解析例程测试</p>
+            </figure>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-08-03T02:32:27.889Z" itemprop="dateUpdated">2020-08-03 10:32:27</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9%EF%BC%8C%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0%E5%8F%8A%E9%9D%9E%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0%E7%9A%84%E8%8E%B7%E5%8F%96%E4%B8%8E%E8%A7%A3%E6%9E%90/" rel="tag">命令行选项，选项参数及非选项参数的获取与解析</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/&title=《【apue】命令行参数分析》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/&title=《【apue】命令行参数分析》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】进程基础</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2%E4%B8%8E%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】进程的终止与钩子函数</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/&title=《【apue】命令行参数分析》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/&title=《【apue】命令行参数分析》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEk0lEQVR42u3aS27bQBAFQN//0g6QVQIj8nvdFMKhiyshpsSZYoCe/nx8xNfn7+vPz3/+y9d7vt759Vv5LyTreb3O18+97MKECRMmTLdk+nx55UyvF50sffb01+vJX/m/no4JEyZMmJ7B1G44iZg50GbDm0NGsndMmDBhwvRzmGaBPNn87MCxT9oxYcKECROmPF3MU99NZXV/EMGECRMmTD+TKQ/ts0CepKybo0OeVL+9Fo4JEyZMmG7GNEsgn/H54gsTJkyYMN2M6fPSKw/Defq6Sb8v2xcmTJgwYTqWaT8us0kpN43JWRN01trEhAkTJkynM7UF2XekzbM1zNqTefG62DUmTJgwYTqEadNKzAN529Rsm6xtetzuCBMmTJgwncKUh9jXKC3T/t2+PgTkR4TodzBhwoQJ07FMSfoX/UR5sMhLt+9Ig/OXVzwYEyZMmDDdkimBmLUAZw3Od6fiyV+/OTdhwoQJE6ZjmWbtwGTRm5bnVfdcMNmECRMmTJiOZWpHP9vibJ5kvr6z/eX8VV1W3sWECRMmTDdjuqoFmCy3Lf7m29gP0RYOmDBhwoTpEUxXtQlnYXsW+F+vvG3NRq1NTJgwYcJ0FFOOlWxytqVke+0Ya172XZ1QMGHChAnTIUz7oNsyzcrHOW5+NFn9z8KECRMmTLdkapuF706V26JtC9cmyZgwYcKE6XSmtlmYh/9kw3mxNX9Jb2yOYsKECROmw5lmYbhNZfcV1Px3NoOqmDBhwoTpGUz/azhm1pjcl3rzNWPChAkTpqcy5eG8LQ23iB/ra7MSTJgwYcL0DKa8rbgZIW2boPl4TV6AbtdfV8QxYcKECdMtmdqyaRI42yNFW3jNX9JVO8KECRMmTOcy7duBCda1gT/ZUtuUXaXcmDBhwoTp9kxJIEyWWGfbcck4f3r+lJYVEyZMmDCdyNSWTfOgPiPYB/VZGfqbNWDChAkTpmOZ2sx40yDMS8DtwFAb7GeHBkyYMGHCdCJTEgjbavEsKW0PBPlozuwAgQkTJkyYnsGU3zQL8/t2ad7snK2zOC5gwoQJE6YDmWZF0tnmN8lqmyonKy8GkjBhwoQJ07FMm3GW2XjNPmzPhoHygm90bsKECRMmTIcwtRCzFDTZ3rATW975lpEdTJgwYcJ0FFPeCGxTx3z4tS0Wz1qkydowYcKECdPpTEmwbLexaS4m26sz+7hAHB0sMGHChAnTUUx58TQZ5Wn/OntikpC3w0NRIxMTJkyYMB3OlCxoNi6z+Vb+Ajafa0tMmDBhwnQIU97CTPjab83Wk7RO85R4+C1MmDBhwnQI02d5zcqsbXO0HdBpG5P5s/4q8mLChAkTpgOZNueId6TBbfm4Lf6+PTHGhAkTJky3ZJqll/lSNgXf/OXlCXYOigkTJkyYnsSULOKbAZc4aWxT3LYYfVU6XYzvYMKECROmRzO1oX02pjN7GfmaPzZvDBMmTJgwPYJpVsydHQX2qW+yizw5x4QJEyZMpzO1TcE8lCbfnRWaZ43YYXqMCRMmTJiOZZqF3n1KmR84Zil6eyy4gAwTJkyYMN2L6RcbDxlqFU9EdQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

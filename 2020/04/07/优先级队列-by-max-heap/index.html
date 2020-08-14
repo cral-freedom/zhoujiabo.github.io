@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>优先级队列(by max_heap) | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="优先级队列,heap">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>优先级队列(by max_heap)</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">优先级队列(by max_heap)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-07T15:43:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E7%AE%97%E6%B3%95%E7%B1%BB/">算法类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-优先级队列-by-max-heap"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">优先级队列(by max_heap)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-07 23:43:00" datetime="2020-04-07T15:43:00.000Z"  itemprop="datePublished">2020-04-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E7%AE%97%E6%B3%95%E7%B1%BB/">算法类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>1、Array Representation of Binary Tree<br>2、Complete Binary Tree<br>3、Heap<br>4、Insert &amp; Delet<br>5、Heap Sort<br>6、Heapify<br>7、Priority Queue</p>
+<p>Array Representation of Binary Tree：</p>
+<figure class="image-box">
+                <a rel=优先级队列(by max_heap) href="https://file.moetu.org/images/2020/04/06/798d7852c24ae76094e8d1de90b62d52bd1d7e521fbbf869.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/06/798d7852c24ae76094e8d1de90b62d52bd1d7e521fbbf869.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>数组存储二叉树的存储规则：</p>
+<blockquote>
+<p>if a hole is at index i, then its leftchild is 2<em>i,<br>its rightchild is (2</em>i+1), and its parents is i/2.</p>
+</blockquote>
+<p>Full Binary Tree has [2^(n+1)-1] leaves (n is the high of tree)</p>
+<p>Complete Binary Tree — there are no spaces in array representation.</p>
+<p>非完全二叉树：</p>
+<figure class="image-box">
+                <a rel=优先级队列(by max_heap) href="https://file.moetu.org/images/2020/04/05/0f9a8ff99adaabdddfbc1c9ad178ec0755e47919e7663f2c.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/05/0f9a8ff99adaabdddfbc1c9ad178ec0755e47919e7663f2c.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>其顺序存储结构：</p>
+<figure class="image-box">
+                <a rel=优先级队列(by max_heap) href="https://file.moetu.org/images/2020/04/05/47e127808e0122d834c4306eddbf0f693724981e9eb6c570.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/05/47e127808e0122d834c4306eddbf0f693724981e9eb6c570.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+
+<p>满二叉树和完全二叉树：</p>
+<figure class="image-box">
+                <a rel=优先级队列(by max_heap) href="https://file.moetu.org/images/2020/04/06/f05bb045bf3352bf3920d29c704fe5e89689cf32fee98bf7.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/06/f05bb045bf3352bf3920d29c704fe5e89689cf32fee98bf7.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p><strong>完全二叉树：前n层为满二叉树，最后一层从左到右依次填充</strong>。</p>
+<p>heap — 首先要是完全二叉树<br><strong>max heap —根结点（亦称为堆顶）的关键字是堆里所有结点关键字中最大者，称为大根堆，又称最大堆</strong><br>min heap —与max heap相反</p>
+<p>operations：Insert &amp; Delete<br>插入：<br>①先将待插入的值回到数组末尾<br>②与其父节点比较，大于则swap, 位置调换<br>③重复②，直到其为根节点</p>
+<p>删除：（一般只删除根节点 —取出堆的最大值）<br>①删除根节点，用数组的最后一个元素放入数组首位（原来根节点的位置）<br>②若其子节点大于它，将更大的子节点与其交换<br>③重复②，将元素向下推向”树叶”，直到恢复为max heap</p>
+<p>Heap sort：<br>&emsp;逐个地将所有数据添加到堆中（create max heap），然后从堆中连续删除元素，并将其填充到自由空间中，即可自动完成排序。（因为每次删除，都会取出堆中的最大值）</p>
+<p>Heapify：<br>&emsp;先一次性复制数组元素到新的数组，然后新数组自我调整成最大堆（其中调整的过程就叫做heapify）。（ 或者说，使得一个数组是堆有序的操作就叫做“heapify”）</p>
+<p>&emsp;索引从1开始计数时，第一个非叶子的结点的索引是index/2；从index/2递减到根节点依次去完成shift down，即可使堆有序。</p>
+<blockquote>
+<p>思考：为什么不用shift up(上浮)，而用shift down（下沉）<br>使用shift up的话，得将数组中所有的元素都shift up，才能使堆有序；而用shift down的话，工作量可以减少一半！</p>
+</blockquote>
+<p>&emsp;将n个元素逐一插入到一个空堆中，时间复杂度是O(nlogn)；而Heapify过程的时间复杂度是O(n)。</p>
+<p><em>重要结论</em>：堆排序在整体的性能上不如归并排序和快排。但是，堆这种数据结构更多的时候用于<strong>动态数据的维护</strong>。</p>
+<p>Priority Queue：<br>&emsp;堆是实现优先级队列的最佳数据结构，每次从队列中取出具有最高优先权的元素。</p>
+<p>算法实现代码：</p>
+<p><em>priqueue.h</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _PRIQUEUE_H</span><br><span class="line">#define _PRIQUEUE_H</span><br><span class="line"></span><br><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line">#include &quot;stdlib.h&quot;</span><br><span class="line">#include &quot;string.h&quot;</span><br><span class="line">#define MAXSIZE 30</span><br><span class="line"></span><br><span class="line">typedef struct _item</span><br><span class="line">&#123;</span><br><span class="line">	char name[10];	&#x2F;&#x2F;数据部分</span><br><span class="line">	int prio;	&#x2F;&#x2F;优先级	</span><br><span class="line">&#125;Item;</span><br><span class="line"></span><br><span class="line">typedef struct _heap</span><br><span class="line">&#123;</span><br><span class="line">	int capcity;</span><br><span class="line">	int size;</span><br><span class="line">	Item *pItem;	&#x2F;&#x2F;piro[0]空着，下标从1开始</span><br><span class="line">&#125;*pQueue;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void pQ_init(pQueue *pQ);</span><br><span class="line">void pQ_print(pQueue Q);</span><br><span class="line">int is_empty(pQueue Q);</span><br><span class="line">int is_full(pQueue Q);</span><br><span class="line">void EnQueue(pQueue *pQ, Item item);</span><br><span class="line">void DeQueue(pQueue *pQ, Item *item);</span><br><span class="line">void exam_queue(pQueue *pQ);</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+
+<p><em>priqueue.c</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;priqueue.h&quot;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; priority queue, implemented by max_heap</span><br><span class="line">void pQ_init(pQueue *pQ)</span><br><span class="line">&#123;</span><br><span class="line">	*pQ &#x3D; (pQueue)malloc(sizeof(pQueue));</span><br><span class="line">	if(*pQ)</span><br><span class="line">	&#123;</span><br><span class="line">		(*pQ)-&gt;pItem &#x3D; (Item *)malloc(sizeof(Item)*(MAXSIZE+1));</span><br><span class="line">		if((*pQ)-&gt;pItem)</span><br><span class="line">		&#123;</span><br><span class="line">			(*pQ)-&gt;capcity &#x3D; MAXSIZE;</span><br><span class="line">			memset((*pQ)-&gt;pItem,-1,sizeof(Item)*(MAXSIZE+1));</span><br><span class="line">			(*pQ)-&gt;size &#x3D; 0;</span><br><span class="line">			printf(&quot;init success\n&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void pQ_print(pQueue Q)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">	printf(&quot;Q-&gt;size:%d\n&quot;,Q-&gt;size);</span><br><span class="line">	for(i&#x3D;1; i&lt;&#x3D;Q-&gt;size; i++)</span><br><span class="line">		printf(&quot;(%s,%d) &quot;,Q-&gt;pItem[i].name,Q-&gt;pItem[i].prio);</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">typedef Item swaptype;</span><br><span class="line">void swap(swaptype *p1, swaptype *p2)</span><br><span class="line">&#123;</span><br><span class="line">	swaptype tmp;</span><br><span class="line">	tmp &#x3D; *p1;</span><br><span class="line">	*p1 &#x3D; *p2;</span><br><span class="line">	*p2 &#x3D; tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int is_empty(pQueue Q)</span><br><span class="line">&#123;</span><br><span class="line">	return Q-&gt;size&#x3D;&#x3D;0;</span><br><span class="line">&#125;</span><br><span class="line">int is_full(pQueue Q)</span><br><span class="line">&#123;</span><br><span class="line">	return Q-&gt;size&#x3D;&#x3D;Q-&gt;capcity;</span><br><span class="line">&#125;</span><br><span class="line">void DeQueue(pQueue *pQ, Item *item)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j;</span><br><span class="line">	if(!is_empty(*pQ))</span><br><span class="line">	&#123;</span><br><span class="line">		*item &#x3D; (*pQ)-&gt;pItem[1];</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F;调整位置</span><br><span class="line">		(*pQ)-&gt;pItem[1] &#x3D; (*pQ)-&gt;pItem[(*pQ)-&gt;size]; &#x2F;&#x2F;最后一个调到前面</span><br><span class="line">		memset(&amp;(*pQ)-&gt;pItem[(*pQ)-&gt;size],-1,sizeof(Item));&#x2F;&#x2F;最后项的位置清空</span><br><span class="line"></span><br><span class="line">		i &#x3D; 1,j&#x3D;1;</span><br><span class="line">		while((*pQ)-&gt;pItem[i*2+1].prio !&#x3D; -1)</span><br><span class="line">		&#123;</span><br><span class="line">			if((*pQ)-&gt;pItem[i*2].prio &gt;&#x3D; (*pQ)-&gt;pItem[i*2+1].prio)</span><br><span class="line">				j &#x3D; i*2;</span><br><span class="line">			else  </span><br><span class="line">				j &#x3D; i*2 + 1;</span><br><span class="line"></span><br><span class="line">			swap(&amp;((*pQ)-&gt;pItem[j]),&amp;((*pQ)-&gt;pItem[i]));</span><br><span class="line">			i &#x3D; j; 		</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		(*pQ)-&gt;size--;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void EnQueue(pQueue *pQ, Item item)</span><br><span class="line">&#123;</span><br><span class="line">	int i,tmp;</span><br><span class="line">	if(!is_full(*pQ))</span><br><span class="line">	&#123;	</span><br><span class="line">		(*pQ)-&gt;size++;	</span><br><span class="line">		memcpy(&amp;(*pQ)-&gt;pItem[(*pQ)-&gt;size],&amp;item,sizeof(Item));</span><br><span class="line"></span><br><span class="line">		i &#x3D; (*pQ)-&gt;size;</span><br><span class="line">		while(i&gt;&#x3D;2 &amp;&amp; (*pQ)-&gt;pItem[i].prio &gt; (*pQ)-&gt;pItem[i&#x2F;2].prio ) &#x2F;&#x2F;新添项的优先级比父节点要大</span><br><span class="line">		&#123;</span><br><span class="line">			&#x2F;&#x2F; 调整位置</span><br><span class="line">			swap(&amp;((*pQ)-&gt;pItem[i]),&amp;((*pQ)-&gt;pItem[i&#x2F;2]));</span><br><span class="line">			i &#x2F;&#x3D; 2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;heapify：使一个数组是堆有序的操作，sink：调整方式为下沉</span><br><span class="line">void HeapifyBySink(pQueue *pQ)</span><br><span class="line">&#123;</span><br><span class="line">	int i,start &#x3D; (*pQ)-&gt;size&#x2F;2;</span><br><span class="line">	int indexofmax;</span><br><span class="line">	for(i&#x3D;start; i&gt;&#x3D;1; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		if((*pQ)-&gt;pItem[i*2].prio &gt;&#x3D; (*pQ)-&gt;pItem[i*2+1].prio)</span><br><span class="line">			indexofmax &#x3D; i*2;</span><br><span class="line">		else  </span><br><span class="line">			indexofmax &#x3D; i*2 + 1;</span><br><span class="line">		printf(&quot;indexofmax:%d\n&quot;,indexofmax);</span><br><span class="line">		if((*pQ)-&gt;pItem[i].prio &gt;&#x3D; (*pQ)-&gt;pItem[indexofmax].prio)</span><br><span class="line">			;</span><br><span class="line">		else	&#x2F;&#x2F;如果小于其子节点，就交换</span><br><span class="line">			swap(&amp;((*pQ)-&gt;pItem[i]),&amp;((*pQ)-&gt;pItem[indexofmax]));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;heapify：使一个数组是堆有序的操作，sink：调整方式</span><br><span class="line">void HeapifyBySink(pQueue *pQ)</span><br><span class="line">&#123;</span><br><span class="line">	int i,start &#x3D; (*pQ)-&gt;size&#x2F;2;</span><br><span class="line">	int indexofmax;</span><br><span class="line">	for(i&#x3D;start; i&gt;&#x3D;1; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		if((*pQ)-&gt;pItem[i*2].prio &gt;&#x3D; (*pQ)-&gt;pItem[i*2+1].prio)</span><br><span class="line">			indexofmax &#x3D; i*2;</span><br><span class="line">		else  </span><br><span class="line">			indexofmax &#x3D; i*2 + 1;</span><br><span class="line">		printf(&quot;indexofmax:%d\n&quot;,indexofmax);</span><br><span class="line">		if((*pQ)-&gt;pItem[i].prio &gt;&#x3D; (*pQ)-&gt;pItem[indexofmax].prio)</span><br><span class="line">			;</span><br><span class="line">		else	&#x2F;&#x2F;如果小于其子节点，就交换</span><br><span class="line">			swap(&amp;((*pQ)-&gt;pItem[i]),&amp;((*pQ)-&gt;pItem[indexofmax]));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void exam_queue(pQueue *pQ)</span><br><span class="line">&#123;</span><br><span class="line">	Item a[] &#x3D; &#123;&#123;&quot;zhou&quot;,1&#125;,&#123;&quot;wang&quot;,4&#125;,&#123;&quot;li&quot;,3&#125;,&#123;&quot;niu&quot;,29&#125;,&#123;&quot;yang&quot;,15&#125;,&#123;&quot;ji&quot;,8&#125;&#125;;</span><br><span class="line">	int i,len &#x3D; sizeof(a)&#x2F;sizeof(a[0]);</span><br><span class="line">	printf(&quot;len:%d\n&quot;,len);</span><br><span class="line"></span><br><span class="line">	pQ_init(pQ);</span><br><span class="line">	memcpy(&amp;((*pQ)-&gt;pItem[1]),a,sizeof(Item)*len);&#x2F;&#x2F;起始地址不要搞错了</span><br><span class="line">	(*pQ)-&gt;size &#x3D; len;</span><br><span class="line"></span><br><span class="line">	HeapifyBySink(pQ);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;*************main.c************&#x2F;</span><br><span class="line"></span><br><span class="line">#include &quot;priqueue.h&quot;</span><br><span class="line">int test();</span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dsp()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;priority queue test:\n&quot;);</span><br><span class="line">	printf(&quot;1.create a priority queue\n&quot;);</span><br><span class="line">	printf(&quot;2.enqueue\n&quot;);</span><br><span class="line">	printf(&quot;3.dequeue\n&quot;);</span><br><span class="line">	printf(&quot;4.printf queue\n&quot;);</span><br><span class="line">	printf(&quot;9.exit\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">int test()</span><br><span class="line">&#123;</span><br><span class="line">	int i,opt;</span><br><span class="line">	Item item;</span><br><span class="line">	pQueue pQ;</span><br><span class="line">	dsp();</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;your option:&quot;);</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;opt);</span><br><span class="line">		switch(opt)</span><br><span class="line">		&#123;</span><br><span class="line">			case 1:exam_queue(&amp;pQ);break;</span><br><span class="line">			case 2:</span><br><span class="line">				printf(&quot;item.name and item.prio:&quot;);</span><br><span class="line">				scanf(&quot;%s%d&quot;,&amp;item.name,&amp;item.prio);</span><br><span class="line">				EnQueue(&amp;pQ,item);</span><br><span class="line">				break;</span><br><span class="line">			case 3:</span><br><span class="line">				DeQueue(&amp;pQ,&amp;item);</span><br><span class="line">				printf(&quot;delqueue:\nname:%s\tprio:%d\n&quot;,item.name,item.prio);</span><br><span class="line">			case 4:</span><br><span class="line">				pQ_print(pQ);break;</span><br><span class="line">			case 9:</span><br><span class="line">				printf(&quot;exit\n&quot;);</span><br><span class="line">				return 0;</span><br><span class="line">				break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-07T15:48:27.221Z" itemprop="dateUpdated">2020-04-07 23:48:27</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/heap/" rel="tag">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97/" rel="tag">优先级队列</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/&title=《优先级队列(by max_heap)》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/&title=《优先级队列(by max_heap)》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/07/chapter5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">chapter5: 内存和磁盘的亲密关系</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/04/05/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%B8%90%E8%BF%91%E7%AC%A6%E5%8F%B7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【算法】渐近符号</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/&title=《优先级队列(by max_heap)》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/&title=《优先级队列(by max_heap)》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD3klEQVR42u3aQXLbQAwEQP3/08rVKRfJGWCV6NA8uWxR3G0exsDi9Yqv94/r529+/5x8w+97899fPfF+hYcvHDhw4MBRLvR+cfffc/+b/K77leSU+R5x4MCBA8dZjvuFJgtKtppE+OyTCUe0Qhw4cODA8WUce6DZU+5jHgcOHDhwfDNHvsk8RGf3ttGLAwcOHDj+JcesJZe3BdsDp/x78pbi4V4pDhw4cOCYp15Rzn3nz4cvHDhw4MARlEDJtQnddhhuU7ANd4cDBw4cONYcs7GDtnyaxV5bkh0bksCBAwcOHB/gaON2U0rNAn5D9oCFAwcOHDjWHJvhhjxi84OfFr0dv0ugceDAgQPHhiM/+N8XaavYG72edswCBw4cOHBsONoiZ3YQ1UZgwpfg5q+5OB/DgQMHDhwxR/uwdtRgM+iQrCR5+sNLwoEDBw4ca468NNpvexbJLUG7+eJEDgcOHDhwjDhmo2+bEms/MLHhi9qaOHDgwIEjvmuzuLzMywMv2dhstCJ6tThw4MCBY80xa6vtHzl7Yltwzgb1cODAgQPHhmO/6DxKZw3H/SeTl/TX/x04cODAgWPNUdywLt7e5ZUTJ83Kh5eHAwcOHDgOcRTnUeXj95GcvIzZGFxUy+LAgQMHjgXHpgmYH1y1zcT7rbahXgjhwIEDB44Fx/5QZxaBs6GHPMjrog4HDhw4cBzimAXV/bLyCYFTBVgb5K+zuY0DBw4cOBbXJ4beZtCbTR4DwoEDBw4cH2gOnj24mqHkrcnL9ePAgQMHjjXHZrltSTYby0s22QLVrxAHDhw4cMQcm3A6NWqwmSuYvarLZ+HAgQMHjqMcSQK3hzp5QbjfcP6Uh4oWBw4cOHCsOfax+onhg5y7bQ5erg0HDhw4cKw52qmHJLraQYecexPts2ISBw4cOHC0HLOI+txdsxZhG6v1sRMOHDhw4Ig52iidtfnasmrWBNyMPrxm/1ngwIEDB4742ClBaYcY2lJwBn0fog+fx4EDBw4cRznaBt8mXJMjqFlRtwp7HDhw4MBxiCM55slH2d6jqx2Mawu/6HALBw4cOHCsOWbbbkumWStw1v5rv/9yfhAHDhw4cIw4NnF4tiTLxxFmY3DR+nHgwIEDx5ojv9oGYlsTnR2kmH0nDhw4cOA4xZEXSG1w5kVX3iLcjNMN3zwOHDhw4BhxtEGVHFnNjov2YwqbXePAgQMHjm/jmMVw/vn8M8O2IA4cOHDg+E8c7SZnR1mzYnIV/zhw4MCB4xBH28hLFp1spn1KHvzt0AMOHDhw4DjFsY+oWfnU0m+KtLOBjQMHDhw4Lv76B6johynXpYWUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

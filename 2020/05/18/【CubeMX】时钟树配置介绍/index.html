@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【CubeMX】时钟树配置介绍 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="时钟树">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【CubeMX】时钟树配置介绍</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【CubeMX】时钟树配置介绍</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-05-18T10:25:00.000Z" itemprop="datePublished" class="page-time">
+  2020-05-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【CubeMX】时钟树配置介绍"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【CubeMX】时钟树配置介绍</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-05-18 18:25:00" datetime="2020-05-18T10:25:00.000Z"  itemprop="datePublished">2020-05-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/b682defdfd020c9ae723deba04a3018511de0f642e021739.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/b682defdfd020c9ae723deba04a3018511de0f642e021739.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>①、 LSI 是低速内部时钟， RC 振荡器，频率为 32kHz 左右。供独立看门狗和自动唤醒单元使用。</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/e5421c8e0e6c04a808ead53c361898c56627d4b91a714368.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/e5421c8e0e6c04a808ead53c361898c56627d4b91a714368.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>②、 LSE 是低速外部时钟，接频率为 32.768kHz 的石英晶体。 这个主要是 RTC 的时钟源。</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/c52eab012542dad5cc4641556ecadf5d9ae7db88af848405.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/c52eab012542dad5cc4641556ecadf5d9ae7db88af848405.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>③、HSE 是高速外部时钟，可接石英/陶瓷谐振器，或者接外部时钟源，频率范围为 4MHz~26MHz。我们的开发板接的是 8M 的晶振。</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/10e0acd5935b881282780ff56e9adb424a72cb3620b435b3.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/10e0acd5935b881282780ff56e9adb424a72cb3620b435b3.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<br>
+**PPL为锁相环倍频输出**。STM32F4有两个PLL：
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/950783e5db07fa82de9cc9c8eda8d215f553cd2b49728fad.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/950783e5db07fa82de9cc9c8eda8d215f553cd2b49728fad.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>1）主PLL（Main PLL），由HES或HSI提供时钟信号，并具有两个不同的输出时钟。<br>    第一个输出PLLP，用于生成调整的系统时钟（最高168MHZ）<br>    第二个输出PPLQ，用于生成USB OTG FS的时钟（48MHz），随机器发生器的时钟和SDIO时钟</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/fa9084b3213e29d302d642d15808b3da4c7540d425496cd1.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/fa9084b3213e29d302d642d15808b3da4c7540d425496cd1.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>    
+<p>2）专用PLL（PLLI2S），用于生成精确时钟，从而在I2S接口实现高品质音频性能。</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/46eedc2e0c17df4640848f31eec8f25b75f6f9bee93951d7.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/46eedc2e0c17df4640848f31eec8f25b75f6f9bee93951d7.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p><strong>STM32F4 输出时钟 MCO1 和 MCO2</strong>。<br>    MCO1 是向芯片的 PA8 引脚输出时钟。它有四个时钟来源分别为： HSI,LSE,HSE 和 PLL 时钟。<br>    MCO2 是向芯片的 PC9 输出时钟，它同样有四个时钟来源分别为： HSE,PLL， SYSCLK 以及 PLLI2S时钟。<br>    MCO 输出时钟频率最大不超过 100MHz。</p>
+<figure class="image-box">
+                <a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/2020051818323903b2f7c51bf6bcc7.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/2020051818323903b2f7c51bf6bcc7.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>F4内部以太网MAC时钟的来源。<br>对于MII接口来说，必须向外部PHY芯片提供25MHZ的时钟，这个时钟，可以由PHY芯片外接晶振，或者使用芯片的MCO输出来提供。然后，PHY芯片再给F4提供ETH_MII_TX_CLK和ETH_MII_RX_CLK时钟。<br><strong>对于RMII接口来说，外部必须提供50MHZ的时钟驱动PHY和F4的ETH_RMII_REF_CLK</strong>，这个50MHZ时钟可以来自PHY、有源晶振或者F4的MCO。</p>
+<p><a rel=【CubeMX】时钟树配置介绍 href="https://file.moetu.org/images/2020/05/18/1bc56a4a82f8acc6d7cc837139cc84818d50e999135bc67a.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/05/18/1bc56a4a82f8acc6d7cc837139cc84818d50e999135bc67a.png" alt=""></a><br>HCLK：AHB总线时钟，由系统时钟SYSCLK分频得到，一般不分频，等于系统时钟；或HCLK是高设外设时钟，是给外部设备的，如内存，Flash。<br>FCLK：处理器的自由运行时钟（free running clock），在处理器休眠时，通过FCLK保证可以采样到中断和跟踪休眠事件。</p>
+<p>APB1：低速外设，连接在APB1上的设备有，CAN USB I2C1 I2C2 UART2 UART3 SPI2 窗口看门狗 TIM2 TIM3 TIM4；<br>APB2：高速外设，连接在APB2的设备有 UART1 SPI1 TIM1 ADC1 所有普通IO。<br>APB1时钟频率通常为APB2的一半。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-18T10:39:42.581Z" itemprop="dateUpdated">2020-05-18 18:39:42</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%97%B6%E9%92%9F%E6%A0%91/" rel="tag">时钟树</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/&title=《【CubeMX】时钟树配置介绍》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/&title=《【CubeMX】时钟树配置介绍》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/05/24/%E3%80%90AD%E3%80%91PCB%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【AD】PCB设计技巧</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/05/18/CubeMX-F407-LAN8720-FreeRTOS%E9%85%8D%E7%BD%AELWIP/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CubeMX+F407+LAN8720配置LWIP（测试成功）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/&title=《【CubeMX】时钟树配置介绍》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/18/%E3%80%90CubeMX%E3%80%91%E6%97%B6%E9%92%9F%E6%A0%91%E9%85%8D%E7%BD%AE%E4%BB%8B%E7%BB%8D/&title=《【CubeMX】时钟树配置介绍》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEmUlEQVR42u3aS27jSBAFQN//0m5gVtMwTL2XSc+o6OBKkOViMbio/H18xNfnP9fXz9d//fr539f199+t3+7quzt+/MSFCRMmTJjekunz8vr6m+Txrn+ZrHZ994Qjf+XXd8eECRMmTM9gypebHdL74zl/JbPfvzDBhAkTJky/gCm5fRsiXEO06O3OMWHChAkTpvxm10f79cPkyWr7TZJUY8KECROm38CUL5ccxvk6eWLc/iZvbd5cC8eECRMmTG/GtBncOf3zfzTfhAkTJkyY/iemz/KKUsRyUGZTtN3sp3hqTJgwYcJ0LNNspGY2gnPvsE6+cnv8FxUCTJgwYcJ0FFN7ZLa3ydHz9uq+MF0UizFhwoQJ04FMyThOu60kUEiajnlamwwStUEDJkyYMGF6BtOsILtpIraBRfJgbYr+I91dTJgwYcL0lkyzQc/ZJtqx0VkiPQsgXtBjwoQJE6bDmfIib3tW5iizkZ28DN0Wef/6BhMmTJgwPYJpNlizzxzzAZ1Z0p4PFb1oZ2LChAkTpgOZ2q0nwcHsge8d9GnHd6JdYcKECROmA5lagln7c1a0bVuh+3R3OKKKCRMmTJjenqkdkZmVhmctySSVzceAZq8HEyZMmDA9iakNDmass8O7DUdalBepLyZMmDBhOpapPiDLo7ptbc6Cj32LNKoQYMKECROmo5hmLcZ9w7Jti7Yl3bwwfcOFCRMmTJjemGm2odk6CVb+YJtv6oMfEyZMmDAdyzQ7IPdjN5swYlbkveFlY8KECROmA5naFLTdeht25Ad222ptXxsmTJgwYXoS06YxeX3tm6DtI+VrFq8cEyZMmDAdy3TzwblIQfNwIU96Z88VVQgwYcKECdMhTPvmZX7k31VQzhPd20aLMGHChAnTQ5mSwuu96eusTDxreRbFZUyYMGHC9Aime4ukd6W7bZgyCxeKySZMmDBhwnQgU17uTI72WRCQj/78RNAQFXkxYcKECdOBTO22NkXhWQF3FhbMkvYXz4sJEyZMmI5l2tPsg4bkju0wUP4UReMTEyZMmDAdy7S5klQzoWyboO0eMGHChAnTb2Nq079NUXhfCN6kynnSPuz6YsKECROmt2S6q1ybPNgsXEhS7jxJ3pSYMWHChAnTuUzJzdr2ZB46JMfwpsjblo8xYcKECdOTmFa6i+N8dt97U+hhkRcTJkyYMB3FlLcbZ03Hdp1ZYbcNYpL1v60NYMKECROmo5hmgzJtiTY/5mcJ7ay8W4QXmDBhwoTpEUxtiJAf+W0oMCsub9LjusiLCRMmTJgOYcqXi8qgo1Jyu8JdyfBsLAkTJkyYMJ3F9Flem1GYzaHeprIJZbF/TJgwYcJ0LNPmUE+2uP+vWXI+a5cWqS8mTJgwYTqK6SeKuUk7M0+588AifyV1yxMTJkyYMB3ONCuttmSzkvH1Csn+Z4VpTJgwYcL025iS9HK2udnoT16QnY0KFdk/JkyYMGF6EFN78OeUsxcwa0DWY0mYMGHChOlwpraMu0lEk2R49sCzMm6UPGPChAkTpmOZNsdn24bME+kXJddbE/jbLkyYMGHC9F5MfwCg2QW2eeQGWQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

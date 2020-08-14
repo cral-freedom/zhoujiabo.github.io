@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】信号基础 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="信号">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】信号基础</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】信号基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-25T09:07:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】信号"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】信号基础</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-25 17:07:00" datetime="2020-07-25T09:07:00.000Z"  itemprop="datePublished">2020-07-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>先补充两个概念:</p>
+<p>同步，用户知道什么时候发生什么事件。（单进程程序）<br>异步，这个事件什么时候到来不知道，会产生什么结果不知道。</p>
+<p>异步事件的处理：查询法，通知法<br>发生频率稀疏—通知法（但是也要有相应的机制监听）</p>
+<p>一、信号</p>
+<p>1、信号的概念<br>    <strong>信号是软件层面的中断。信号的响应依赖于中断。</strong></p>
+<p>2、signal()<br>#include &lt;signal.h&gt;<br>typedef void (*sighandler_t)(int);    //sighandler_t是函数指针，返回值为void，参数为int<br>sighandler_t signal(int signum, sighandler_t handler);<br>@param：<br>    signum：为信号编号，如SIGINT表示终端中断符，ctrl+c是其快捷方式<br>    handler：为函数指针，也可以是SIG_IGN忽略信号，或SIG_DFL默认动作<br>@return：上一个信号的行为</p>
+<p>void ( *signal(int signum, void (*func)(int)) )(int)<br>//头文件中没有sighandler_t的定义，每次要用时在文件头加typedef void (*sighandler_t)(int);</p>
+<p>signal小例程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void int_handler(int s)</span><br><span class="line">&#123;</span><br><span class="line">    write(1,<span class="string">"!"</span>,1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    int i;</span><br><span class="line"></span><br><span class="line">    signal(SIGINT,int_handler);</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; 10; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        write(1,<span class="string">"*"</span>,1);</span><br><span class="line">        sleep(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>C语言的缺陷之一：名空间管理不善，如果名字冲突就完蛋了。</p>
+<p>信号会打断阻塞的系统调用。<br>    查看man手册知open存在返回值为EINTR的情况，<strong>当阻塞等待打开一个慢设备时，调用可能被信号打断。<br>    所以在使用阻塞系统调用时，要判断是真错还是假错（被信号打断）</strong></p>
+<p>重构mycpy.c中open和read内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;</span><br><span class="line">    sfd = open(argv[1], O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span>(sfd &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(errno != EINTR)//不是信号导致的打开失败</span><br><span class="line">        &#123;</span><br><span class="line">            perror(<span class="string">"open()"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line">        //<span class="keyword">else</span> <span class="built_in">continue</span>;//是假错</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">while</span>(sfd &lt; 0);</span><br></pre></td></tr></table></figure>
+
+<p>3、信号的不可靠<br>    信号的行为不可靠，执行现场是由内核布置的，<strong>有可能第一次调用还没结束就发生了第二次调用。</strong></p>
+<p>4、可重入函数<br>    所有的系统调用都是可重入的，一部分库函数也是可重入的，如memcpy</p>
+<p><strong>一些库函数其本身是不可重入的，所以需要额外的_r版本函数，<br>如rand_r,localtime_r,,,专门用于信号处理。</strong></p>
+<p>5、<strong>信号的响应过程（重点）</strong></p>
+<p>2个位图，mask，pending，理论上是32位的。<br>mask是信号屏蔽字（初始全为1），pending位图（初始全为0）</p>
+<p>&emsp;从内核回到用户态时要进行mask&amp;pending，如果有信号到来(pending对应位为1)，则将mask，pending中的信号位归0，<br>栈中PC寄存器值表示的执行位置地址换成int_handler函数地址；响应完成后，mask对应信号位恢复，<br>PC寄存器值也恢复原来的执行位置。</p>
+<blockquote>
+<p>总结与思考：<br>①信号从收到到响应有一个不可避免的延迟。<br>&emsp;信号是进程从kernel回到user的路上响应的。<br>②如何忽略掉一个信号？<br>&emsp;SIG_IGN实现实际就是将mask中表示某信号的位置0<br>③标准信号为什么要丢失？<br>&emsp;位图不会计数<br>④标准信号的响应没有严格的顺序<br>⑤不能从信号处理函数中随意的往外跳。（可能会错过mask的恢复过程，sigsetjump,siglongjump）</p>
+</blockquote>
+<p>6、常用函数<br>    kill();//发信号，int kill(pid_t pid, int sig);<br>&emsp;参数pid:<br>&emsp;&emsp;&gt;0，发送信号到对应pid的进程<br>&emsp;&emsp;0，当前进程的进程组广播（组内广播）<br>&emsp;&emsp;-1，发送信号到init以外的所有进程（全局广播），一般是Init进程用来广播通知所有进程终止。<br>&emsp;&emsp;&lt;-1，发送信号到ID为|-pid|的进程组中的所有进程（特定gid的组广播）。<br>&emsp;参数sig：为0时，不会发送信号，用于测试一个进程或进程组是否存在。<br>&emsp;errno：EPERM，没有发送信号的权限；ESRCH，进程或进程组不存在</p>
+<p>raise();//发送信号给当前进程，int raise(int sig);</p>
+<p>alarm();//设置时钟信号，unsigned int alarm(unsigned int seconds);<br>&emsp;当seconds倒计时到0，产生SIGALRM信号，默认动作是终止当前进程。<br><strong>有些平台sleep是用alarm+pause封装的。所以不要在程序中混用alarm和sleep。</strong></p>
+<p>pause();//等待一个信号<br>abort();</p>
+<p>system();<br>&emsp;想要在有信号的进程当中使用system，需要blocked掉SIGCHLD，ignored掉SIGIINT和SIGQUIT。</p>
+<p>sleep();的替代函数：<br>&emsp;nanosleep();<br>&emsp;usleep();<br>&emsp;select();</p>
+<p>alarm小例程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"></span><br><span class="line">static volatile int loop = 0;</span><br><span class="line">static void alrm_handler(int s)</span><br><span class="line">&#123;</span><br><span class="line">    loop = 1;</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">    int64_t count = 0;</span><br><span class="line">    signal(SIGALRM,alrm_handler);</span><br><span class="line">    alarm(5);</span><br><span class="line">    <span class="keyword">while</span>(!loop)//5s内count能加到几？</span><br><span class="line">        count++;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%ld\n"</span>,count);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gcc -S 5sec_sig.c -O1    //对源文件进行优化，获取其汇编文件<br>查看其汇编文件，while(loop)会陷入死循环，因为是去内存中取的loop的值，没有变过。<br>解决：volatile修饰loop，去这个变量的真正空间取数值。</p>
+<p>测试结果：优化之后得到的count大约是原来计数值的7倍。</p>
+<figure class="image-box">
+                <a rel=【apue】信号基础 href="https://file.moetu.org/images/2020/07/25/8de76ea3f17269cb6bd94dd00d81d6b529fb6ec6c20192fb.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/25/8de76ea3f17269cb6bd94dd00d81d6b529fb6ec6c20192fb.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-25T10:48:03.048Z" itemprop="dateUpdated">2020-07-25 18:48:03</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E4%BF%A1%E5%8F%B7/" rel="tag">信号</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/&title=《【apue】信号基础》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/&title=《【apue】信号基础》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E6%BC%8F%E6%A1%B6%E4%B8%8E%E4%BB%A4%E7%89%8C%E6%A1%B6/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】漏桶与令牌桶</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/19/%E3%80%90apue%E3%80%91%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】守护进程与系统日志</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/&title=《【apue】信号基础》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7/&title=《【apue】信号基础》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJElEQVR42u3aQW7CQAwFUO5/abqu1MC3PZWIeVlFBZJ504Vl/3k84ut5cV198/Vvk0/zt1x958CFjY2NfRP28+WVPPo1Jmfkv7paW2LBxsbG3srOi0S+NflfkudMihk2NjY2dl7AXhehvIDleGxsbGzsnD1fVt549MZY2NjY2N/MToZK1UH8JFQ41SYdmKVhY2Njfzw7B3z+/b/k29jY2NgfzH4Wr3yEdKoInWpgfv0KGxsbexG7d2QnH/RXQ9/kab3B1h9vxMbGxl7EziOBpFE5tTX5fbWwYWNjY29lV1uIvFUYlZajh4SwsbGx97GTslSNe5PtqA6Gkq1J/knY2NjYW9l5Y9A7fPN/MUBzndjY2NiL2PNyVQVMouVeXPGoLh0bGxv7VuzJiCdvEqpBwmRoFcUP2NjY2IvY5XFMKxjuFaRerFsInrGxsbFXsHvHX/LyU42KezHDqG5jY2Njr2DPxz3VNiOHFVqLvABjY2NjL2L3llsd8fQGUr2It5yHYGNjY69gT2KAXsRbHSRN7pvpNzY2Nvat2L0xTa9hyAtest35Fl8GvdjY2Ng3Zz8PXcnQP28/Jod4okACGxsbexG7+nG+3OroZ17AmiEBNjY29gr2JNat9j1JiaqWxmrbg42Njb2JnY+QqntZ3cRe5NB7LzY2NvYm9rzBmHQ/SRmbNDBvGhVsbGzsFexqO1FdYi+gTUpatb0pBL3Y2NjYN2SfKl15+cmHStVmJip12NjY2OvY1YUmxSNvTvJoIR+EvVkJNjY29iJ2DzYPXCdtz+SgDzY2Nva3sZNRUW+Uf+o+Xz82Njb2bna1PZiUq1OHMichBDY2NvZW9vz1SQNQDmWr54/y4zvY2NjYK9iTeDUpUb3ToPmwqTqiwsbGxt7Hzq/eIZvJE6rb0dtKbGxs7B3satFKFlcdPyWNR762KLrAxsbGXseeLLE6sp8cncxr75tnYmNjY38x+/Dxx+J4qBctY2NjY2NX24/esZv8LdXjRG+O7GBjY2OvYFfD3UlAmxzQ6QUS+aEfbGxs7E3svEno/aW3iXkTkscSzXwbGxsb+3PZP/wpfhlWvKBLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

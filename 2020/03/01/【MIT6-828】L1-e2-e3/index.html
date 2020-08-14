@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【MIT6.828】L1_e2,e3 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="exercise 3,CS:IP">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【MIT6.828】L1_e2,e3</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【MIT6.828】L1_e2,e3</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-01T09:09:00.000Z" itemprop="datePublished" class="page-time">
+  2020-03-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/MIT6-828/">MIT6.828</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【MIT6-828】L1-e2-e3"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【MIT6.828】L1_e2,e3</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-01 17:09:00" datetime="2020-03-01T09:09:00.000Z"  itemprop="datePublished">2020-03-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/MIT6-828/">MIT6.828</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p><big><strong>仿真x86</strong></big><br>&emsp;替代在真正的、物理的PC上开发操作系统，我们使用一个程序仿真一个完整的PC（你为仿真器写的代码也能在真实机上启动）使用一个仿真器简化调试，例如，你可以设置在仿真x86上设置断点，而这在真实机上很难做到。</p>
+<p>&emsp;在6.828上我们将使用QEMU仿真器，一个现代的和相对快速的仿真器。QEMU内置的监视器只提供有限的调试支持，qemu能作为GNU gdb的远程调试目标，我们将使用它逐步完成早期的引导程序。</p>
+<p>首先，将lab 1文件解压缩到你自己的目录，然后在lab目录下输入make构建最小的启动加载器和内核。（将我们在这里运行的代码称为内核有点慷慨，但我们将在整个学期中充实它）</p>
+<p>（如果你在编译过程中遇到了“undefined reference to ‘__udivdi3’”的错误，你可能没有32-bit gcc multilib，请尝试安装gcc-multilib包）<br>现在你可以运行qemu了，提供/obj/kern/kernel.img文件。上面创建的img文件作为仿真PC的虚拟硬盘的内容。这个硬盘映像包括我们的启动加载器和内核。</p>
+<p>make qemu执行qemu，其中包括设置硬盘和串口端口直接输出到终端。</p>
+<p>‘Booting from Hard Disk…’ 之后的所有东西被我们的JOS内核框架打印，’&gt;K’是内核包含的小监视器或交互控制程序打印的提示符。这些被内核打印的行会在运行QEMU的常规shell窗口中出现。我们设置JOS内核不仅写控制台到虚拟VGA显示，还到仿真PC的虚拟串口端口（QEMU依次输出到它自己的标准输出），是为了测试和lab分级。类似的，JOS内核将从键盘和串口得到输入，从而要么在VGA显示窗口要么在运行qemu的终端，获取它的命令。或者你可以通过运行make qemu-nox，只使用串口控制台（不用虚拟VGA）。这可能很方便，如果你是ssh连接到服务器的。Ctrl+a x停止qemu。</p>
+<figure class="image-box">
+                <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/beb2c54d91fcc25024d141f0f6b48bddb730659348867a18.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/beb2c54d91fcc25024d141f0f6b48bddb730659348867a18.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>这里只有两条能传递给内核监视器的命令，help和kerninfo。<br>help命令不言而喻，我们将简要讨论kerninfo打印内容的信息。尽管简单，需要注意的是内核监视器“直接”运行在仿真PC的“虚拟硬件”。这意味着你应该将img拷贝到真实硬盘的头几个扇区。插入那个硬盘到一个真实的PC，启动它，在真实PC屏幕上看到的内容和前面在QEMU窗口看到的完全相同。（我们不推荐你在 硬盘上有有用信息的 真实机器上这样做，因为拷贝img映像到它的硬盘会丢失 主加载记录和第一个分区的头，导致硬盘上以前的所有东西丢失。）</p>
+<blockquote>
+<p>遇到的问题：GNUmakefile:305: recipe for target ‘warn’ faild<br>解决：将warn:后面的echo注释掉，重新make即可。</p>
+</blockquote>
+<p><font color='blue'><big><strong>PC物理地址空间</strong></big></font></p>
+<p>现在我们将更深入钻研PC如何启动的细节。PC的物理地址是硬连接的，有如下布局：</p>
+<figure class="image-box">
+                <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/000618b0822c1c98f74f377f9c643b4b0ade0efc95bbdd17.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/000618b0822c1c98f74f377f9c643b4b0ade0efc95bbdd17.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>&emsp;第一代基于16位Intel 8088处理器的PC，只有1MB寻址的物理内存容量。早期PC的物理地址空间将因此在0x00000000开始，但结束在0x000FFFFF而不是0xFFFFFFFF。640KB名为Low Memory的区域是早期PC能使用的RAM，实际上更早的PC只能配置16kb,32kb,或64kb的RAM。</p>
+<p>&emsp;从0x000A0000到0x000FFFFF的384kb的区域被硬件保留为特殊用处，例如视频显示缓冲和固件保存在非易失性内存中。这个保留区域中最重要的部分是BIOS(Basic Input/Output System)，它占用64KB（范围从0x000F0000到0X000FFFFF）。早期PC的BISO保存在ROM中，<u>但现在的PC存储BIOS在可更新缓存中。BIOS负责执行基本的系统初始化，例如激活显示和检查已安装的内存容量。执行这些初始化后，BIOS从适当的位置加载操作系统，如软盘，硬盘，光驱或网络，并递交机器控制权给操作系统。</u></p>
+<p>&emsp;当Intel用分别支持16MB和4GB物理地址空间的80286和80386处理器打破“1MB限制”时，PC架构仍保留物理空间低1MB的原始布局，为了确保与现有的软件的向后兼容性。现代PC因此有一个从0x000a0000到0x00100000的洞，将RAM划分成“low”,”常规内存”（前640kb）和”扩展内存”（其它所有内存）。还有，在PC的32位空间的最顶层的部分空间，由BIOS保留，供32位PCI设备使用。</p>
+<p>&emsp;现在x86处理器能运行超过4gb的物理RAM，所以RAM可以进一步扩展到0xFFFFFFFF之上。这样BIOS必须安排在系统RAM的32位寻址地区的顶部留下第二个洞，为这些被映射的32位设备留下空间。因此设计的限制，JOS只使用PC物理内存的前256MB，所以我们将假设所有PC都只有一个32位物理地址空间。但处理复杂的物理地址空间和经过许多年发展的硬件组织的其它方面是OS开发的其中一个重要挑战。<br></p>
+<p><big><strong>ROM BIOS</strong></big></p>
+<p>在lab的这部分，你将使用QEMU的调试工具来调查一个IA-32兼容的计算机如何启动。</p>
+<p>&emsp;打开两个终端，在第一个终端，make qemu-gdb(或make qemu-nox-gdb)启动QEMU，但QEMU在处理器执行第一条指令之前停止，并等待GDB的调试连接。在第二个终端，从相同目录运行make，运行make gdb。</p>
+<p>&emsp;我们提供一个.gdbinit文件，用于设置GDB来调试加载引导程序早期使用的16位代码，并将其定向到正在监听QEMU。（如果它不起作用，你可能需要添加“ add-auto-load-safe-path ”到你用户目录下的.gdbinit文件，说服gdb处理我们提供的.gdbinit。如果你需要这样做，gdb会告诉你）</p>
+<blockquote>
+<p>[f000:fff0] 0xffff0:    ljmp $0xf000,$0xe05b</p>
+</blockquote>
+<p>是GDB要执行的第一条指令的反汇编。从这条输出你可以总结一些东西：<br>&emsp;a. IBM PC在0x000ffff0开始执行，它在为ROM BIOS保留的64KB区域的顶部。<br>&emsp;b. PC从CS = 0XF000和IP = 0XFFFF0开始执行<br>&emsp;c. 第一条被执行的指令是jmp, 它会跳转到段地址CS = 0xf000 和 IP = 0xe05b</p>
+<blockquote>
+<p>什么是CS和IP？<br>CS (code segment)是代码段寄存器，IP (instruction pointer)是指令指针寄存器<br>CS:IP暗示CPU当前将要读取的指令的地址，需要重定位（CS*16 + IP）</p>
+</blockquote>
+<blockquote>
+<p>8086处理器的简要工作过程：<br>①从CS:IP指向的内存单元读取指令，读取的指令进入指令缓冲器<br>②IP = IP + 所读取指令的长度，从而指向下一条指令<br>③执行指令，转到步骤①，重复这个过程。</p>
+</blockquote>
+<blockquote>
+<p>指令和数据：<br>在内存或磁盘上，指令和数据没有任何区别，都是二进制信息。<br>那CPU根据什么将内存中的信息看做指令？<br>    a. CPU将CS:IP指向的内存单元的内容看做指令<br>    b. 如果内存中的某段内容曾被CPU执行过，那么它所在的内存单元 必然被CS:IP指向过。<br>jmp指令：CPU从何处执行指令由CS、IP中的内容决定的，我们可以通过改变CS、IP的内容来控制CPU执行目标指令。8086中不能用mov设置CS、IP的值，而提供了另外的指令来修改CS、IP的值，这些指令统称为转移指令，其中最简单的是jmp指令。用jmp指令可修改IP的值，如jmp 0x0100或 先mov ax 0x0100再jmp ax。</p>
+</blockquote>
+<p>&emsp;为什么QEMU像这样开始？这就是Intel设置的8088处理器的方式，IBM在最初的PC上使用它。因为PC上的BIOS是硬连接到物理地址范围0x000f0000-0x000fffff，这个设计确保了BIOS在上电或重启后总是第一个获得硬件控制权的，这是至关重要的，因为上电时在RAM上没有其它的软件可供处理器执行。qemu仿真器自带有BIOS，它将其放置在处理器的模拟地址空间的这个位置。在处理器复位时，模拟处理器进入实模式并设置CS为0XF000，IP为0XFFF0，从而执行就从那个（CS:IP）段开始。段地址是如何变成物理地址的？<br>&emsp;要回答这个问题我们需要知道一些关于实模式寻址的知识。</p>
+<blockquote>
+<p><a href="https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%92%8C%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/">实模式与保护模式介绍</a></p>
+</blockquote>
+<br>
+在实模式（PC启动的模式），地址转换根据公式：“物理地址 = 段地址*16 + 偏移”进行。所以当PC设置CS为0XF000和IP为0XFFF0时，物理地址参考：16* F000 + FFF0 = 0xffff0。//16进制中乘16就是追加一个0。
+
+<p>0xfffff0是BIOS结束之前的16字节。因此我们不必惊讶于BIOS做的第一件事是向后返回到一个更早的位置，毕竟它能在16字节完成多少工作？<br>    &gt;练习二：使用GDB的si命令跟踪ROM BIOS以获得更多指令，并尝试猜测它可能会做什么。你可能想查看[Phil Storrs I/O Ports Description]（打不开网页）和6.828参考材料页面的其它材料。不需要计较所有细节，大概了解BIOS首先做了什么事情。</p>
+<p>当BIOS运行时，它设置一个中断描述符表并初始化多种设备，如VGA显示 。这就是你在QEMU窗口所看到的”Starting SeaBIOS”信息的来源。</p>
+<p>初始化PCI总线和BIOS所知的所有重要设备后，它查找一个可启动的设备，如软盘，硬盘或光驱。最终，当它找到一个引导磁盘时，BIOS从盘中读取引导加载程序并递交控制给它。</p>
+<p><big><strong>引导加载程序</strong></big><br>&emsp;PC的软硬盘被分割成512字节的区域叫做扇区。一个扇区是磁盘的最小传输颗粒：第次读、写操作的大小必须是一个或多个扇区，并在扇区边界上对齐。如果磁盘是可启动的，第一个扇区被叫做启动扇区，因为这是引导加载程序代码所在的位置。当BIOS发现可启动的软盘或硬盘，它加载这个512字节的扇区到物理地址0x7c00-0x7dff的内存，然后使用一个jmp指令来设置CS:IP（段：偏移）为0000:7c00，递交控制权给引导加载程序。与BIOS加载地址一样，这些地址是相当随意的，但它们是固定并对于PC是标准的。</p>
+<p>&emsp;在PC发展过程中从光驱启动的能力出现的相当晚，因此PC架构师抓住机会重新思考了一下引导加载过程。结果，现代BIOS从光驱启动的方式有些复杂（也更强大）。光驱使用一个2048字节大小的扇区替代512字节 ，并且BIOS可以在递交控制权前，从磁盘加载许多更大的启动映像到内存（不止一个扇区）。想知道更多信息，请查看<a href="https://pdos.csail.mit.edu/6.828/2016/readings/boot-cdrom.pdf" target="_blank" rel="noopener">“E1 Torito”可启动光驱格式规范</a></p>
+<p>&emsp;然而对于6.828，我们将使用传统的磁盘引导机制，这意味着我们的引导加载程序必须填充到极少的512字节中。引导加载程序由一个汇编源文件boot/boot.S和一个C源文件boot/man.c组成。详细地查看这些源因为有人并确保你明白发生了什么。引导加载程序必须起两个主要功能：<br>&emsp;a. 引导加载程序切换处理器从实模式到32位保护模式，因为只有在这个模式下，软件才能访问处理器所有1MB之上的物理地址空间。保护模式在【PC Assembly Language】的1.2.7和1.2.8中有简要的描述，和Intel架构手册上有详细介绍。这点你只需要了解段地址(segment:offset)转换成物理地址在保护模式发生的不同，而且在转移偏移量之后是32位而不是16位。<br>&emsp;b. 引导加载程序通过x86特殊的I/O指令，从硬盘直接访问IDE磁盘设备寄存器读取内核。如果你想更加了解这里的所指的I/O指令的意思，请在6.828参考页面中查找“IDE hard drive controller”章节。在这节课中，你不需要学习很多关于特殊设备的编程：写设备驱动在OS开发中占重要地位，但从概念和架构的视角它也是最无趣的。</p>
+<p>&emsp;在你了解引导加载程序之后，查看obj/boot/boot.asm文件，这个文件是一个引导加载程序的反汇编，GNUmakefile在编译boot loader之后产生的。这个反汇编文件使我们容易地查看所有代码在物理内存中的位置，并使得当gdb中单步执行时容易跟踪发生的情况。同样的obj/kernel.asm包含了JOS内核的反汇编，它对调试非常有用。</p>
+<p>&emsp;你在gdb中可以用b命令设置地址断点。例如 b *0x7c00在0x7c00地址处设置一个断点。在一个断点处，你可以用c和si命令继续执行：c使qemu连续运行直到下一个断点（或直到你在gdb中按ctrl-c），si N一次执行n个执行。 </p>
+<p>&emsp;要检查内存中的指令（除了下一个要执行的指令外），可以使用x/i命令。这个命令有语法 x/Ni ADDR, N是要反汇编的连续指令的数量，ADDR是开始反汇编的内存地址。</p>
+<blockquote>
+<p>   练习三：查看[lab tools guide]，特别是GDB命令的章节。即使你熟悉GDB，这也包括一些对OS工作有用的深奥的GDB命令。<br>    在启动扇区被加载的地址0x7c00设置一个断点，连续执行直到这个断点。跟踪boot/boot.S的代码，使用源代码和反汇编文件obj/boot/boot.asm来跟踪你的位置。也在gdb中使用使用x/i命令反汇编boot loader中的指令序列，在obj/boot/boot.asm和GDB中比较boot loader原始源代码和反汇编 。<br>    跟踪到boot/main里bootmain()，然后进入readsect()。识别与readsect()中每个语句对应的确切的汇编指令。跟踪readsect()的剩余部分，并返回到bootmain()，确定用于从磁盘中读取内核其余扇区的for循环的开始和结束。找到循环结束时将要运行的代码是什么，在那里设置一个断点，并连续运行到断点。然后逐步完成boot loader的其余部分。</p>
+</blockquote>
+<p><font color='blue'><strong>能够回答以下问题：</strong></font><br>    • 处理器在什么位置开始执行32位代码？究竟是什么导致了从16位模式到32位模式的转换？<br>    <font color='purple'>答：在0x7c2d位置进入保护模式，cr0寄存器（属于CPU控制寄存器）的第0位（PE位）置1，启动保护模式</font><br>    <figure class="image-box">
+                <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/256b7515a20e985676e45e011d1519d43b04f3577f8ff795.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/256b7515a20e985676e45e011d1519d43b04f3577f8ff795.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>    • boot loader执行的最后一条指令的什么，而且它刚刚加载的内核的第一条指令是什么？<br>    <font color='purple'>bootmain()：先读取磁盘的第一页，然后判断image映像是否有效，循环读取各个程序段，最后跳转到内核入口entry()。<br>    则boot loader执行的最后一条指令是call *0x10018</font><br>    <figure class="image-box">
+                <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/12a5e5ae9135da3dd21d099cc95230dadfc38793cecd9d5d.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/12a5e5ae9135da3dd21d099cc95230dadfc38793cecd9d5d.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>    <font color='purple'>刚加载内核的第一条指令是movw   $0x1234,0x472</font><br>  <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/12c4c91b2d976b2781384991b2d7860f34b3a5b5a886f0e2.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/12c4c91b2d976b2781384991b2d7860f34b3a5b5a886f0e2.png" alt=""></a><br>    • 内核的第一条指令在哪里？<br>    <font color='purple'>显然是0x0010000c，不过也可以用图中的方式，反汇编内核二进制文件并显示整个文件头的内容。</font><br>    <figure class="image-box">
+                <a rel=【MIT6.828】L1_e2,e3 href="https://file.moetu.org/images/2020/03/01/893c4420fddd4dcbee1eff525265a071826b383cf000bcf8.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/03/01/893c4420fddd4dcbee1eff525265a071826b383cf000bcf8.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>    • 引导加载程序如何决定它为了从磁盘中取出整个内核，必须读多少个扇区？它从哪里找到这个信息的？<br>    <font color='purple'>根据ELF文件头中含有的段记录（程序段偏移，段数目）</font></p>
+<blockquote>
+<p>readseg(uint32_t pa, uint32_t count, uint32_t offset)<br>    @function: 向pa所指向的地址读入count个bytes的、在磁盘上偏移量为offset的数据。实际借助了readsect(void *dst, uint32_t offset)（通过offset计算数据所在磁盘扇区，然后再将整个扇区读入），以扇区为单元对数据进行读取。<br>    <u>通过Elf结构体中记录的程序头表在文件中的偏移量e_phoff，计算出程序头表的表头ph；通过它记录的程序头表的条目数量e_phnum，计算出程序头表的表尾（项）eph。</u> Proghdr结构体描述了各个程序段（即程序头表中的条目）的属性。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">汇编指令：</span><br><span class="line">cli ：清中断允许位</span><br><span class="line">xor：异或</span><br><span class="line">movw：字传送</span><br><span class="line">gdb命令：</span><br><span class="line">x/N：查看从当前地址开始的连续N条指令的反汇编</span><br><span class="line">si N：连续执行N条指令</span><br><span class="line">delete breakpoints n：删除n号断点</span><br><span class="line">info breakpoints：查看当前设置了哪些断点</span><br><span class="line">display/undisplay 变量：跟踪查看某个变量，每次执行完成都会显示它的值</span><br></pre></td></tr></table></figure>
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-03-01T09:42:18.830Z" itemprop="dateUpdated">2020-03-01 17:42:18</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/CS-IP/" rel="tag">CS:IP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/exercise-3/" rel="tag">exercise 3</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/&title=《【MIT6.828】L1_e2,e3》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/&title=《【MIT6.828】L1_e2,e3》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/03/02/%E3%80%90MIT6-828%E3%80%91%E5%AE%9E%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%B8%80%E7%82%B9%E8%A1%A5%E5%85%85/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【MIT6.828】实模式的一点补充</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%92%8C%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统学习之实模式和保护模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/&title=《【MIT6.828】L1_e2,e3》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/03/01/%E3%80%90MIT6-828%E3%80%91L1-e2-e3/&title=《【MIT6.828】L1_e2,e3》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADHElEQVR42u3aQW4jMQwEwPz/095rFkHG3dQYsJmak2HvSCrmwCWpr6/4eXx7rr/5+Vby+edqv+2S/3rDg42Njf0h7Mflc71BfqBk5QR/He7Ego2Njb2V/dvR86VPUs55Gsst2NjY2Nh5OZGnnOtd2jSJjY2Njd2y23KlLTmS9IaNjY2N3TZu7uq952uelEnY2NjYu9nn27zP55fMt7GxsbHfmP0on2SFk4R30qIqFNjY2NiL2LPSInkrby3N9m3LDGxsbOzd7HyD62Rzb3toFqw6iWJjY2OvYL9iEDu7lDkLVlvMYGNjY+9mz1pLs9Akb7WpK1kZGxsbexN7tk3+3/1Z2ZA3s9qTYGNjY+9jz3oss8Pd9dxVumBjY2PvYM9aPCdpKf+mHe4mDaz/8jY2Njb2CnayaJtCkjFwfpXzpEVVTLaxsbGxP5zdjk7bwcBsoNuOEOoEho2Njb2C3Q4AZr8maex8PJyPfrGxsbE3sWcXYk4GwLMx7cm/efIWNjY29jp2e3FnlpxO2lXnQwJsbGzsfeyTpNIWNrNvWl4x6MXGxsb+cHbSrJkdKElLefKbhf5JLw0bGxt7KTtvLc1aObMkl/8ajQqwsbGxF7HzqzP5BZqTyzTtoDcZLScrYGNjY29i51dk2lSRHC4vMJLP+agDGxsbewc7GcHOCoO70k8S4rakwcbGxt7Bzhv3J1d5TtJYXt4U62NjY2MvZbfpJ28VJe+eFDn1r9jY2Ngr2LOSo23x5GOAdgA8w2NjY2NvYp83d9rj5qHMdz/5M2BjY2PvYM8GA227Pw/KLEW1g2FsbGzsfew8FR1tNgrTrP2EjY2N/dfY7ec8HHkqmgUuCSg2Njb2VvajfIZxLZPidYhnZUwxo8DGxsb+KPZdKeekJZQks7xF1V73wcbGxt7BTpLWbKB7V0MqOVv9J8HGxsZex5412ZPGUB7Q17W0sLGxsbHbxn07jk1SThvuJw0sbGxs7D/PThpA5+VEPjZo22HY2NjY+9j5sdr0k4x1ZysfDYmxsbGxF7Fn7ftZW2e2wlHJcT7fxsbGxn5f9j+saMRwI+Qq3QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】线程实例 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="信号量">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】线程实例</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】线程实例</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-30T01:46:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】线程实例"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】线程实例</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-30 09:46:00" datetime="2020-07-30T01:46:00.000Z"  itemprop="datePublished">2020-07-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>一、模拟信号量实现：</p>
+<p>main.c</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;pthread.h&gt;</span></span><br><span class="line"><span class="comment">#include "mysem.h"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LEFT    30000000</span></span><br><span class="line"><span class="comment">#define RIGHT   30000200</span></span><br><span class="line"><span class="comment">#define THRNUM  (RIGHT-LEFT+1)</span></span><br><span class="line"><span class="comment">#define N       4       </span></span><br><span class="line">//不限制创建线程的数量，但同一时刻只能有4个线程</span><br><span class="line"></span><br><span class="line">static mysem_t *sem;</span><br><span class="line"></span><br><span class="line">static void* thr_primer(void *p)</span><br><span class="line">&#123;</span><br><span class="line">    int i,j,mark;</span><br><span class="line"></span><br><span class="line">    i = (int)p;</span><br><span class="line"></span><br><span class="line">    mark = 1;</span><br><span class="line">    <span class="keyword">for</span>(j = 2; j &lt; i/2; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(i % j == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            mark = 0;</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(mark)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d is primer\n"</span>,i);</span><br><span class="line"></span><br><span class="line">    //sleep(5); //放大信号量效果，同一时刻只能存在N个线程</span><br><span class="line">    mysem_add(sem,1);//归还信号量</span><br><span class="line">    pthread_exit(NULL);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    pthread_t tid[THRNUM];</span><br><span class="line">    int err,i;</span><br><span class="line"></span><br><span class="line">    sem = mysem_init(N);</span><br><span class="line">    <span class="keyword">if</span>(sem == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"mysem_init() fail\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = LEFT; i &lt;= RIGHT; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        mysem_sub(sem,1);//使用信号量</span><br><span class="line">        err = pthread_create(tid+(i-LEFT),NULL,thr_primer,(void *)i);</span><br><span class="line">        <span class="keyword">if</span>(err)</span><br><span class="line">        &#123;</span><br><span class="line">            fprintf(stderr,<span class="string">"pthread_create():%s\n"</span>,strerror(err));</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = LEFT; i &lt;= RIGHT; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_join(tid[i-LEFT],NULL);//回收线程,接收返回值</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mysem_destroy(sem);</span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mysem.c</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;pthread.h&gt;</span></span><br><span class="line"><span class="comment">#include "mysem.h"</span></span><br><span class="line"></span><br><span class="line">typedef void mysem_t;</span><br><span class="line"></span><br><span class="line">struct mysem_st</span><br><span class="line">&#123;</span><br><span class="line">    int value;</span><br><span class="line">    pthread_mutex_t mut;</span><br><span class="line">    pthread_cond_t cond;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">mysem_t *mysem_init(int initval)</span><br><span class="line">&#123;</span><br><span class="line">    struct mysem_st *me;</span><br><span class="line"></span><br><span class="line">    me = malloc(sizeof(*me));</span><br><span class="line">    <span class="keyword">if</span>(me == NULL)</span><br><span class="line">        <span class="built_in">return</span> NULL;</span><br><span class="line"></span><br><span class="line">    me-&gt;value = initval;</span><br><span class="line">    pthread_mutex_init(&amp;me-&gt;mut,NULL);</span><br><span class="line">    pthread_cond_init(&amp;me-&gt;cond,NULL);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> me;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int mysem_add(mysem_t *ptr, int n)</span><br><span class="line">&#123;</span><br><span class="line">    struct mysem_st *me = ptr;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;me-&gt;mut);</span><br><span class="line"></span><br><span class="line">    me-&gt;value += n;</span><br><span class="line">    pthread_cond_broadcast(&amp;me-&gt;cond);//通知其它线程value有变化</span><br><span class="line"></span><br><span class="line">    pthread_mutex_unlock(&amp;me-&gt;mut);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int mysem_sub(mysem_t *ptr, int n)</span><br><span class="line">&#123;</span><br><span class="line">    struct mysem_st *me = ptr;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;me-&gt;mut);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(me-&gt;value &lt; n)</span><br><span class="line">        pthread_cond_wait(&amp;me-&gt;cond,&amp;me-&gt;mut);</span><br><span class="line"></span><br><span class="line">    me-&gt;value -= n;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_unlock(&amp;me-&gt;mut);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int mysem_destroy(mysem_t *ptr)</span><br><span class="line">&#123;</span><br><span class="line">    struct mysem_st *me = ptr;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_destroy(&amp;me-&gt;mut);</span><br><span class="line">    pthread_cond_destroy(&amp;me-&gt;cond);</span><br><span class="line">    free(ptr);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自行补充makefile和mysem.h文件。<br>上面的信号量实现，是为了限制同一时间的线程数量；要<em>测试</em>：先将main中的sleep取消注释；新建终端，隔一段时间ps一次，会发现，除main线程不变外，同一时间总是存在4个线程，它们的id号会变化。</p>
+<p>二、用多线程<strong>重构令牌桶</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;signal.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include "mytbf.h"</span></span><br><span class="line"><span class="comment">#include &lt;pthread.h&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct mytbf_st</span><br><span class="line">&#123;</span><br><span class="line">    int cps;</span><br><span class="line">    int burst;</span><br><span class="line">    int token;</span><br><span class="line">    int pos;</span><br><span class="line">    pthread_mutex_t mut;</span><br><span class="line">    pthread_cond_t cond;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static pthread_t tid_alrm;</span><br><span class="line">static struct mytbf_st *job[MYTBF_MAX];//static,默认初始化为0</span><br><span class="line">static pthread_mutex_t mut_job = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">static pthread_once_t init_once;</span><br><span class="line"></span><br><span class="line">static void *thr_alrm(void *p)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_mutex_lock(&amp;mut_job);</span><br><span class="line">        <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(job[i] != NULL)</span><br><span class="line">            &#123;</span><br><span class="line">                            pthread_mutex_lock(&amp;job[i]-&gt;mut);</span><br><span class="line">                job[i]-&gt;token += job[i]-&gt;cps;</span><br><span class="line">                <span class="keyword">if</span>(job[i]-&gt;token &gt; job[i]-&gt;burst)</span><br><span class="line">                    job[i]-&gt;token = job[i]-&gt;burst;</span><br><span class="line">                pthread_cond_broadcast(&amp;job[i]-&gt;cond);//通知token发生变化</span><br><span class="line">                pthread_mutex_unlock(&amp;job[i]-&gt;mut);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        pthread_mutex_unlock(&amp;mut_job);</span><br><span class="line">        sleep(1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static void module_unload(void)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    pthread_cancel(tid_alrm);</span><br><span class="line">    pthread_join(tid_alrm,NULL);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(job[i] != NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            mytbf_destroy(job[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_mutex_destroy(&amp;mut_job);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void module_load(void)</span><br><span class="line">&#123;</span><br><span class="line">    int err;</span><br><span class="line">    err = pthread_create(&amp;tid_alrm,NULL,thr_alrm,NULL);</span><br><span class="line">    <span class="keyword">if</span>(err)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"pthread_create():%s\n"</span>,strerror(err));</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    atexit(module_unload);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static int get_free_pos_unlock(void)</span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    <span class="keyword">for</span>(i = 0; i &lt; MYTBF_MAX; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(job[i] == NULL)</span><br><span class="line">            <span class="built_in">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> -1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mytbf_t *mytbf_init(int cps,int burst)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me;</span><br><span class="line">    int pos;</span><br><span class="line"></span><br><span class="line">    pthread_once(&amp;init_once,module_load);</span><br><span class="line"></span><br><span class="line">    me = malloc(sizeof(*me));</span><br><span class="line">    <span class="keyword">if</span>(me == NULL)</span><br><span class="line">        <span class="built_in">return</span> NULL;//malloc失败</span><br><span class="line"></span><br><span class="line">    me-&gt;cps = cps;</span><br><span class="line">    me-&gt;burst = burst;</span><br><span class="line">    me-&gt;token = 0;</span><br><span class="line">    pthread_mutex_init(&amp;me-&gt;mut,NULL);</span><br><span class="line">    pthread_cond_init(&amp;me-&gt;cond,NULL);</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;mut_job);//加锁</span><br><span class="line">    pos = get_free_pos_unlock();</span><br><span class="line">    <span class="keyword">if</span>(pos &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        free(me);</span><br><span class="line">        pthread_mutex_unlock(&amp;mut_job);//解锁</span><br><span class="line">        <span class="built_in">return</span> NULL;//令牌桶个数达到上限</span><br><span class="line">    &#125;</span><br><span class="line">    me-&gt;pos = pos;</span><br><span class="line">    job[pos] = me;</span><br><span class="line">    pthread_mutex_unlock(&amp;mut_job);//解锁</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> me;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static int min(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(a &lt; b) <span class="built_in">return</span> a;</span><br><span class="line">    <span class="built_in">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//size为想要取的token数，返回值为实际取得的token数</span><br><span class="line">int mytbf_fetchtoken(mytbf_t *ptr,int size)</span><br><span class="line">&#123;</span><br><span class="line">    int n;</span><br><span class="line">    struct mytbf_st *me = ptr;</span><br><span class="line">    <span class="keyword">if</span>(size &lt;= 0)</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;me-&gt;mut);//加锁</span><br><span class="line"></span><br><span class="line">    //通知法</span><br><span class="line">    <span class="keyword">while</span>(me-&gt;token &lt;= 0)</span><br><span class="line">    &#123;</span><br><span class="line">        //等待其它人来通知，得到通知第一反应是先抢锁;如果条件不成立解锁继续等&gt;待</span><br><span class="line">        pthread_cond_wait(&amp;me-&gt;cond,&amp;me-&gt;mut);</span><br><span class="line">    &#125;</span><br><span class="line">/*</span><br><span class="line">    //查询法，忙等</span><br><span class="line">    <span class="keyword">while</span>(me-&gt;token &lt;= 0)</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_mutex_unlock(&amp;me-&gt;mut);//解锁</span><br><span class="line">        sched_yield();//出让CPU使用权</span><br><span class="line">        pthread_mutex_lock(&amp;me-&gt;mut);//抢锁</span><br><span class="line">    &#125;</span><br><span class="line">*/</span><br><span class="line">    n = min(me-&gt;token,size);</span><br><span class="line"></span><br><span class="line">    me-&gt;token -= n;</span><br><span class="line">    pthread_mutex_unlock(&amp;me-&gt;mut);</span><br><span class="line">    <span class="built_in">return</span> n;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//归还未使用的token</span><br><span class="line">int mytbf_returntoken(mytbf_t *ptr,int size)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me = ptr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(size &lt;= 0)</span><br><span class="line">        <span class="built_in">return</span> -EINVAL;</span><br><span class="line">    pthread_mutex_lock(&amp;me-&gt;mut);//加锁</span><br><span class="line"></span><br><span class="line">    me-&gt;token += size;</span><br><span class="line">    <span class="keyword">if</span>(me-&gt;token &gt; me-&gt;burst)</span><br><span class="line">        me-&gt;token = me-&gt;burst;</span><br><span class="line"></span><br><span class="line">    pthread_cond_broadcast(&amp;me-&gt;cond);//广播通知token发生变化</span><br><span class="line">    pthread_mutex_unlock(&amp;me-&gt;mut);//解锁</span><br><span class="line">    <span class="built_in">return</span> size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int mytbf_destroy(mytbf_t *ptr)</span><br><span class="line">&#123;</span><br><span class="line">    struct mytbf_st *me = ptr;//转换</span><br><span class="line"></span><br><span class="line">    pthread_mutex_lock(&amp;mut_job);</span><br><span class="line">    job[me-&gt;pos] = NULL;</span><br><span class="line">    pthread_mutex_unlock(&amp;mut_job);</span><br><span class="line"></span><br><span class="line">    pthread_mutex_destroy(&amp;me-&gt;mut);</span><br><span class="line">    pthread_cond_destroy(&amp;me-&gt;cond);</span><br><span class="line">    free(ptr);</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三、用线程<strong>重构anytimer</strong>：</p>
+<p>思路：<br>①module_load时创建<strong>一个始终运行的定时线程</strong>（job数组中所有元素的sec–，出现sec减至0的元素就发广播通知）；module_unload挂到钩子函数，在exit前运行，进行清理回收工作；<br>②<strong>每个定时任务都要一个自己的等待执行线程</strong>，计时完成（收到通知）后执行任务，线程退出，但因为有将tid保存到timjob_st中，所以可以在最后deljob时，调用pthread_join回收线程。<br>③<em>回收线程和销毁定时任务策略</em>：已完成的任务，是执行后直接销毁；还是先不管，到最后module_unload时统一销毁；或者超过一定数量回收一次。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-30T02:20:16.362Z" itemprop="dateUpdated">2020-07-30 10:20:16</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E4%BF%A1%E5%8F%B7%E9%87%8F/" rel="tag">信号量</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/&title=《【apue】线程实例》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/&title=《【apue】线程实例》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">虚拟机和电脑能相互ping通，但使用putty远程连接</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%90%8C%E6%AD%A5/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】线程竞争与同步</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/&title=《【apue】线程实例》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/&title=《【apue】线程实例》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD9klEQVR42u3dy07jQBAF0Pz/T8NmFkgkzr1VbSaLkxUKfnQfI5XrIfF4xJ+vH5/r75MjXx1/fczvqyUredzxwYEDBw4c8VbzRedLuV5WvtX25xYdBw4cOHCc5bhe6PUxeYBsQ/jsXvlKcODAgQPH53Mk3+eZ1CwtbNePAwcOHDg+hyO/TluqS87Kf4sDBw4cOP6eY5+M7Qt2m/DZFjcP1Epx4MCBA8ck3q0aP5/z8y3zHThw4MCBI24a7YcbNoG2fTyzvTy5Ow4cOHDgWHPMxg5mQ2mz0L5pOA3HKXDgwIEDx4IjWXQeVjftqFkAnr0QFFVSHDhw4MBRciSnbYpx+XLbQuRsVCJqquHAgQMHjjVHOxyQbz7JINuw2o415GvGgQMHDhx7jjZ01S2c0ZZmSWCbFkZVUhw4cODAMeKYtXbarW4GJpLHdqC4iQMHDhw4jnLMWkdJkN6MO5xKIyNWHDhw4MBxiGPVnimbTHnyll9hdvzLQIsDBw4cOBYcs8ylbR3loHl4bhPF/FUABw4cOHBsONoy3CzozsYdThX+VrVSHDhw4MBRclyHq30RMEmZZmG+LWXm7SscOHDgwLHnaIPZqWXlxcT8yrNRjKLPhgMHDhw4RgW4Gd+MbDPKMLv+y7Nw4MCBA8dRjlm4miV7bRMruXte1qyfMA4cOHDgGMWgvNjXtoXa67etrHzNyVk4cODAgWPPsRkXmJUX94EwSeoOlAhx4MCBA8cihZs1k9pgNrv+LIGs/whw4MCBA8dt3ZY8fG5CcpuMteMRyTHFkBwOHDhw4Ag4rpfVFgfbc9s0bNZqSv4i/n2DAwcOHDhu49hvNQ+Qs/ZSm8hFqSAOHDhw4LiBI0/SNiFzn7zlgbYI9jhw4MCBY82RB6c8WdoE7A16u562GYYDBw4cOBKOlVY5Hld3w8rHk6eUb1I4HDhw4MBxiCMv1SWBtk2xklG85MrtW8aTjBYHDhw4cCw48mA2azvNhhLuG1xoHwwOHDhw4NhwbDaTb3WWqrUcLetj9n6BAwcOHDhepHD7UYO84ZS0mjaJYlvufNJ2woEDBw4ca44k4OXfzIYe8sJi+4pQPDwcOHDgwHEmDtb/2GxT7NukcKcGI948DBw4cODAseDY36ZFyVtc+/GIdv04cODAgWPPkX/aMmJ+zc3ARFvKzIcwcODAgQPHhiMJrkm7KC/GnS0OzsLwMIPEgQMHDhxlwNukZ7OBg/xRtaCzXePAgQMHjs/hmA0fnBqG2JQ1ceDAgQPH/+Vof9uWF9ttX6+qLUHiwIEDB45THJvAtmkpJXdJrp8XKN+knThw4MCBY82xKqWVwwptejZLCNsyJQ4cOHDgOMTxDW/OchRvfKyGAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

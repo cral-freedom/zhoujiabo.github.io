@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>操作系统学习之虚拟内存技术 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="操作系统">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>操作系统学习之虚拟内存技术</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">操作系统学习之虚拟内存技术</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-19T13:59:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-操作系统学习之虚拟内存技术"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统学习之虚拟内存技术</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-19 21:59:00" datetime="2020-02-19T13:59:00.000Z"  itemprop="datePublished">2020-02-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p><strong>几个事实</strong>：<br>&emsp;1、CPU能访问多大的内存空间取决于CPU的程序计数器，该计数器的字长越长，能访问的空间就越大。如对于程序计数器为32位的CPU，它最大能访问内存空间为4G（2^32）。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/df8a63741ae68cd19ab97243d5e4f1372a1d0a2cd64fe61a.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/df8a63741ae68cd19ab97243d5e4f1372a1d0a2cd64fe61a.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;2、计算机配置内存的实际空间常常小于处理器的寻址范围，如图，32位寻址能力的处理器只配置了256M的内存。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/afab27b59f6241ef5a9e7ba67dca17fbde494780c3a4d9fd.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/afab27b59f6241ef5a9e7ba67dca17fbde494780c3a4d9fd.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;3、还有一些处理器因外部地址线的根数小于处理器程序计数器的位数，使地址总线的根数不能满足处理器的寻址范围。如Intel8086处理器的程序计数器32位，而处理器芯片的外部地址总线只有20根，所以它所能配置的内存只有1MB。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/00da96c6603616f57cc021a3969745e139a46f82c11d8c13.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/00da96c6603616f57cc021a3969745e139a46f82c11d8c13.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;4、一个应用程序总是逐段被运行，而且在一段时间内会稳定运行在某一段程序里。（时间片轮转调度）<br>&emsp;5、进程对于物理空间的需要：<br>    &emsp;&emsp;a. 进程只需要一小部分的代码（请求CPU执行的代码部分）驻留内存<br>        &emsp;&emsp;b. 进程的逻辑空间可以远大于（分配给它的）物理空间<br></p>
+<p>什么是虚拟内存：</p>
+<blockquote>
+<p>计算机系统内存管理的<strong>一种技术</strong>。它使得应用程序认为它拥有连续的可用内存（一个连续完整的地址空间），而实际上，进程通常会被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘（辅存）上，在需要时进行数据交换。目前大多数操作系统者使用了虚拟内存，如windows家族的”虚拟内存“，Linux的”交换空间“（十分形象）。</p>
+</blockquote>
+<p>大概的工作原理（方便理解）：<br>&emsp;把进程中要运行的程序从辅存中复制装入到内存运行，而其他暂时不运行的程序段就让它留在辅存。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/91391b217399f4087cf461187fe6dc5bd650756fa5f8fdfa.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/91391b217399f4087cf461187fe6dc5bd650756fa5f8fdfa.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;当需要执行另一段程序时，把内存中的程序段放回辅存，在内存腾出必要的空间后，再把辅存中的程序段装入内存来运行。（这个技术叫”swap“）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/06eaa6be9190059b4b8eae14bf1acdc6c2b33234eebae910.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/06eaa6be9190059b4b8eae14bf1acdc6c2b33234eebae910.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;（计算机中所有运行的程序都需要经过内存来执行，如果执行的程序很大或很多，就会出现内存不够用的情况，虚拟内存技术就是为解决这个问题而诞生的，系统拿出一部分硬盘空间来充当内存使用，虚拟内存就是硬盘上的一个超级大的文件，文件名为PageFile.Sys）<br></p>
+<p>程序员看到的只是虚拟内存空间和虚拟地址，而处理器片外地址总线看到的是物理地址空间和物理地址。<br>如何将虚拟内存空间映射到真正的物理空间？<br>&emsp;这个工作需要软硬件共同完成，承担这个工作的硬件部分叫存储管理单元MMU，软件部分就是操作系统的内存管理模块。<br>Linux把虚拟空间分成若干个大小相等的存储分区，这样的分区叫做页。操作系统的内存管理模块建立了页表专门来映射物理地址。<br></p>
+<p>虚拟内存的实现策略有按需调页（Demand paging）和Demand segmentation.<br>按需调页：<br>&emsp;CPU指令含内存访问，即访问该内存地址所在页面。称作页面引用（reference）。<br>存在有三种可能：<br>&emsp;a. 页面已经装入内存，有对应页帧 →CPU完成操作<br>&emsp;b. 非法的页面引用 →abort<br>&emsp;c. 合法引用，但是页面不在内存 →把页面装入内存</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/ab0bf2fdd1bd41bc275dfe15d4ac0fee082e15061ce15e49.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/ab0bf2fdd1bd41bc275dfe15d4ac0fee082e15061ce15e49.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>有效位（valid-invalid bit）<br>&emsp;为每个进程的每个页表项，设计一个“有效位”，”v”表示页面驻留内存，”i”表示进程非法访问该页面，或者页面不存在。<br>初始化时，所有”有效位“都设置成”i”。<br><strong>CPU执行指令，访问内存单元时，一旦读到某个页表项，其“有效位”是”i”，则会引起缺页中断（page fault）</strong></p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/cf978c464e184bd8ccc4b37ed1046796cbf24bcb018513c5.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/cf978c464e184bd8ccc4b37ed1046796cbf24bcb018513c5.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>中断过程：<br>&emsp;1. 操作系统查找内存的数据结构，判断<br>        &emsp;&emsp;a. 它是非法引用 →abort<br>        &emsp;&emsp;b. 它是合法引用，但是页面不在内存<br>    &emsp;2. 操作系统查找内核的数据结构，找出一个空闲页帧<br>    &emsp;3. 把页面从外存换入至该空闲页帧<br>    &emsp;4. 更新内核的数据结构，更新进程的页表<br>    &emsp;5. 把进程页表中（该页面）页表项的有效位重置为v<br>    &emsp;6. 缺页中断程序返回，重新执行引起缺页中断的那条指令<br></p>
+<p>当且仅当需要该页面时，才把它调入内存。<br>Lazy swapper ——从不换入这个页面，除非有进程真的访问这个页面。<br></p>
+<p><strong>如果缺页响应时没有空闲页帧，如何调页？</strong><br></p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/cabe8f73b351f6368efaf971b803645ff6ba95929f1a6537.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/cabe8f73b351f6368efaf971b803645ff6ba95929f1a6537.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>因为换入换出操作涉及外存，（外存的访问比正常的内存访问慢几十倍）时间开销比较大。所以在没有空闲页时，我们要想办法让换出和换入的次数不会很多。</p>
+<p>页面转换（Page Replacement）<br>&emsp;如果找不到空闲页帧，选择一个“牺牲者”页帧，换出位于该页帧的页面。<br><strong>一个技巧</strong>——利用modify(dirty) bit，减少页面传输的开销<br>&emsp;换出页面时判断，该页面装入后有没有被修改过，<strong>如果没被修改过，就不需换出，可直接丢弃；因为交换区里有它的备份</strong>。只有被修改过的页面才有必要换出，也就是更新交换区的备份。<br></p>
+<p>Optimal算法：转换掉整个过程中最长时间不被引用的页面。（无法预知，最优但无法实现，用来作为性能分析的参考）</p>
+<p>LRU（least recently use）算法：如何知道哪个进程最近最长时间没引用。<br>&emsp;○ 利用计数器实现<br>&emsp;——每个页面带一计数器，每次引用页面时，页表项的计数器更新为当时的时钟值；调用转换算法时，选取计数器最“早”的页面换出<br>&emsp;○ <strong>利用堆栈实现</strong><br>&emsp;——设计双向链表维护一个堆栈，<strong>引用某页面时，将该页面移动至栈顶；页面转换时，不需要搜索，直接选取页面</strong></p>
+<p>近似LRU算法：<br>    ○ <strong>引用位（Reference bit）</strong><br>    ——每个页表项设计1位，引用位。初始时为0；页面被访问时，引用位被置1，需要置换页面时，问题选取引用位为0的页面（如果存在这样的页面），近似算法不规定所有引用位为0的页面的顺序。<br>    ○ <strong>计数（counting）</strong><br>    ——每个页面附着一个计数器，记录页面的引用次数。选取计数值最小或最大的页面换出。（难以判断，计数值小可能是刚装入内存）<br>    ○ <strong>Second chance算法（也称lock算法）</strong><br>    ——也需要引用位，需要置换页面时，（顺时针顺序）考察下一个页面，<strong>如果引用位是0，则选中。如果其引用位为1，则引用位被置0，留在内存，这次不选；顺时针继续考察下一页面</strong>。重复上述过程。<br></p>
+<p>在为进程分配内存时，将涉及到<strong>三个问题</strong>：</p>
+<blockquote>
+<ol>
+<li>为保证进程能正常运行，所需的最小页帧是多少</li>
+<li>在为每个进程分配物理块时，应采取什么样的分配策略，分配的物理块是固定的，还是可变的</li>
+<li>为不同进程所分配的物理块数是采取平均分配算法，还是根据进程的大小按比例分配<br></li>
+</ol>
+</blockquote>
+<p><strong>几个概念</strong>：</p>
+<blockquote>
+<ol>
+<li>固定分配，为每个进程分配一组固定数目的物理块，在进程运行期间不再改变</li>
+<li>可变分配，先为每个进程分配一定数目的物理块，在进程运行期间，可根据情况做适当的增加或减少</li>
+<li>局部置换，进程只能从它自己占用的页帧中选出一个，进行置换</li>
+<li>全局置换，从所有页帧中选取，可以选取其它进程占用的页帧<br></li>
+</ol>
+</blockquote>
+<p>系统抖动<br>    当进程没能拥有足够的页帧，会导致很高的缺页次数。其后果：<br>&emsp;a. 很低的CPU利用率<br>&emsp;b. 误导OS以为有必要提高多任务的程序<br>&emsp;c. 误导OS装入更多作业，内存中驻留更多进程<br>&emsp;d. 于是每个进程拥有的页帧数更少，，一直恶性循环下去<br>抖动（Thrashing）——进程忙于换入换出页面。（解决：可选择挂起一个或几个进程）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之虚拟内存技术 href="https://file.moetu.org/images/2020/02/19/3a58dca988255aab77d3fa1c9c3e1d15d6779cd9f6a19996.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/19/3a58dca988255aab77d3fa1c9c3e1d15d6779cd9f6a19996.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>
+
+<p><strong>伙伴（Buddy）算法分配连续块</strong>——找到符合申请长度的连接块，先不马上分出去，把数据块一分为二，判断分割后的数据块是否仍然满足申请长度，如果满足继续“一分为二”，如果不满足，那么把分割前的连续块分配出去。当数据块被用完释放后，又可以逆向合并数据块成一个更大的连续块。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-02-19T14:24:26.103Z" itemprop="dateUpdated">2020-02-19 22:24:26</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/&title=《操作系统学习之虚拟内存技术》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/&title=《操作系统学习之虚拟内存技术》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统学习之文件系统</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%A1%B5%E8%A1%A8%E8%AF%A6%E8%A7%A3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统学习之三种页表</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/&title=《操作系统学习之虚拟内存技术》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/&title=《操作系统学习之虚拟内存技术》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFSUlEQVR42u3awW4bORAE0Pz/TzvAngLElqqqR4csnk6GJHM4jwKmWc1fv+LX13+v1+9//fH6+52/R3j9fnKt9tN2ho+98OHDhw8fvpdDv75MTpNDJ7NKRn5N+XphXt/dj3PGhw8fPnz4Jr6tKMnLi7yIuRQZbclyuTt8+PDhw4fv03wbVnIz25h5IdKWNfjw4cOHD9+/wpdsvPPx83luwUEeTODDhw8fPnzP8uW32rbVt+163lxPWNsY4iO9Dnz48OHDh+/A8f/+++EXPnz48OHDFzyet+10Hg1s47QH1NriqdDAhw8fPnz4Fo06sL5s7BOOe2n1uVZBlLjgw4cPHz58Ad+l7X2J2tviI5ln3mJvi5s6TcGHDx8+fPimf362KNluOC9Nkqtvxc2b3yA+fPjw4cP38o4Ssjx2b1GSa+UEWwiyoePDhw8fPnwbX/7xpRDJI4aNsm2Nt030ou7Dhw8fPnz4un16Uay0jfMcpS1W8htrI/uxkY8PHz58+PDFu922BMm38dt3Wr6tSb/FDfjw4cOHD99TfHkrOme9tL230urSVi9aEfjw4cOHD9+Br43C21ghj8jvLfM2jMjbCd8cU8OHDx8+fPhivpyp3bq35dG9PdAeMmujh/qsAT58+PDhw/dy59tuodsov21p53NIPk0We2zG48OHDx8+fMFdX7bQT4Xm7RUT6LwlsDXg8eHDhw8fvo0vD6Pz4Ps+xTb0v895W2x8+PDhw4ev5duOo+XReTLm5VBaO8+Hw3p8+PDhw4dv4ssf+U81rfOGelu4tIvdHnd7U/Hhw4cPHz58ZZ/3TplHD21k38YTyeLloPjw4cOHD9+dbysX2um2TfQtmk++uV0rGgcfPnz48OGb+PIGdhu4b8vTBvdtydU27N8ULvjw4cOHD9/0zM1j608cRNuOi11mtc0cHz58+PDha/nyiW4BQftf9wBia6u3zftvzvfhw4cPHz58Jd8lwm4vnGz4n4rUn23DvzllgA8fPnz48AV895Ilef+p6KEdJ2kY5MuJDx8+fPjw3fmSKT67Ib8cJrtzb++PYT0+fPjw4cP3snBpD59dmtxtuHCHaI/cvRkfHz58+PDhK/mSAmIrULYwPb9KW8rkxVDyU3gzZ3z48OHDh++Hv5PCIt/8ty3qvN2+hf7tIbY6yseHDx8+fPimLnA+3a013pYX2668Bd1Kojp3wYcPHz58+H7gyyP1fEN+KX2eKlAuoTw+fPjw4cP3LN9WjrRFQB4HPLVUbWMg6Wn8GNbjw4cPHz58E18brLdb7kthdNrSx1eszxfgw4cPHz5809G0diOdDHqJyPODbm1wsJVHb2aLDx8+fPjwTc/rNibYJtGWCPkGPlnydj7JTPDhw4cPH76N715S5P97WZKWqf1mHpTgw4cPHz58LV8bxF+a5Zeg4fSLOP843vQ68OHDhw8fvkPJ8kDbOC4LtivmS3spfYqYAB8+fPjw4SsD+mRL35YFeUHTNubz+eSL9xW/8OHDhw8fvjtfskXPP322fGln27bS2+t+E9bjw4cPHz58B778sX3Zlue3mn/nE2NGvQ58+PDhw4cv5msf3km4sI2wNb8vAX3bkLiUPvjw4cOHD18b0OeP8y0Ebxve7Xfa1ntx8A4fPnz48OGb+NojYnlwPzahp0LqUtzUYT0+fPjw4cP3Yb482r6XHZf44N4CL8bBhw8fPnz4Psx3CdPzdnsb/V/ucfsR4MOHDx8+fBe+LUBvI/tLBLAtQNtIyKMQfPjw4cOHb+O7h+Mt/dbAfqo0acuUNrzAhw8fPnz4fpjhbyrCuZmzSlGLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

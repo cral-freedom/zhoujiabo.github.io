@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>操作系统学习之内存管理前序 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="操作系统">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>操作系统学习之内存管理前序</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">操作系统学习之内存管理前序</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-18T15:44:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-操作系统学习之内存管理前序"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统学习之内存管理前序</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-18 23:44:00" datetime="2020-02-18T15:44:00.000Z"  itemprop="datePublished">2020-02-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>基本概念和背景<br><br>&emsp;a. 内存包括主存（内存条，基于DRAM）和高速缓存（Cache，基于SRAM）两部分。<br>&emsp;b. 程序必须装入内存后，才能（以进程为单位）被CPU解释、执行。<br>&emsp;c. CPU能直接访问的，只有主存、寄存器<br>&emsp;d. 访问寄存器需要一个CPU时钟周期，很快；访问主存需要许多时钟周期，或者需要若干机器周期<br>&emsp;e. Cache位于主存、寄存器之间<br><br>&emsp;（高速缓冲存储器Cache主要是为了解决CPU和主存速度不匹配而设计的。Cache一般由SRAM芯片实现，它的存取速度接近CPU，快于DRAM，存储容量小于DRAM。它比主存的优先级高，CPU存取信息时优先访问Cache，找不到的话再去主存DRAM中找，同时把信息周围的数据块从主存复制到Cache中）<br><br></p>
+<figure class="image-box">
+                <a rel=操作系统学习之内存管理前序 href="https://file.moetu.org/images/2020/02/18/5e5eafeeb0b6214c6f6916d93db2eb8008597566ba4beb76.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/18/5e5eafeeb0b6214c6f6916d93db2eb8008597566ba4beb76.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>汇编器Assembler<br>任务：<br>    &emsp;a. 把符号指令翻译成二进制指令<br>    &emsp;b. 把标号labels翻译成地址<br>    &emsp;c. 处理伪指令（pseudo-ops）<br>区别于编译，它基本上是one-to-one的翻译<br>产生的目标文件（object file）添加了<br>    &emsp;a. Text段：代码<br>    &emsp;b. Data段：初始化了的全局变量<br>    &emsp;c. Bss段：示初始化的全局变量<br></p>
+<p>基地址寄存器和界限寄存器共同划定逻辑地址空间</p>
+<figure class="image-box">
+                <a rel=操作系统学习之内存管理前序 href="https://file.moetu.org/images/2020/02/18/76fa085098e7df67338314c2b17bd5a969f52c6961d29b82.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/18/76fa085098e7df67338314c2b17bd5a969f52c6961d29b82.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>
+<p>指令和数据的地址绑定（Binding）<br>指令和数据的地址绑定通常发生在3个阶段：<br>    &emsp;• 编辑时（学习汇编）：如果代码、数据的存放首地址已知，编译阶段即可确定绝对地址。如果首地址变更，则需要重新编译<br>    &emsp;• 装入时（学习单用户OS）：如果代码、数据的存放首地址未知，编译阶段生成可重定位地址，装入时才确定绝对地址<br>    &emsp;• 执行时（学习OS原理）：如果允许进程在执行时迁移其代码、数据，那么，地址绑定也在执行时进行。需要硬件装置支持其地址映射。（e.g. 基地址寄存器各界限寄存器）<br></p>
+<p>区别于物理地址的各种逻辑地址空间是OS得以管理内存的必要条件<br>    &emsp;a. 逻辑地址 - generated by the CPU; also referred to as virtual address.<br>    &emsp;b. 逻辑地址 - 非物理的各种地址标记，包括符号名，包括编译、汇编、连接、装入操作产生的地址<br>    &emsp;c. 物理地址 - 内存单元接收到的地址。也就是说，”浮现“在地址总线上的地址，以二进制形式表达。</p>
+<p>存储管理单元（MMU）<br>&emsp;MMU（Memory-Management-Unit）是CPU内部的硬件装置，其功能是将虚拟地址（或逻辑地址）转换成物理地址。</p>
+<p>&emsp;例如一种简单的MMU策略，在用户进程将逻辑地址送往地址总线前，MMU把重定位寄存器（relocation register）的值，加到这个逻辑地址。<br>基于重定位寄存器的动态重定位（Dynamic relocation）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之内存管理前序 href="https://file.moetu.org/images/2020/02/18/2f7a511321d8a3430d34ecc2b9987abbc2b06c6f2b92bdc7.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/18/2f7a511321d8a3430d34ecc2b9987abbc2b06c6f2b92bdc7.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p><strong>用户进程只能处理逻辑地址</strong>，无法获取真正的物理地址。<br></p>
+<p>动态连接（Dynamic Linking）<br>&emsp;○ 进程即将用到的代码段，不被预先连接入程序，只有真正被调用的时刻才连接。<br>&emsp;○ 需要动态连接库（Linux的.so，或者Windows的.dll）的配合<br><br>&emsp;○ 设计一小段代码，称stub<br>&emsp;○ 当真正调用该段代码时，<strong>通过stub定位该段代码，或从外部装入内存</strong>。</p>
+<p>动态装入（Dynamic Loading）<br>&emsp;○ 进程即将用到的子程序，不被预先装入，只有到真正被调用的时刻才装入内存<br>&emsp;○ 这样，进程本次运行中没有调用的子程序，就不会被装入内存，更有效地利用了内存空间<br>&emsp;○ 不需要操作系统的特别支持<br><br><br><strong>覆盖（overload）</strong>：<br>&emsp;一个程序不需要反所有的指令和数据都装入内存，而是将程序划分为若干个功能相对独立的程序段，按照程序的逻辑结构让那些不会同时执行的程序段共享同一块内存区。早期的计算机系统中使用覆盖技术来扩充内存，不过要求程序员手动对程序进行分块，这是一个费时费力让人头痛的事情。<br></p>
+<p><strong>交换（Swapping）</strong>:<br>&emsp;进程映像暂时传输至后备存储空间保存（换出，swap out），需要执行时再装入内存（换入，swap in）。称为”交换“<br>&emsp;○ 后备存储空间<br>&emsp;&emsp;        ○ 快速<br>&emsp;&emsp;        ○ 大容量<br>&emsp;&emsp;        ○ 直接访问机制（direct access）<br>&emsp;○ 交换操作结合cpu调度算法，使得及时换出低优先级的进程，让高优先级的进程装入、执行<br>&emsp;○ 大部分交换时间用于传输。传输时间与交换数据量成正比<br>&emsp;○ 交换的思想或变种，频频见诸于UNIX、Linux、Windows等<br>&emsp;○ 系统只要保障就绪队列里的就绪进程全部驻留内存。其它进程映像可以被换出。<br></p>
+<p>存储管理基本思想<br>&emsp;y = f(x)<br><br>存储管理算法的评估和比较<br>    &emsp;○ 硬件支持，Hardware Suppot<br>    &emsp;○ 性能，Performance<br>&emsp;○ 碎片，Fragmentation<br>    &emsp;○ 重定位，Relocation<br>&emsp;○ 交换，Swapping<br>&emsp;○ 内存共享，Memory sharing<br>&emsp;○ 内存保护，Memory protection<br></p>
+<p>连续区内存分配<br>&emsp;    ○ 把主存划分成两个分区（partitions）<br>&emsp;&emsp;        a. 操作系统占一个分区，通常驻留主存的低端（低地址），中断矢量也在低端<br>&emsp;&emsp;        b. 用户进程占另一个分区，通常在主存的高端<br>&emsp;    ○ 运用重定位寄存器（Relocation registers）防止用户进程访问其它进程的空间，篡改操作系统的代码、数据<br>&emsp;&emsp;        a. 基地址寄存器（Base register）保存了进程物理地址的首地址<br>&emsp;&emsp;        b. 界限寄存器（Limit register）保存了逻辑地址的地址范围，任一个逻辑地址必须小于界限寄存器的值<br>&emsp;&emsp;        c. MMU能够动态地映射每一个地址<br></p>
+<p>多重分区（Multiple-partition）连续区分配<br>&emsp;    ○ Hole - 有效可分配的内存块<br>&emsp;    ○ 多个长度不等的holes散布在内存各区域<br>    &emsp;○ 当一个进程申请进入主存时，OS选出一个hole，其长度足够容纳进程的映像。它就是分配给该进程的分区（partition）<br>    &emsp;○ OS维护一些管理信息，包括<br>    &emsp;&emsp;    a. 已经分配的分区<br>    &emsp;&emsp;    b. 可分配的分区（hole）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之内存管理前序 href="https://file.moetu.org/images/2020/02/18/f50ed12ef9e88a5e729b2716485ee041dc07fa1ced0e5f6b.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/18/f50ed12ef9e88a5e729b2716485ee041dc07fa1ced0e5f6b.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>如何找Hole?<br>&emsp;动态存储分配问题：如何在一串holes中找出一个能存储n个单元的hole<br><br>&emsp;    a. First-fit：找到第一个足够大的hole<br>&emsp;    b. Best-first：在所有足够在的holes里面找出最小的一个hole。（要遍历整个列表；可以先升序排序，然后first-fit。）<br></p>
+<p><strong>碎片（Fragmentation）</strong><br>&emsp;    ○ <strong>External Fragmentation</strong>，这些内存块加起来能够满足一个请求，但是由于不连续（中间有断层），不能用来连续区分配。<br>&emsp;    ○ <strong>Internal Fragmentation</strong>，分出去的分区略大于请求的内存长度。这个余下的小内存块属于该分区，但是无法利用。（无法避免）<br></p>
+<p>紧缩（compaction）操作减小external fragmentation<br>&emsp;    ○ 重排内存块，使所有空闲内存连续排列，合并成一块大的内存块<br>&emsp;    ○ 前提条件：<br>&emsp;&emsp;        a. 代码、数据可重定位<br>&emsp;&emsp;        b. 重定位可以在运行时操作<br></p>
+<p>页式内存管理<br>&emsp;    ○ 注意一个事实：<strong>进程并不要求逻辑地址必须连续</strong><br>&emsp;    ○ 把物理空间等分成长度一致的数据块，称作“页帧”（frames）<br>&emsp;    ○ <strong>把逻辑空间等分成长度一致的数据块，称作“页”（pages），并且与页帧长度相等</strong><br>&emsp;    ○ 通常页长（也是页帧长度）是2的次幂，取512byte到8192byte之间的数值<br>&emsp;    ○ OS负责监控所有空闲页帧<br>&emsp;    ○ 若进程需要n页逻辑空间，OS分配n个空闲页帧给它，装入代码和数据<br>&emsp;    ○ OS分配页表需要的物理空间，布置好页表（就是映射函数）<br>&emsp;    ○ 页式内存管理存在Internal fragmentation问题<br></p>
+<p>页表：<br>&emsp;页表是一种特殊的数据结构，存放在系统空间的页表区，存放逻辑页和物理页帧的对应关系。每个进程都拥有一个自己的页表，PCB表中有指针指向页表。<br></p>
+<p>如何实现页表？<br>&emsp;页表基地址寄存器Page-table base register，指向页表的首地址<br>&emsp;页表长度寄存器Page-table length register，表示页表占用的空间长度<br>&emsp;○ 访问一个数据/地址，<strong>需要两次内存访问</strong>！（1次访问页表取得页帧位置，1次访问页内偏移地址取得数据）</p>
+<p>解决2次访问问题，借助translation look-aside buffers（TLBS）<br>TLB也称为关联存储器Associative memory<br>&emsp;特征 - 并行搜索<br>&emsp;TLB用于对（p,d）的地址翻译；<strong>有助于更快速地获取物理页帧号</strong>。如果p恰好在TLB(hit)，直接从TLB得到页帧号；否则从内存页表中取得页帧号</p>
+<figure class="image-box">
+                <a rel=操作系统学习之内存管理前序 href="https://file.moetu.org/images/2020/02/18/a69027af08b107a3cb9b36b555ffcf6900cd634e6e2c3db6.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/18/a69027af08b107a3cb9b36b555ffcf6900cd634e6e2c3db6.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>内存保护<br>&emsp;○  在进程页表的每个页表项中，为每个页设置一个保护位Valid-iinvalid bit<br>&emsp;○ 页表项的“有效-无效”位（“有效”表示该页面在进程的逻辑地址空间范围内，是合法页面）<br></p>
+<p>共享页面<br>&emsp;○ 共享代码<br>    &emsp;&emsp;    ○ 只读（可重入）代码只需一份，供若干进程共享（如文件编辑器，编译器、窗口系统）<br>    &emsp;&emsp;    ○ 对所有进程来说共享代码必须位于逻辑地址空间的相同位置<br>&emsp;○ 进程自有代码和数据<br>&emsp;&emsp;        ○ 进程各自拥有一份<br>&emsp;&emsp;        ○ 为自有代码、数据分配的页面，可以分布在进程逻辑地址空间的任意位置<br><br></p>
+<p>下一章：操作系统学习之页表详解</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-02-18T16:18:53.319Z" itemprop="dateUpdated">2020-02-19 00:18:53</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/&title=《操作系统学习之内存管理前序》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/&title=《操作系统学习之内存管理前序》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E9%A1%B5%E8%A1%A8%E8%AF%A6%E8%A7%A3/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统学习之三种页表</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/17/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%AD%BB%E9%94%81/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统学习之死锁</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/&title=《操作系统学习之内存管理前序》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%89%8D%E5%BA%8F/&title=《操作系统学习之内存管理前序》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFQklEQVR42u3aQY7bMBAEQP//0841wUZy9wxtLODSaWE7ElkMoGEPH4/4ev513X/y8++f97m/c/L02Wiv/m7vX1/48OHDhw/fxcOubpc85urb2Z2v7jNbznYJExN8+PDhw4dvw3f/mE0pkA83WYb86af+1QsrfPjw4cOH7yN8bbGSf5sXVbPAosXFhw8fPnz4fidfi5UMNx/nvtDBhw8fPnz4Psk3KwvymHsf3yeUCUrOd7jXgQ8fPnz48JWnsL7n77ec78OHDx8+fF/P91xcSbiwj9Tb9nl7BG3jgA8fPnz48M0Ekqg6f6m32/JN8ZSPM48k6uAAHz58+PDhi/mGjeFDTfRNUbJZpNlI/nM3fPjw4cOHb8SXw7VDST7JW+bJmNsAom1O/PMJPnz48OHDN+LbTClfgLysabf37TGydrT48OHDhw/fKb68+Fg9oCyJ8hi9jfhn3YwDvQ58+PDhw4fv9oBavtlum81t9NCWJhuOPKrAhw8fPnz49nynNtWz9nNbQrWLlCxA/u3j1Ck5fPjw4cP3ZXz5gNppb1rgm6cnUcKs/RA9BR8+fPjw4bt9ShsTtBvvfEv/maKnDRpe3BkfPnz48OFb8OX/OG+H50VGuwAtcT6vYhnw4cOHDx++7Ru8QGkj9dlGfbbhz8lmS1ificOHDx8+fPjKxvBsku3nSZSQtwryWQyb6/jw4cOHD9+Ib7blzo+m5WVB8pT9L5OFKQoXfPjw4cOHr+Q7tc2ehfst9Gwhk6teAHz48OHDh2/y7n7Mpj1rNucb+9nk83vOfoMPHz58+PBt+PaDnm2/c9x8hO1/gv2S4MOHDx8+fLM8PG9+z0qW/NvN1Y6kPYp3+Ut8+PDhw4cvHvOpbXzbhs/j+Db5aEuitknwoteBDx8+fPjwxXxJYD175d8PMW94bw6izUL8onDBhw8fPnz40gS7fpHXHfhgcHkB0YYX+cLMGgD48OHDhw/fjG8TkbfBwSy+b3+Tt//zOR5GxIcPHz58X8yXH/9KSpZZNJ+EC6fa87M4o143fPjw4cOHb1EcbLbleUkxi/v3d5iVSvjw4cOHD1/ONysaNkwt/Yx4U5AVxwLw4cOHDx++km82rNnhsLbxnHy7OSS3iTnw4cOHDx++DV9+o7OhfA7UFkx5WTaLFS5rQHz48OHDh+92DPuXejLtpAB6ltdsSdqg5EWVgg8fPnz48I342hd8W1K0d2trrlMhfl304MOHDx8+fJP98rB5nLef84KjCMfLiD8ps4atBXz48OHDhy/mm0UA+WGyTeGSL1I+5iTaKMoyfPjw4cOHb7Sjn5Uss2nM4vtZmTVjreeLDx8+fPjwLfhmQfmpICAfSR7K75f/xVPw4cOHDx++Bd/ZQHwTQ7Qt7dmhtLZgiiIDfPjw4cOH7zasT8qO5PXfHmjbly+zQ2z54bPofAE+fPjw4cMX8+Wv/7Mv/tmUEsR3lFnRb/Dhw4cPH76Arx1ufuRrv+3PG+T7mH7WqMCHDx8+fPhmfHkpsAnfk283HHnJtYkw8OHDhw8fvrN8sy16/covw/pkMnn43rLiw4cPHz58p/j2U9p8ngQKm4Ijb+23hVRNiQ8fPnz48P3o9m6Kj02bfFO4tO2EzZJfzg4fPnz48OEb8bUoeQmyX55Z5TUrdOon4sOHDx8+fG/jm7W3T231k23/prhp74MPHz58+PC9my/5ZduiTgad3/nUor49MsCHDx8+fF/P1x5KawP3Ngpv29ttafUcXas2OT58+PDhw7eIqjfTnpVBszC9jQzaAAUfPnz48OGL+f4A9jDU/MmR0oQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

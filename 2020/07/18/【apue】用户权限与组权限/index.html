@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】用户权限与组权限 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】用户权限与组权限</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】用户权限与组权限</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-17T16:17:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】用户权限与组权限"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】用户权限与组权限</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-18 00:17:00" datetime="2020-07-17T16:17:00.000Z"  itemprop="datePublished">2020-07-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>执行某个命令时，是带着身份的。</p>
+<p><strong>u+s权限：将root用户的权限打散，往下放。<br>二进行文件的权限如果是u+s，则在文件执行时，它的身份会暂时切换成文件的user用户</strong><br>（如passwd，过去普通用户是无法更改自己的口令的。而现在本身普通用户虽然无法查看修改/etc/shadow，<br>但普通用户却能通过passwd命令，修改自身的口令。就是通过将/usr/bin/passwd设置为u+s权限来实现的。）</p>
+<p>shell进程fork，exec出一个子进程passwd，子进程身份暂时切换成root执行，父进程shell等待回收子进程。</p>
+<p>g+s权限，，，类似</p>
+<p>函数：<br>    getuid();//get real user id                            geteuid();//get effective user id<br>    getgid();                                            getegid();<br>    setuid();//设置euid。                                setgid();//设置egid<br>    setreuid();//交换ruid和euid,且是原子化操作            setregid();</p>
+<blockquote>
+<p>给二进制可执行文件添加u+s权限：<br>    将文件用户设置为root(sudo chown root xxx)，并添加u+s权限(sudo chmod u+s xxx)。</p>
+</blockquote>
+<p><strong>简单mysu实现</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    pid_t pid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(argc &lt; 3)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"usage...\n"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"fork()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //实现 ./mysu 0 cat /etc/shadow</span><br><span class="line">    //不要太天真，不是说切换就能切换的。需要将文件用户设置为root，并添加u+s权限。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pid == 0)    //child</span><br><span class="line">    &#123;</span><br><span class="line">        setuid(atoi(argv[1]));//切换用户身份，测试</span><br><span class="line">        execvp(argv[2],argv+2);//替换子进程镜像，执行cat /etc/shadow</span><br><span class="line">        perror(<span class="string">"execvp()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">wait</span>(NULL);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】用户权限与组权限 href="https://file.moetu.org/images/2020/07/18/c6a94e6ba0fc4dd1a8277932f45e68e489153db983440c87.png" target="_blank" title="必须将用户改为root且给予u+s权限" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/18/c6a94e6ba0fc4dd1a8277932f45e68e489153db983440c87.png" alt="必须将用户改为root且给予u+s权限" title="" class=""></a>
+                <p>必须将用户改为root且给予u+s权限</p>
+            </figure>
+
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-17T16:48:58.588Z" itemprop="dateUpdated">2020-07-18 00:48:58</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/&title=《【apue】用户权限与组权限》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/&title=《【apue】用户权限与组权限》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/19/%E3%80%90apue%E3%80%91%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】守护进程与系统日志</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】进程基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/&title=《【apue】用户权限与组权限》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/&title=《【apue】用户权限与组权限》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFM0lEQVR42u3dUY5bNxAEQN//0s4BYkndPU+bICl9GbsSH1lcQMMeAv71K379fvG6fGr7+fvxX73z7596P8LDL3z48OHDhy9Y5PvHvJ/0xv1+kfmC26dv68WHDx8+fPgufO0C2gIlKR3yxSc/yenz0gcfPnz48OH7p/iS5bXFx1Ol0uWJ+PDhw4cP37+Nbytf6mnFJUgycrLN+PDhw4cP30/ytcf++4H80j7fgoNLq/6BXgc+fPjw4cP3UNP6v/fvr9zvw4cPHz58/3u+3+WrvQq2jXx5bv6ptj3wh/Hx4cOHDx++SSMPypPDdv7bVyPnJdTG3cYN78fBhw8fPnz4Wr4tdr/AJUt96rpbPp9LMx4fPnz48OHL+ZLyos2r26y7PcBfwouN6UNkgA8fPnz48B347pPIC4V8uhe4/LJaezkAHz58+PDhy/naxSdDt2XHFuVfmu55QXZKWfDhw4cPH76HIL5XgtwLi3troW4w4MOHDx8+fAe+ZCrvv84T4i0UKK6Lla2CfDtfJi748OHDhw/fge9+XE9i/Ta8uIQOeQRfly/48OHDhw/f4eRbhNQlZVsk/UxgkZdZH96DDx8+fPjwxXyXg33b0s57ze3m5UVPW+hEdw3w4cOHDx++A989Xr/Qb9FDHvfnrBExPnz48OHDN/E9e0Fta7FvBVBCk6+lnj8+fPjw4cMXz/+pSH17Txu+5wu+tMyLrcWHDx8+fPgeapO3B+w2Im8htoUlT79caMOHDx8+fPja326lQH59LS8RtuA+f25bJEUtB3z48OHDh2/qbicL277at3Fapq1xnqPjw4cPHz58T/FdHlCkEfEUL4tsG+qXFz58+PDhw3fn28Lu9pi9fbZtcm+lTNIwKLIEfPjw4cOHb2qQJ0vdCp2tGNquym0NgyKsx4cPHz58+AK+/MpX3ma+XFxro4R2s1umqO7Dhw8fPnz4vptU1wF9jvVUG/t77QF8+PDhw4fvDrFdxc6vsrXvbEurZ4ukwgEfPnz48OFbHE7/dVP+9Z8HChvWJQQ5BQr48OHDhw9fzJc3m7ejflvWtO3tlqBt3uPDhw8fPnzf40tokrImL3raAugyziWSeLkZ+PDhw4cPX8mXL/59cVM8rIzaxxRkKq224gYfPnz48OHL35lH3s8GB/ew/r4B7Yr+MBo+fPjw4cM38eWB9XbgT47xefiexweXsB4fPnz48OH7Bl/SwM6XvS2pHacNO7bIo2gJ4MOHDx8+fDHfJSxoA/p2e9oAPedrS5yX6Pjw4cOHD99y6l8/9lArOg/Ht4txbeiQXMvDhw8fPnz4nuJrv/4vsULerm6Lj7z0ycsjfPjw4cOH786XlCYtWV6aXIL7+4W2pKD5sA348OHDhw/fo3zbUfze2N62LSlW8s2IiiF8+PDhw4fvcI7OH38vSrZ2e96Sb5vil4gfHz58+PDhy+fQtoTbL/ht/LrbUAYW+Tw/vB8fPnz48OGb+C5XtS4TbVva7SLzQmR8Lj58+PDhw3fmyy+QbSF4G0O0AcFW9OR/HNHQ+PDhw4cPX/odHTWYN+Ikym9Lja2Fn4/cbgA+fPjw4cOX8CUc7cPyiSbTvQQEl5ZA9Ft8+PDhw4dv4msLiy24366aJeH+tm2Xsz8+fPjw4cP3M3z5ki7N78uB/56UFOEIPnz48OHD92W+durJYpLx72XH1nj48Fx8+PDhw4dv4kuGaKPzLVjfuJ9qHtRlHD58+PDhw7cnAHVxsx3mkzZ2XsokbYOtcd7+oeDDhw8fPnxvR/gLeBrjwyQmjBwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

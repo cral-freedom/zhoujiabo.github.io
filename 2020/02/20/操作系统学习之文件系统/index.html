@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>操作系统学习之文件系统 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="操作系统">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>操作系统学习之文件系统</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">操作系统学习之文件系统</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-20T13:23:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-操作系统学习之文件系统"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统学习之文件系统</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-20 21:23:00" datetime="2020-02-20T13:23:00.000Z"  itemprop="datePublished">2020-02-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>文件”只是个逻辑概念，文件表示一段连接的逻辑地址空间。<br>文件类型<br>&emsp;○ 数据文件，包括数字文件，文本文件，二进制文件<br>&emsp;○ 程序</p>
+<p>文件类型——以文件扩展名区分</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/ef3e1ea98041759ccc13fdc74a545aec5fb44c014304a803.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/ef3e1ea98041759ccc13fdc74a545aec5fb44c014304a803.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>文件结构<br>    &emsp;○ 无结构文件：一串字节流<br>    &emsp;○ 简单的记录型结构：行文件，固定长度文件，变长度文件<br>    &emsp;○ 复杂结构：格式化文档，重定位可执行文件<br>    &emsp;○ 可以在“无结构”文件中插入控制字符，就模拟了其它有结构类型的文件。</p>
+<p>文件属性（attributes）<br>    &emsp;w 文件名——唯一一项以可行性指导文件信息<br>    &emsp;w 文件标识——在文件系统内部，文件的唯一身份标志（数字）<br>    &emsp;w 文件类型——OS用于支持各种类型文件<br>    &emsp;w 位置——文件内存在存储设备的首地址<br>    &emsp;w 长度——当前文件长度<br>    &emsp;w 保护——控制用户的读、写、执行等权限<br>    &emsp;w 时间，日期，用户标识——因为有人的保护、安全、监控操作时用到的数据<br>    &emsp;w <strong>关于文件的属性信息不是文件内容本身，保存在文件存储空间的目录结构中</strong>。<br></p>
+<p>文件操作：<br>&emsp;创建文件，写，读，文件内定位（lseek），删除，截取（truncate）<br>&emsp;Open(Fi) - 在目录结构中执行文件Fi，并且将其文件属性复制到内存<br>&emsp;Close(Fi) - 将文件Fi的文件属性，从内存写回到磁盘的目录结构<br><br><br>磁盘I/O中几种访问文件的方式： <a href="https://blog.csdn.net/zhoucheng05_13/article/details/71771690?utm_source=distribute.pc_relevant.none-task" target="_blank" rel="noopener">https://blog.csdn.net/zhoucheng05_13/article/details/71771690?utm_source=distribute.pc_relevant.none-task</a><br></p>
+<blockquote>
+<p>读取和写入I/O操作都调用操作系统提供的接口，因为磁盘设备是由操作系统管理的，应用程序要访问物理设备只能通过操作系统调用的方式工作。读和写对应read()和write()两个系统调用。以下是几种访问文件的方式：<br></p>
+<ol>
+<li>标准访问文件的方式：<br>读操作：当应用调用read()时，操作系统检查在内核的高速缓存中有没有需要的数据，如果已经缓存了，那么就直接从缓存中返回，如果没有，则从磁盘中读取，然后缓存在操作系统中<br>写操作：用户应用程序调用write()接口将数据从用户地址空间复制到内核地址空间的缓存中，这时对用户程序来说写操作就已经完成了，至于什么时候再写到磁盘中由操作系统决定，除非显式地调用sync同步命令。</li>
+<li>直接I/O方式：<br>应用程序直接访问磁盘数据，而不经过内核的缓冲区，这样减少了一次从内核缓冲区到用户程序缓存的数据复制。这种访问通常出现于数据库等 对数据的数据管理由应用程序实现的管理系统中。</li>
+<li>同步访问文件的方式：<br>数据的读取和写入都是同步操作的，它与标准访问文件方式不同的是，只有当数据被成功写到磁盘时才返回读/写操作成功的标志。这种方式性能较差，只有在一些对数据安全性要求比较高的场景中才会使用。</li>
+<li>异步访问文件的方式：<br>当访问数据的线程发出请求后，线程会接着去处理其它事情，而不是阻塞等待（不需要等待操作成功返回标志）。可以提高应用程序的效率，不会改变访问文件的效率。</li>
+<li>内存映射的方式<br>内存映射的方式是操作系统中将内存中的某一块区域与磁盘中的文件关联起来，当要访问内存的一段数据时，转换为访问文件的某一段数据。<br></li>
+</ol>
+</blockquote>
+<p>目录结构：<br>&emsp;一堆节点的集合，节点包含了关于文件的信息。目录结构和文件一样，驻留在磁盘。<br>针对目录的操作：<br>    &emsp;a. 搜索文件<br>    &emsp;b. 创建/删除一个文件<br>    &emsp;c. 列表显示目录下的文件和子目录<br>    &emsp;d. 文件改名<br>    &emsp;e. 遍历文件系统</p>
+<p>使用目录的好处：<br>    &emsp;a. 效率 - 快速定位文件<br>    &emsp;b. 命名 - 方便用户<br>    &emsp;c. 成组操作 - 将文件属性相同的文件，组合起来</p>
+<p> 树型目录结构：（高效搜索）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/808932a9687ebc8a1bba11411b24a84118fa7b125bb8e4c1.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/808932a9687ebc8a1bba11411b24a84118fa7b125bb8e4c1.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>有向无环图目录结构：（共享子目录）</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/014008a282ce02a275be4b6bbedf73d1e209cd1f7c7a454b.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/014008a282ce02a275be4b6bbedf73d1e209cd1f7c7a454b.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>目录结构存在环怎么办？<br>    &emsp;• 规定links只能指向文件，不能指向子目录<br>    &emsp;• garbage collection算法清理孤立环<br>    &emsp;• 每当创建link，调用环检测算法，确保不存在环</p>
+<p>文件系统分区（Partitions）<br>    ® A disk be sliced into multiple partitions<br>    ® A partition span multiple disks - RAID<br>    ® “raw partition/disk” - no file system<br>    ® “cooked partition” - contain a file system<br>    ® Boot information in a separate partition（独立分区）<br>    ® Root partition - contain OS kernel and other system file<br>    ® Mount table in its in-memory contains the information of mounted file systems（挂载表会记录挂载到当前系统的其它硬件设备的文件系统）<br></p>
+<p>系统系统安装（mounting）<br>&emsp;文件系统必须先安装好（明确了访问目录），才能被访问；一个文件系统被安装在安装点（mount point）。</p>
+<p>多用户系统之文件共享<br>    &emsp;○ User IDs 标识用户身份，可以针对用户设置访问许可、保护级别<br>    &emsp;○ Group IDs 标识一组用户，设置这个组所有用户的访问权限</p>
+<p>保护（protection）——文件拥有者/文件创建者有权限决定，谁可以操作文件，可以对文件做什么<br>访问类型——读、写、执行、附加、删除、列表。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/e90ccce07efc19cff3c638f64e7f45701fd469e9d7f3e2c0.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/e90ccce07efc19cff3c638f64e7f45701fd469e9d7f3e2c0.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>UNIX目录列表：</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/a2a8d2c6ad509f9911b7366b10b1c4b6da16382df6a4b338.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/a2a8d2c6ad509f9911b7366b10b1c4b6da16382df6a4b338.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>文件系统管理的一些事实<br>    w 文件的结构<br>        &emsp;a. 基本的逻辑存储单元，称数据块（data blocks）<br>        &emsp;b. 文件管理信息，保存在文件控制块FCB<br>    w 文件系统被设计成层次化的管理体系<br>    w 文件系统通常驻留在辅存（disks）。要求文件系统的管理：高效、方便地访问磁盘上的数据<br>    w 磁盘的设备驱动程序只是控制物理设备，也就是磁盘。</p>
+<p>层次化的文件系统管理：<br>&emsp;（从上到下）application programs →logical file system →file-organization module →basic file system →I/O control →devices</p>
+<pre><code>® I/O control, the lowest level
+    a. Device drivers
+    b. Interrupt handlers
+® Basic file system - Issue generic commands to read and write
+® File-organization module
+    ○ File and their logical blocks, physical blocks
+    ○ Free space manger
+® Logical file system
+    ○ Manage metadata information
+    ○ Manage directory structure
+    ○ Maintain file structure via(通过) file control blocks
+    ○ Responsible for protection and security</code></pre><p>Layered File System, apllication<br>    &emsp;○ Unix：Unix file system(UFS)<br>    &emsp;○ Windows NT：FAT, FAT32, NTFS<br>    &emsp;○ Linux：ext, ext2, ext3, msdos, vfat, iso9660, hpfs等多种文件系统</p>
+<p>文件系统管理的一些事实<br>    &emsp;1. 引导块（Boot）- 保存特殊的代码和数据，目的是将OS磁盘引导到内存<br>    &emsp;2. 分区控制块保存分区的详细信息<br>    &emsp;3. 目录结构用于组织、管理文件</p>
+<p>一个典型的文件控制块：<br>    &emsp;○ file permissions<br>    &emsp;○ file dates(create, access, write)<br>    &emsp;○ file owner, group, ACL<br>    &emsp;○ file size<br>    &emsp;○ file data blocks or pointers to file data blocks</p>
+<p>示例：内存中的文件系统结构：</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/46ac24f6d39df1ed99812c134e5606c7196012bddb8cd299.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/46ac24f6d39df1ed99812c134e5606c7196012bddb8cd299.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>
+<p>虚拟文件系统<br>    &emsp;○ 虚拟文件系统（VFS），借用面向对象思想实现文件系统<br>    &emsp;○ VFS为用户提供统一的系统调用界面，却能够访所有类型的文件系统<br>    &emsp;○ 用户编程时使用的API，只需要接口VFS的界面，不必接口任何类型的文件系统<br></p>
+<p>目录实现：<br>    &emsp;1. 关于文件名的线性列表，除了文件名，表项内含指针，指向文件的数据块。实现简单，时间很杂度不好<br>    &emsp;2. 哈希表 - 线性列表，再加上哈希数据结构。减少了目录项查找时间，要处理冲突。<br></p>
+<p>&emsp;为了实现用户对文件的按名存取，系统必须首先利用用户提供的文件名，对文件目录进行查询，找出该文件的文件控制块FCB，对UNIX系统即要找出 该文件的索引节点。然后根据找到的FCB中所记录的文件物理地址，并根据文件物理组织方式找出 文件的盘块号，进而换算出文件在磁盘上的物理位置（柱面号、磁头号、扇区号），最后启动磁盘驱动程序，将所需文件读入内存。<br></p>
+<p>磁盘空间分配给文件 ——如何将磁盘数据块分配给文件<br>    &emsp;1. 连续分配，Contiguous allocation<br>    &emsp;2. 链接分配，Linked allocation<br>    &emsp;3. 索引分配，indexed allocation<br></p>
+<p><strong>连续分配</strong>：<br>    &emsp;1. 每个文件占有磁盘中一串连续的数据块<br>    &emsp;2. 实现简单 - 只需要给出起始位置（块号）和文件长度（数据块总数）<br>    &emsp;3. 支持随机访问<br>    &emsp;4. 问题：碎片浪费（动态存储空间分配问题），不方便文件长度扩展<br><br><strong>链接分配</strong>：<br>    &emsp;1. 文件存储在一个磁盘数据块的链表中<br>    &emsp;2. 数据块可以分散各处。只要有空闲块，都可以利用。<br>    &emsp;3. 实现简单，磁盘数据块充分利用<br>    &emsp;4. 问题：不支持随机访问，太依靠数据块中的指针，要求磁盘设备可靠性好<br></p>
+<p>FAT表结构：<br>&emsp;MS-DOS文件系统的文件物理结构采用FAT表结构。该结构为了克服链接文件随机读取任一逻辑块需要花费多次磁盘IO操作的不足，将各盘块中的链接指针集中存放在盘的开始部分，构成一张表，称为FAT表。FAT表每一项存放链接指针（下一个簇号），每个FAT表项占12位或16位，对于硬盘则采用16位FAT表。</p>
+<p>&emsp;FAT表原为小硬盘的目录结构而设计，由于簇的数目最多只能用16位表示，，即最多只能有64K个簇，要用FAT表管理在的磁盘分区，只能采取增大每簇所包含的扇区数，一般根据磁盘的类型和容量大小来决定簇的大小。那当然每簇包含扇区数增加，带来内碎片的浪费，这对小文件特别严重。</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/74054c975f4d6495b318a3335363d64446ded43771573e80.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/74054c975f4d6495b318a3335363d64446ded43771573e80.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;Windows98为了减少内碎片的浪费，可采取每簇的数目用32位表示，减少每簇包含的扇区数，这称为FAT32<br></p>
+<p><strong>索引分配方法</strong>：<br>    &emsp;1. 将链表分配方法的数据块指针，全部归置到一个数据块，称作索引块（indexblock）<br>    &emsp;2. 优点：支持随机访问，支持动态伸缩文件长度，没有外部碎片<br>    &emsp;3. 缺点：需要一个索引数据块，访问索引数据块，增加开销</p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/b4c1eb3fa0ec60567373d3e9ebb6d9cacf6dfd8be0d0b7f2.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/b4c1eb3fa0ec60567373d3e9ebb6d9cacf6dfd8be0d0b7f2.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p><strong>UNIX/Linux直接间接混合分配方式</strong>：<br>    &emsp;1. <strong>由于80%以上文件是小文件</strong>，为了解决能高速存取小文件和管理大文件的矛盾，UNIX将直接寻址、一级索引、二级索引和三级索引结合起来，形成了混合寻址方式<br>    &emsp;2. 假设每个盘块大小为4kb，当文件不大于40Kb时，可直接从索引结点中读出该文件全部盘块号，这样读小文件时速度快；如果文件大于40kb时，<u>系统再逐步增加一级索引、二级索引、三级索引，这样对应可管理的文件大小为4MB、4GB、4TB，达到管理大文件的目标</u>。<br></p>
+<p>空闲空间管理 - <strong>位图</strong></p>
+<figure class="image-box">
+                <a rel=操作系统学习之文件系统 href="https://file.moetu.org/images/2020/02/20/1fc47a834eb79c70b3409372e42f0f2d1f4010073b37bb9a.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/20/1fc47a834eb79c70b3409372e42f0f2d1f4010073b37bb9a.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;假如每个数据块长度为4KB，磁盘空间容量为4GB，则数据块总数为2^20，<br>位图额外的内存开销为128KB。<br></p>
+<p>空闲空间管理 - 链表<br>&emsp;空闲数据块链表，与链接分配方法配合使用，不浪费空间。但不容易整合出连续空闲空间。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-02-20T13:46:04.857Z" itemprop="dateUpdated">2020-02-20 21:46:04</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之文件系统》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之文件系统》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统学习之Linux文件系统</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/19/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%8A%80%E6%9C%AF/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统学习之虚拟内存技术</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之文件系统》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之文件系统》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFQElEQVR42u3aQW7cSBAEQP3/096zYXCUmUUtDDh4GkgcsjuawBSz+usrPn49HMmZn8/58+9Pnz//5fP1n0aVjPaFAx8+fPjw4Qtokgk8TX5jevrLBppcJ+d+JMaHDx8+fPgmvny4yRDzX/mkEEnKmsu3LvT48OHDhw/fT/O1Q8kXIy+nLguQzwIfPnz48OH72/iSAV2Gm48zwb0XZPjw4cOHD99bfNvt713jrXWdc18egpd7Hfjw4cOHD18Zsv87n18+8OHDhw8fvjIQfysiz1/L27Ljc1mTRxuFAD58+PDhw7cIjNu+L3FDTpk3D+6b7VpWfPjw4cOHb+Nr29458ecC4t0r5AvTtvajJgE+fPjw4cMX8OWn5k3ijayNCS6Jet7s/2ZR8eHDhw8fvokvn8y9Snq3GbBtI8sfF3z48OHDh+9dvo0sZ9pC9rzEabfWbXF80evAhw8fPnz4Pvq8u21re3VPNp/lL/wXjjzix4cPHz58+O58CUfbom7Ljnuk3j4Kn+/+zX/x4cOHDx++kq8tGpI4eyt9ku/mhVF7Zov7+Aziw4cPHz58U2RwaSRv0cAW8bdFTxs0fHNlfPjw4cOH78B3ednON4G1Q2+XsA0j2gXGhw8fPnz4LnzJz3n+mp1Mst2U1kYD+ZjvIQU+fPjw4cO38bU/7duGsLbRnkQJLegWW0Ss+PDhw4cPX8CX99IvL/btq3gSsrdnXoqqr22S+PDhw4cP31vt4UPjvG2ltyF7W+hsi/rY68CHDx8+fPgCh61QeC3mnmqD5I55nJHPDh8+fPjw4XuXL/+ZbyPvrU2+Tbu947Yk+PDhw4cP38ZXxNOH4P7nipt7m/+yJQ4fPnz48OHb+JJp/3QQ3xYlP9FQb5sB+PDhw4cP38aXRwDbsFq+PG5oy6Mt8ojqPnz48OHDhy9OmNsCIil6knu1BcRWatzniw8fPnz48N352pj+HvRfovC8rb7FGdsi4cOHDx8+fHe+dtvZWxvF8qChzUXy6L8mxocPHz58+KadYFtEvhG3Qflb0f8W6+PDhw8fPnxv8f06HO302vJli+Dzu2wb3X77jA8fPnz48E094m3zWTL5LeLfQoR2K1t+zW/mhQ8fPnz48JV8bXidlzVbwZFMIC8+kr+3scLjM4gPHz58+PBN5UvSJM5Lk61QyJdkK5gSsmLu+PDhw4cP38SXlAj3aH7rOG8F0LYtIC968OHDhw8fvpbvrYHmUX7ewE6OLbDIl/ybUeHDhw8fPnzxlZOX7TZSb1vp2xXaK781/t8+48OHDx8+fBNfUqDkJUUeLuTbxfIG9r3EKe6FDx8+fPjwlXzbbdrS5PLyf4kD7hzjXPDhw4cPH76Pd7m/rr/VMm+LnvZql2b/4xjw4cOHDx++ku/StM7LlAS9LV8u8X0Si9QxAT58+PDhwzfxtS/5yQLkZFszOy9T2rImOgcfPnz48OELvrUVDZdS5jL5S2s8L3TyJceHDx8+fPg2vvZVedtq1gYHLUfSGt+W4fFMfPjw4cOH78y3ReTjD38w3DZcSOBaVnz48OHDh+8tvjaUbxvSWwyRNwDukcFWSNWU+PDhw4cP3x/d3nvZ0X4rb423EUB+37xweRwzPnz48OHDN/G1sfj/E5QX0XkZPVy24kX/wIcPHz58+M58n2Px7QW+PTPf3LYdeYmDDx8+fPjw/TRfDtdG4ZcpbcuZPxA/Ehngw4cPH75/ni/flJa8Nb/bCN+2muUPR17unNrk+PDhw4cP3yGqziP4rYhpY/rkW+04t7ADHz58+PDhexjzf5hXeC/otBJNAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

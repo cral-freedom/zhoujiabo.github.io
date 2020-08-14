@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>chapter5: 内存和磁盘的亲密关系 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="程序是怎么跑起来的">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>chapter5: 内存和磁盘的亲密关系</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">chapter5: 内存和磁盘的亲密关系</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-07T15:51:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-07
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-chapter5"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">chapter5: 内存和磁盘的亲密关系</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-07 23:51:00" datetime="2020-04-07T15:51:00.000Z"  itemprop="datePublished">2020-04-07</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/07/chapter5/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/07/chapter5/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>问题：<br>&emsp;1. 存储程序方式指的是什么？<br>&emsp;2. 通过使用内存来提高磁盘访问速度的机制称为什么？<br>&emsp;3. 把磁盘的一部分作为假想内存来使用的机制称为什么？<br>&emsp;4. windows中，在程序运行时，存储着可以动态加载调用的函数和数据的文件称为什么？<br>&emsp;5. 在exe程序文件中，静态加载函数的方式称为什么？<br>&emsp;6. 在windows计算机中，一般磁盘的1个扇区是多少字节？</p>
+<p>答案：<br>&emsp;1. 在存储装置中保存程序，并逐一运行的方式<br>&emsp;2. 磁盘缓存<br>&emsp;3. 虚拟内存（借助虚拟内存，哪怕是内存容量不足的计算机，也可以运行很大的程序）<br>&emsp;4. DLL文件（Dynamic Link Liabrary）<br>&emsp;5. 静态链接（函数的加载方式有静态链接和动态链接两种）<br>&emsp;6. 512字节（扇区是磁盘保存数据的物理单位）</p>
+<p>&emsp;内存和磁盘都属于计算机5大部件中的存储器（其它4个分别是输入装置，输出装置，运算器和控制器）。不过，利用电流来实现存储的内存，同利用磁效应来实现存储的磁盘（内存的存取是电子动作，而磁盘的存取是I/O动作） ，是有差异的。内存高速高价，磁盘低速廉价。<br>内存主要是指主存，磁盘主要是指硬盘。</p>
+<p>5.1 不读入内存就无法运行<br>&emsp;程序保存在存储设备中，通过有序地被读出来实现运行。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/13ffa9195366d8d5996d11eabc66a4931f7111acd63e23cb.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/13ffa9195366d8d5996d11eabc66a4931f7111acd63e23cb.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>5.2 磁盘缓存加快了磁盘访问速度<br>&emsp;磁盘缓存指的是从磁盘中读出的数据存储到内存空间中的方式。这样一来，当接下来需要读取同一数据时，就不用通过实际的磁盘，而是从磁盘缓存中把内容读出。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/ca45f27f9203804e2a7cad5f53f48ca3f5ef324b60b730fd.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/ca45f27f9203804e2a7cad5f53f48ca3f5ef324b60b730fd.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<blockquote>
+<p>磁盘缓存分类：<br>读缓存：操作系统为已读取的文件数据，在内存较空闲的情况下留在内存空间，当下次软件或用户再次读取同一文件时就不必重新从磁盘中读取，从而提高速度；<br>写缓存：将要写入磁盘的数据先保存于系统为写缓存分配的内存空间中，当保存到内存池中的数据达到一定程度，再将数据一起保存到硬盘中（可以减少实际的磁盘操作）。</p>
+</blockquote>
+<p>5.3 虚拟内存把磁盘的一部分作为假想的内存来使用<br>&emsp;CPU只能执行加载到内存中的程序。所以虽说是把磁盘作为内存的一部分来使用，但实际上正在运行的程序部分，在这个时间点上是必须存在于内存中的。也就是说，为了实现虚拟内存，就必须把实际内存中的内容，和磁盘上的待运行的程序进行置换（swap)。<br>&emsp;虚拟内存的方式有分页式和分段式两种。windows采用的是分页式：在不考虑程序构造的情况下，把运行的程序按照一定大小的页（一般为4KB）进行分割，并以页为单位在内存和磁盘间进行置换。</p>
+<p>&emsp;为了实现虚拟内存功能，windows在磁盘上提供了虚拟内存用的文件（page file，页文件），该文件由windows自动生成和管理。文件的大小，也就是虚拟内存的大小，通常是实际内存的相同程度至两倍。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/dcbe0429d9140d30fc51ce0a4a33b0676fd543b9daf3678d.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/dcbe0429d9140d30fc51ce0a4a33b0676fd543b9daf3678d.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+
+<p>5.4 节约内存的编程方法<br>&emsp;虚拟内存能避免因内存不足导致应用无法启动的问题。不过，由于使用虚拟内存时发生的Page In和Page Out往往伴随着低速的磁盘访问，在这个过程中应用的运行会变得迟钝。<br>&emsp;从根本上解决内存不足的问题，需要增加内存的容量（费钱），或者尽量把运行的应用文件变小（费脑）。</p>
+<p>两个把应用文件变小的编程方法：<br>1）通过DLL文件实现函数共有<br>&emsp;DLL文件，顾名思议，是在程序运行时可以动态加载Library（函数和数据的集合）的文件。此外，多个应用可以共有一个DLL文件。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/57009d84bd185245dcebc445428249e32acc864730823d52.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/57009d84bd185245dcebc445428249e32acc864730823d52.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;内存中存在具有同一函数的两个程序，会导致内存的利用效率降低。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/495798ae037d7a41d8e66f32f9c739aeb209f13db5d5c715.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/495798ae037d7a41d8e66f32f9c739aeb209f13db5d5c715.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>&emsp;有时我们安装新应用时，会看到目录下有不少.dll文件。应用通过利用这些dll文件的功能来运行。之所以要利用多个dll文件，其中的一个原因就是可以节约内存。而且dll文件还有一个优点，就是在不变更exe文件的情况下，只通过升级dll文件就可以更新。</p>
+<p>2）通过调用_stdcall来减小程序文件的大小</p>
+<blockquote>
+<p>_stdcall是standard call（标准调用）的略称。windows提供的dll文件内的函数，基本上都是_stdcall调用方式。这主要是为了节约内存，另外，用C语言编写的程序内的函数，默认设置都不是_stdcall。这是因为C语言所对应的函数的传入参数是可变的，这种情况下，栈的清理作业无法进行。只有在函数的参数数量固定的情况下，能指定_stdcall。</p>
+</blockquote>
+<p>&emsp;C语言中，在调用函数后，需要执行栈清理处理指令。栈清理处理是指，把不需要的数据从（接收和传递函数的参数时使用的内存上的）栈区域中清理出去。该命令是在程序编译时由编译器自动附加到程序中的，编译器默认将该处理附加在函数调用方。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/e5c4ed21728855fdca0db0185448c54d8171b5203e4c29f2.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/e5c4ed21728855fdca0db0185448c54d8171b5203e4c29f2.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/86e23e3920dae4b3b88efe3c503ac3d443f490039f0d5a46.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/86e23e3920dae4b3b88efe3c503ac3d443f490039f0d5a46.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>&emsp;C语言通过栈来传递函数的参数。（通过寄存器来返回返回值）。<br>&emsp;栈清理处理，比起在函数调用方进行，在反复被调用的函数一方进行时，程序整体要小一些。在函数前加上_stdcall，就可以把栈清理处理变为在被调用函数一方进行。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/07/2b02a3738156743e9626342cbcabc81900320f4b50136f14.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/07/2b02a3738156743e9626342cbcabc81900320f4b50136f14.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+
+<p>5.5 磁盘的物理结构<br>&emsp;磁盘的物理结构是指磁盘存储数据的形式。磁盘是通过把其物理表面划分成多个空间来使用的。划分的方式有扇区方式和可变长方式两种，windows中所使用的硬盘和软盘（ 早期计算机上的一种可移储存硬件，适用于一些需要被物理移动的小文件，软盘的读写是用过软驱也就是软盘驱动器来完成的），采用的都是固定长度的扇区方式。<br>&emsp;扇区方式中，把磁盘表面分成若干个同心圆的空间就是磁道，把磁道按照固定大小划分而成的空间就是扇区。</p>
+<figure class="image-box">
+                <a rel=chapter5: 内存和磁盘的亲密关系 href="https://file.moetu.org/images/2020/04/08/8b7e4dcd4646a8e3c47f0e6fd021c0f2074e517810e7bd8a.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/08/8b7e4dcd4646a8e3c47f0e6fd021c0f2074e517810e7bd8a.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>&emsp;扇区是对磁盘进行物理读写的最小单位。不过，windows在逻辑方面（软件方面）对磁盘进行读写的单位是扇区整数倍——簇。1簇可以是512字节，1KB（2个扇区），2KB，4KB，，，磁盘的容量越大，簇的容量也越大。不过，在软盘中，簇和扇区的大小是相等的。</p>
+<p>&emsp;无论是硬盘还是软盘，不同的文件是不能存储在同一簇中的（无论多么小的文件，都会占用1簇的空间）。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-07T16:14:04.009Z" itemprop="dateUpdated">2020-04-08 00:14:04</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/07/chapter5/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/chapter5/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84/" rel="tag">程序是怎么跑起来的</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/chapter5/&title=《chapter5: 内存和磁盘的亲密关系》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/chapter5/&title=《chapter5: 内存和磁盘的亲密关系》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/09/chapter6/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">chapter6: 数据压缩</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/04/07/%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97-by-max-heap/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">优先级队列(by max_heap)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/chapter5/&title=《chapter5: 内存和磁盘的亲密关系》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/07/chapter5/&title=《chapter5: 内存和磁盘的亲密关系》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtklEQVR42u3aQW7jMBAEwPz/09lrgF053TOkkwVKJyOyRRYP4qQ5Hx/x9fnl+vqXp7t/fyf51Wdwfdy48PDw8BZTf3rc6wFe/yr5/HR3thB4eHh47+E9Tbqd0H5p2vl8Y8HDw8P7Bby84N5sBnlBj4eHh/e/8PIyOo8S2gXCw8PD+1leEkbMJjcLfH8ga8HDw8O7cIr0ez5fOd/Dw8PDW5+qv37h5i/3/GmzZoLH5+Ph4eFd4LXlcjL861J4Fj3M5omHh4d3m7cJTNvAN9lC8hjimzAXDw8P7ygvKV6T+LUtgjeHbUlcEuXKeHh4eAve6+J1VsjmC5fz2iYGPDw8vPfw8taB9iB/tvG0B3J1xwEeHh7e6N2evNDbSWwm2m4hxQEYHh4e3pqX/3ufBAqzqbebyjBrwcPDwzvEayPatrxu2XmbQhRG4OHh4V3j5V9NXt97QBvm5hsVHh4e3p6Xv8TzYDef4qmmq8dx8fDw8C7wZtepkGLTmNW+//Hw8PBu8NohZ81Y+/aFYRiBh4eHd4h3tvxtI4N8M8jn9tg6gIeHh3eBlx/2J4dheamdj1iHyHh4eHjXeLMDrVl0uwkUhj1leHh4eEd5yaM3W0KbIl+JcfHw8PDefkLUhrazoOFegxceHh7eDV5bEOdHVvkBWztWsaB4eHh413htxHAKcOqwrajT8fDw8I7yEmQbXuTHWnkTQxEW4+Hh4V3m5YFpvhCzloJjFx4eHt41WHK1v51Vue0B2+NdPDw8vAu8zebRNmC1mLbx6/DeiIeHhzfqR9oP367rvtUgylrw8PDwDvHyqecBxGZLaBelvo2Hh4f3dl5ecO+L7Hwb+Mc88fDw8H4NL2+Baltg84bUoukKDw8P7wJv3xqVTKgtkfPPj6Pg4eHhXeDth2yj1bZF9XrDFh4eHl7K+wNrG5xx3NfjTwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

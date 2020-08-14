@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【MIT6.828】HW: shell | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="shell">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【MIT6.828】HW: shell</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【MIT6.828】HW: shell</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-27T16:15:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/MIT6-828/">MIT6.828</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【MIT6-828】HW-shell"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【MIT6.828】HW: shell</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-28 00:15:00" datetime="2020-02-27T16:15:00.000Z"  itemprop="datePublished">2020-02-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/MIT6-828/">MIT6.828</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>HW：shell</p>
+<p>下载shell文件（<a href="https://pdos.csail.mit.edu/6.828/2016/homework/sh.c" target="_blank" rel="noopener">sh.c</a>），并反复阅读它。shell文件包括两个主要部分：解析shell命令并实现它们。解析器只能辨识以下简单的shell命令：<br>    1     ls &gt; y<br>    2     cat &lt; y | sort | uniq | wc &gt; y1<br>    3     cat y1<br>    4     rm y1<br>    5     ls |  sort | uniq | wc<br>    6     rm y<br>剪切并粘贴这些命令到一个文件t.sh。<br>编译shell框架：gcc sh.c，（注意所有操作都在虚拟机上执行）<br>得到一个a.out文件，你可以运行“./a.out  &lt; t.sh”。<br>本次执行会打印错误信息，因为你没有实现几个功能。在这个作业的余下部分你将实现那些功能。</p>
+<p><font color='blue'><big>执行简单命令：</big></font><br>实现简单命令，如ls。解析器已经为您构建了一个execcmd，所以你需要写的代码只是在runcmd中的’ ‘情况。你可能发现查看exec的手册页面有帮助，输入”man 3 exec”（注意不是运行./a.out后生成的命令行）并阅读有关execv。当执行失败时打印一个错误信息。</p>
+<blockquote>
+<p>int execv(const char <em>path, char <em>const argv[]);<br>execv()函数提供一个指针数据，指向以空字符结尾的字符串，这些字符串代表新程序可用的参数列表。</em></em>第一个参数按照惯例应该指向正在执行的文件相关的文件名。指针数据必须以空指针结尾**。<br>我的修改：在runcmd()中的case’ ‘:中添加执行函数execv(ecmd-&gt;argv[0], ecmd-&gt;argv);</p>
+</blockquote>
+<p>测试你的程序，编译并运行a.out，它会打印一个“6.828$”的提示符并等待你的输入，这样你就不会和你电脑的shell混淆了，现在输入ls。你的命令解释器会打印一个错误信息（除非有一个名为ls的程序在你的工作目录，或者你使用查找路径的exec版本）。<br>现在输入”/bin/ls”到你的shell。这会执行/bin/ls程序，它会打印输出你工作目录中的文件名。你可以输入”ctrl-d”来停止6.828的shell，它会让你返回到你电脑的shell。</p>
+<p>如果程序在当前工作目录中不存在，你可能希望修改6.828shell为总是尝试/bin。因此你不必每次都输入”/bin”。如果你有信心你可以实现一个PATH变量的支持。</p>
+<blockquote>
+<p>使用spintf(path,”%s%s”,path,ecmd-&gt;argv[0]); 或strcat(path,ecmd-&gt;argv[0]);实现字符串拼接</p>
+</blockquote>
+<p>运行./a.out时程序崩溃，显示段错误（核心已转储）。如何解决？<br>查找段错误的方法： <a href="https://blog.csdn.net/guaiguaihenguai/article/details/78701008" target="_blank" rel="noopener">https://blog.csdn.net/guaiguaihenguai/article/details/78701008</a></p>
+<p><strong>我的修改：定义char path[] = “/bin/“; 再使用字符串拼接</strong></p>
+<figure class="image-box">
+                <a rel=【MIT6.828】HW: shell href="https://file.moetu.org/images/2020/02/28/43bc8c17d558b2e0f53d47536415732ff2c8b92254cf2455.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/28/43bc8c17d558b2e0f53d47536415732ff2c8b92254cf2455.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p><strong>别人的修改（更完善）</strong>：<br>借助一个检查函数：int access(const char *pathname, int mode)<br>参数mode的选择：<br>    R_OK，W_OK, X_OK : 测试（读、写、执行）的许可权限; 以及F_OK : 测试文件是否存在。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    1 <span class="keyword">if</span>(access(ecmd-&gt;argv[0],F_OK) == 0)</span><br><span class="line">    2 &#123;</span><br><span class="line">    3     execv(ecmd-&gt;argv[0],ecmd-&gt;argv);</span><br><span class="line">    4 &#125;</span><br><span class="line">    5 <span class="keyword">else</span></span><br><span class="line">    6 &#123;</span><br><span class="line">    7     char binpath[] = <span class="string">"/bin"</span>;</span><br><span class="line">    8     strcat(binpath,ecmd-&gt;argv[0]);</span><br><span class="line">    9     <span class="keyword">if</span>(access(binpath,F_OK) == 0)</span><br><span class="line">   10         execv(binpath,ecmd-&gt;argv);</span><br><span class="line">   11     <span class="keyword">else</span></span><br><span class="line">   12         fprintf(stderr,<span class="string">"%s: Command not found\n"</span>,ecmd-&gt;argv[0]);</span><br><span class="line">   13 &#125;</span><br></pre></td></tr></table></figure>
+<br>
+
+<p><font color='blue'><big>I/O重定向：</big></font><br>实现I/O重定向命令，从而你可以运行 echo  “6.828 is cool” &gt; x.txt，cat &lt; x.txt<br>解析器已经识别”&gt;”和”&lt;”，并为你创建了一个redircmd，所以你的工作只是为这些符号补充runcmd中缺失的代码。你可能发现用于打开和关闭的手册页非常有用。<br>注意redircmd中的模式字段包括访问方式（e.g O_RDONLY），你应该传递它到flags参数给open，有关shell使用的模式值和open的flags参数的手册，参见parseredirs。</p>
+<p>如果你正在使用的其中的一个系统调用失败，请确保打印一个错误信息。</p>
+<p>确保用上面的测试输入能正确运行你的实现。常见的错误是忘了指定文件必须被创建的权限。（即，开启第三个论证）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">open函数：</span><br><span class="line">man 2 open    查看open()系统调用</span><br><span class="line">int open(const char *pathname, int flags);</span><br><span class="line">int open(const char *pathname, int flags, mode_t mode);</span><br><span class="line"></span><br><span class="line">@<span class="built_in">return</span>:</span><br><span class="line">	如果打开成功则返回文件描述符，否则返回-1.</span><br><span class="line">@args:</span><br><span class="line">    pathname：当前路径的文件名，或文件的绝对路径</span><br><span class="line">    flags: 三个必选常量（O_RDONLY,O_WRONLY,O_RDWR）中的一个（表示读写模式）还有一些常量可以选用，和前面的必选项 按位或起来作为flags参数，如表示 如果指定文件不存在则创建这个文件的O_CREAT，表示追加的O_APPEND等。</span><br><span class="line">    mode:设置文件访问权限的初始值，和用户掩码有关，如0644表示-rw-r--r--。也可以用S_IRUSR、S_IWUSR等宏定义按位或起来表示。</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">    ①文件权限由open的mode参数和当前进程的<span class="built_in">umask</span>掩码共同决定。</span><br><span class="line">    ②第三个参数是在第二个参数中有O_CREAT时才作用，如果没有，则第三个参数可以忽略</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>要看redircmd结构体代码</strong>：</p>
+<blockquote>
+<p>struct cmd*<br>redircmd(struct cmd <em>subcmd, char <em>file, int type)<br>{<br>  struct redircmd *cmd;<br>  cmd = malloc(sizeof(</em>cmd));<br>  memset(cmd, 0, sizeof(*cmd));<br>  cmd-&gt;type = type;<br>  cmd-&gt;cmd = subcmd;<br>  cmd-&gt;file = file;<br>  cmd-&gt;mode = (type == ‘&lt;’) ?  O_RDONLY : O_WRONLY|O_CREAT|O_TRUNC;<br>  cmd-&gt;fd = (type == ‘&lt;’) ? 0 : 1;<br>  return (struct cmd</em>)cmd;<br>}</p>
+</blockquote>
+<p><strong>注意 cmd-&gt;mode，应该作为open函数的flags参数</strong></p>
+<p>添加如下修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">close(rcmd-&gt;fd);	</span><br><span class="line"><span class="keyword">if</span>(open(rcmd-&gt;file,rcmd-&gt;mode,0644) &lt; 0)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"open %s fail"</span>,rcmd-&gt;file);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【MIT6.828】HW: shell href="https://file.moetu.org/images/2020/02/28/5c52d8b16d3a63e277e8ae848ce2083989bdea0c8f4a09da.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/28/5c52d8b16d3a63e277e8ae848ce2083989bdea0c8f4a09da.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<br>
+<font color='blue'><big>管道符：</big></font>
+
+<p>实现管道符从而你能运行如下管道命令：ls | sort | uniq | wc</p>
+<p>解析器已经识别“|”并创建pipecmd，所以你只需在runcmd中写case “|”的代码。你可能发现pipe,fork,close和dup的手册有帮助。</p>
+<p>测试你能否运行上面的管道命令。sort程序可能在/usr/bin目录，假如那样你可以输入绝对路径/usr/bin/sort来运行sort。（你可以输入which sort在shell查找路径查找哪个目录有名为”sort”的可执行文件）</p>
+<p>现在你应该可以正确运行下面命令：a.out &lt; t.sh，确保在这个程序中你使用了正确的绝对路径。</p>
+<blockquote>
+<p>int pipe(int pipefd[2]);<br>pipe()创建一个管道，一个单向的数据通道，它可以用于进程之间的通信。pipefd数据是用来返回两个引用管道末端的文件描述符。pipefd[0]引用管道的读末端，pipefd[1]引用管道的写末端。被写到管道写末端的数据被内核缓冲，直到它从读末端被读出。<br><a href="https://blog.csdn.net/oguro/article/details/53841949" target="_blank" rel="noopener">管道pipe详解</a></p>
+</blockquote>
+<blockquote>
+<p>int dup(int oldfd);<br>dup()系统调用创建一个oldfd文件描述符的拷贝，为新描述符使用最小号码的未使用的文件描述符。</p>
+</blockquote>
+<p><strong>要兼容/usr/bin，所以用了字符串指针数组，<br>char *path[] = {“/bin/“,”/usr/bin/“};<br>但遇到的一个问题：在strcat上引发了段错误:</strong><br>函数原型：char *strcat(char *dest, char *src)<br>函数功能：把src所指字符串添加到dest结尾处(覆盖dest结尾处的’\0’)并添加’\0’。这就要求<u>dest必须有足够的空间来容纳src的字符串</u>，否则就很可能导致段错误。<br>解决：起初我们想用malloc给dest申请一段足够大的空间来解决这个问题的，但试了好几次都没成功。<br>最后直接用了二维数组：。</p>
+<blockquote>
+<p>char path[][20] = {“/bin/“,”/usr/bin/“}; //不一定是20，保证有足够空间存储路径字符串即可。</p>
+</blockquote>
+<p><strong>兼容/usr/bin：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int found = 0;</span><br><span class="line"><span class="keyword">for</span>(int i=0;i&lt;2&amp;&amp;(found==0);i++)</span><br><span class="line">&#123;</span><br><span class="line">  strcat(PATH[i],ecmd-&gt;argv[0]);</span><br><span class="line">  <span class="keyword">if</span>(access(PATH[i], F_OK) == 0)		//若/bin或/usr/bin下有这个命令</span><br><span class="line">  &#123;</span><br><span class="line">    execv(PATH[i],ecmd-&gt;argv);		//my modify</span><br><span class="line">    found = 1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(found == 0)</span><br><span class="line">&#123;</span><br><span class="line">  fprintf(stderr,<span class="string">"%s: Command not found\n"</span>,ecmd-&gt;argv[0]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>管道符实现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">'|'</span>:</span><br><span class="line">    pcmd = (struct pipecmd*)cmd;</span><br><span class="line">    <span class="keyword">if</span>(pipe(p) &lt; 0)//创建管道p,p[0]是读末端，p[1]是写末端</span><br><span class="line">    &#123;</span><br><span class="line">      fprintf(stderr,<span class="string">"pipe fail\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(fork1()==0)//创建一个写进程left</span><br><span class="line">    &#123;</span><br><span class="line">      close(1);</span><br><span class="line">      dup(p[1]);//为写管道生成文件描述符</span><br><span class="line"></span><br><span class="line">      close(p[0]);</span><br><span class="line">      close(p[1]);</span><br><span class="line">      runcmd(pcmd-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(fork1()==0)//创建一个读进程right</span><br><span class="line">    &#123;</span><br><span class="line">      close(0);</span><br><span class="line">      dup(p[0]);//为读管道生成文件描述符</span><br><span class="line"></span><br><span class="line">      close(p[0]);</span><br><span class="line">      close(p[1]);</span><br><span class="line">      runcmd(pcmd-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    close(p[0]);</span><br><span class="line">    close(p[1]);</span><br><span class="line">    <span class="built_in">wait</span>(&amp;r);</span><br><span class="line">    <span class="built_in">wait</span>(&amp;r);</span><br><span class="line">    <span class="built_in">break</span>;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【MIT6.828】HW: shell href="https://file.moetu.org/images/2020/02/28/612c6f8c6793c7fd295f120a18b112da102581e60ee93914.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/28/612c6f8c6793c7fd295f120a18b112da102581e60ee93914.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<br>
+<font color='blue'>挑战练习：</font>
+你可以将自己选择的任何功能添加到shell，但你可以考虑如下的内容作为开始：<br>
+&emsp;a. 实现一系列命令，用";"分隔<br>
+&emsp;b. 实现子shell通过实现"("和")"<br>
+&emsp;c. 通过支持"&"和"wait"实现在后台运行。<br>
+所有的这些需要解析器和runcmd函数的变化。
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-02-27T16:44:59.359Z" itemprop="dateUpdated">2020-02-28 00:44:59</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/shell/" rel="tag">shell</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/&title=《【MIT6.828】HW: shell》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/&title=《【MIT6.828】HW: shell》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/02/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%92%8C%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统学习之实模式和保护模式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/26/%E3%80%90MIT6-828%E3%80%91HW1-boot-xv6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【MIT6.828】HW1:boot xv6</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/&title=《【MIT6.828】HW: shell》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/28/%E3%80%90MIT6-828%E3%80%91HW-shell/&title=《【MIT6.828】HW: shell》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADGklEQVR42u3aS3LjMAwFwNz/0p71VEae9wglZcOtlUofik0vYAD8+oqPx8Xx/e73t5LzduTk7g0HNjY29puwH0+Pq2eej5B8JWFf8dpF/MessLGxsdexryZ69UyyTHnIadn5PC+vY2NjY38wuw11bfiZpEDY2NjY2G1gaMdpw1ieqGBjY2Njn4Wcee09H3MSXLGxsbF3s+efeZ3zH+lvY2NjY78w+1Eebfv2LI1pm821AhsbG3sR+yy1SN56XvqZf7dNM7CxsbE/gZ0U358Hm3vLQ2eLVQRRbGxs7BXs/I/7/K9/voGyXay6IYGNjY29jp2Xh+6tvSdvtaErGRkbGxt7EzsJLT/XcE3ezRsPSUqDjY2NvZVdPzoo8Z8d9y4xNjY29ib2vMRz1nBtl7tNVP7zDDY2NvYidjLoPJy0TYKz7ZVtkoONjY29id1uzWnD2zw05j9PEcCwsbGxV7CTVOQsVcivz9OPvLVQFJWwsbGx34Sdh5bkA5PGcJvYnJWWil8eGxsb+23ZZ+X7vJB0Ft7ubRJgY2Nj72O3CckZe1JsaoNr0ejFxsbGfnN2G1ryVkGSBkwaAKOmMjY2NvY6dluOmZRy5mWps4LUX7PCxsbGXspOyjdnGyInBaM8WBazwsbGxl7EnmzWaTfKtNtx5m3jonSFjY2NvYh9tvEl+fw8/ExKV9jY2Ni72WeN2DyNmYexPL0pxsfGxsZeys63v+TpR/7uJMmp72JjY2MvZbflpOR623hok40Wj42Njb2VPWmX5sWd/N2zMZNzbGxs7K3sszCQF/3PAmT7TIHHxsbGXsdOAPndvKucl7TaBAYbGxv709jteT6JPBQViUT8lcsr2NjY2CvYj/LIA1s7obyFfJbGRL1lbGxs7DdktxP9uaL/fMtO3gbGxsbG3sdOgla+HWce0tqAerig2NjY2OvYbZH9rOR0VkhKFr0OwNjY2NjYQRLStpDPAtVhawEbGxsbOyjZt6lOuxEnCWO/lIpgY2NjvwA7n1Ybfp5PbjJyuzTY2NjYW9mT8v3vjNAWnm7ub2NjY2O/LvsPVWLjXw4oTykAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>蓝牙Mesh组网 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="JDY-10,蓝牙Mesh">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>蓝牙Mesh组网</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">蓝牙Mesh组网</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-05-28T08:46:00.000Z" itemprop="datePublished" class="page-time">
+  2020-05-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-蓝牙Mesh组网"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">蓝牙Mesh组网</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-05-28 16:46:00" datetime="2020-05-28T08:46:00.000Z"  itemprop="datePublished">2020-05-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p><strong>安卓测试APP、组网参考文档与模块程序</strong>：<a href="https://github.com/cral-freedom/JDY-10_Mesh" target="_blank" rel="noopener">https://github.com/cral-freedom/JDY-10_Mesh</a><br>（点亮STAR可收藏）</p>
+<p>一、介绍：<br>    JDY-10透传模块，基于蓝牙4.0协议标准，工作频段为2.4GHZ范围。最大发射距离50m，具有功耗低、信号强、数据传输稳定等特性。</p>
+<p>产品特征：<br>    1. 支持手机数据透传<br>    2. 支持一对多、多对一、多对多数据传输与控制<br>    3. 支持组网GPIO控制，支持组网4路PWM控制<br>    4. 最大广播与单播Mesh发送数据<br>    5. 支持BLE主从同时工作，无需主从切换<br>    6. 至少60%以上的智能家居应用JDY-10M可以胜任</p>
+<p>通信接口：UART     波特率：115200（默认）</p>
+<p><strong>二、测试APP安装</strong><br>    GitHub中的APP源码压缩包直接发到手机，手机不用解压，直接找到点击后辍名为.apk的文件，即可自动安装。</p>
+<p><strong>三、配置</strong>：<br>    先用USB转TTL模块直接与JDY连接，用串口助手发送AT指令配置JDY。</p>
+<p>1：配置组网 ID 号： AT+NETID112233445566<br>2：配置模块广播名： AT+NAME123，注意组网设备所有的模块必须广播名一致（一样）</p>
+<p>3：配置短地址：AT+MADRR22，（短地址为 MAC 地址的最后一位）必须保证网络内的所有模块的短地址不能一样。</p>
+<p>通过以上配置后，发送 AT+RESET 复位，模块重启后，所有模块就自动组网。</p>
+<p>四、部分代码</p>
+<p>mesh.h文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ifndef __MESH_H</span></span><br><span class="line"><span class="comment">#define __MESH_H</span></span><br><span class="line"><span class="comment">#include "sys.h"</span></span><br><span class="line"></span><br><span class="line">/***************** 蓝牙Mesh 缺省设置 *******************/</span><br><span class="line">/*</span><br><span class="line">波特率： 115200    广播名：WAVE        ID：112233445566</span><br><span class="line">发送数据格式：AAFB + FFFF/(00+MADDR) + DATA（最多可以为10字节）</span><br><span class="line">数据接收格式：AA + MADDR + len + data</span><br><span class="line"></span><br><span class="line">手机app中mesh发送串口数据：（特别说明）</span><br><span class="line">①手机不用发FA等验证帧，直接发送数据，但实际要注意：</span><br><span class="line">  发10,实际发送的用户数据是31 30。（而1F对应的是31,46）</span><br><span class="line">②手机连接任意一个WAVE，均能实现控制</span><br><span class="line">③手机只能广播播放，//只能接收与手机连接的JDY的发送信息</span><br><span class="line"></span><br><span class="line">为了兼容手机与蓝牙控制，作出如下约定：</span><br><span class="line">①用户发送的数据长度默认为3，0x31(控制对象) + 0x31/0x32/...（控制指令）+ 0x30（帧尾）</span><br><span class="line">②如对应同一个行为（如控制JDY1的控制LED0反转），蓝牙发送AA FB 00 22 31 31 30, 手机则发送110</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line"><span class="comment">#define User_Data_Len 0x03    </span></span><br><span class="line"><span class="comment">#define  JDY_ID 0x31        //JDY的短地址为21，ID设置为31</span></span><br><span class="line">extern u8 Mesh_Rec_Finish, Mesh_Rec_From, Mesh_Control_Obj, Mesh_Rec_Cmd;</span><br><span class="line"></span><br><span class="line">//void mesh_gpio_config(void);//PWRC与STAT引脚初始化，但用不到</span><br><span class="line">void mesh_uart2_init(u32 bound);</span><br><span class="line">void Mesh_Send_Data(u8 MADDR, u8 Obj, u8 Cmd);</span><br><span class="line"><span class="comment">#define Mesh_Single_Cast(addr,obj,cmd) Mesh_Send_Data(addr,obj,cmd)</span></span><br><span class="line"><span class="comment">#define Mesh_Board_Cast(obj,cmd) Mesh_Send_Data(0x00,obj,cmd)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#endif</span></span><br></pre></td></tr></table></figure>
+<p>mesh.c文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">void Mesh_Send_Data(u8 MADDR, u8 Obj, u8 Cmd)</span><br><span class="line">&#123;</span><br><span class="line">	u8 i, BUFF[7]=&#123;0xAA,0xFB,0xFF,0xFF,0x00,0x00, 0x30&#125;;</span><br><span class="line">	</span><br><span class="line">	//因为手机只能广播，所以为了明确控制对象，额外加了个控制对象的数据</span><br><span class="line">	</span><br><span class="line">	//发送方式设置，ffff为广播，00xx为单播，xx为目标短地址</span><br><span class="line">	<span class="keyword">if</span>(MADDR == 0x00)</span><br><span class="line">	&#123;</span><br><span class="line">		BUFF[2] = 0XFF;	BUFF[3] = 0XFF;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		BUFF[2] = 0X00;	BUFF[3] = MADDR;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//控制对象</span><br><span class="line">	BUFF[4] = Obj;	</span><br><span class="line">	//发送控制的指令</span><br><span class="line">	BUFF[5] = Cmd;	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=0;i&lt;7;i++)</span><br><span class="line">	&#123;		</span><br><span class="line">		<span class="keyword">while</span>(!(USART2-&gt;SR &amp; USART_SR_TXE));</span><br><span class="line">		USART2-&gt;DR=BUFF[i]; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//接收来自蓝牙的数据包：如AA 21 02 31 31 3F</span><br><span class="line"></span><br><span class="line">/****************解析*******************</span><br><span class="line">*AA：表示数据包类型，看作帧头即可</span><br><span class="line">*21：发送者（模块）的短地址</span><br><span class="line">*02：用户数据长度</span><br><span class="line">*31：控制对象为JDY1</span><br><span class="line">*31：控制指令</span><br><span class="line">*30：作为帧尾(为了兼容手机发过来的数据，不能用3A~3F)</span><br><span class="line">***************************************/</span><br><span class="line">void USART2_IRQHandler(void)                	</span><br><span class="line">&#123;</span><br><span class="line">	static u8 state=0;</span><br><span class="line">	u8 i,data;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(USART_GetITStatus(USART2,USART_IT_RXNE) != RESET)</span><br><span class="line">	&#123;</span><br><span class="line">		//USART_ClearFlag(USART2,USART_FLAG_RXNE);</span><br><span class="line">		USART_ClearITPendingBit(USART2,USART_IT_RXNE);</span><br><span class="line">		data=USART_ReceiveData(USART2);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(state==0 &amp;&amp; data==0xAA)</span><br><span class="line">		&#123;</span><br><span class="line">			state = 1;</span><br><span class="line">			Mesh_Rec[0] = data;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(state == 1)//接收发送者的短地址</span><br><span class="line">		&#123;</span><br><span class="line">			Mesh_Rec[1] = data;</span><br><span class="line">			state = 2;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(state==2 &amp;&amp; data==User_Data_Len)//用户数据长度是否正确</span><br><span class="line">		&#123;</span><br><span class="line">			Mesh_Rec[2] = data;</span><br><span class="line">			state = 3;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(state == 3)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(data == JDY_ID)//控制对象是否正确，是不是给我的？</span><br><span class="line">			&#123;</span><br><span class="line">				Mesh_Rec[3] = data;</span><br><span class="line">				state = 4;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				state = 0;</span><br><span class="line">				<span class="keyword">for</span>(i=0; i&lt;5; i++)</span><br><span class="line">					Mesh_Rec[i] = 0x00;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(state == 4)//接收控制命令</span><br><span class="line">		&#123;</span><br><span class="line">			Mesh_Rec[4] = data;</span><br><span class="line">			state = 5;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(state == 5)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(data == 0x30)//验证帧尾</span><br><span class="line">			&#123;									</span><br><span class="line">				Mesh_Rec[5] = data;</span><br><span class="line">				</span><br><span class="line">				//AA 21 02 31 31 3F</span><br><span class="line">				Mesh_Rec_Finish = 1;</span><br><span class="line">				Mesh_Rec_From = Mesh_Rec[1];</span><br><span class="line">				Mesh_Control_Obj = Mesh_Rec[3];</span><br><span class="line">				Mesh_Rec_Cmd = Mesh_Rec[4];</span><br><span class="line">				</span><br><span class="line">				state = 0;</span><br><span class="line">				<span class="keyword">for</span>(i=0; i&lt;5; i++)</span><br><span class="line">				&#123;</span><br><span class="line">					Mesh_Rec[i] = 0x00;	</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;	</span><br><span class="line">				state = 0;</span><br><span class="line">				<span class="keyword">for</span>(i=0; i&lt;5; i++)</span><br><span class="line">					Mesh_Rec[i] = 0x00;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;		 </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-05-28T09:59:55.048Z" itemprop="dateUpdated">2020-05-28 17:59:55</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/JDY-10/" rel="tag">JDY-10</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E8%93%9D%E7%89%99Mesh/" rel="tag">蓝牙Mesh</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/&title=《蓝牙Mesh组网》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/&title=《蓝牙Mesh组网》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/06/02/%E3%80%90Matlab%E3%80%91%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【Matlab】新手入门</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/05/24/%E3%80%90AD%E3%80%91PCB%E8%AE%BE%E8%AE%A1%E6%8A%80%E5%B7%A7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【AD】PCB设计技巧</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/&title=《蓝牙Mesh组网》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/05/28/%E8%93%9D%E7%89%99Mesh%E7%BB%84%E7%BD%91/&title=《蓝牙Mesh组网》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADOElEQVR42u3a0W4aQQwFUP7/p7dSn1olu1zbILHmzBMilJ0zkerYdx6PeB1/17+vf77z86fXn6w+5fqTj3csbGxs7Juwj8t1/ZgjWPnB5ezkX53tBBsbG3sre14kko2efVuOzF8/MWJjY2N/Jfv6k9elKy9FZ5+/fh8bGxsbe14w8gJWbYGS48bGxsbGrj5+gkwO/WxvkyEXNjY29lZ2L+j9zNdvz7exsbGxP4x9DNZ1gUmGU/P4oblzbGxs7EXsSVMxDwl64/7qNaAX5NLY2NjYN2Enl2ny4Xt1rD8PJPLyho2Njb2VnWwieUx1c3mZnO8HGxsbex87bwzyAHUSwc5j2ihIxsbGxl7Ergal1dJVHQMlT8kLVaEDw8bGxr45e/7nfq8I5duqHlA59sDGxsa+LfsdI545af7be1myjY2Njf3x7OoVnHyj1UOpjrF67VDUgWFjY2Pfip0XicLYvQV7xKt3WP/tGRsbG3sdu7fFXlmqXprsjcCePAUbGxt7ETvvV/Iot7quG6H8IMp7wMbGxl7HnozvJ0Fsb1CVXAl6cijY2NjYi9jVaLY33Ekam1656rUx2NjY2DvYvas2vWFQ0thUv7l5MQgbGxt7Nbv6B31SkPK2Z1JxCt+AjY2NvY5dDWLzCzqvalSqMcOT19jY2Njr2EnhqY5vjsvVK3LVluPJZR1sbGzsFezJqL0aAM8PonfR59SCjY2NvZSdlLFJPJyUw+q1m7z5aZ4lNjY29gezqyHrJADu3ZmpFrzo0LGxsbEXsfPwtTcMut7ovNWpxgPY2NjY38CuFpVeizIJAKpNyOk72NjY2IvY+Uar//9PrvhMAoDCeAsbGxt7EXtetHJe0pb0xky9NgYbGxt7Hzv5U74ax05K0ePdCxsbG/u27Hm8Wi0hk6s/vVHULz/FxsbGXsSeFLZqg1EdJOXDpt7wCxsbG3sTe1608qggL34JYxRUYGNjY69jVwdM+ZHlhacX/fbCCWxsbGzsvLAlg6Hq4Ck/rNNvxsbGxv5K9qQ5qQ6b8mCgGUtjY2Njr2PnG80LTHIo1bYkD6SjAoaNjY29gl0NeieYSfmpFrn8ULCxsbFvy/4DdqIcXyAHLzEAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>chapter2: 数据是用二进制数表示的 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="程序是怎么跑起来的">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>chapter2: 数据是用二进制数表示的</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">chapter2: 数据是用二进制数表示的</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-01T12:53:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-Untitled"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">chapter2: 数据是用二进制数表示的</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-01 20:53:00" datetime="2020-04-01T12:53:00.000Z"  itemprop="datePublished">2020-04-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/01/Untitled/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/01/Untitled/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>问题：<br>    1. 32位是几个字节？<br>    2. 二进制数01011100转换成十进制数是多少？<br>    3. 二进制数00001111左移两位后，会变成原数的几位？<br>    4. 补码形式表示的8位二进制数11111111，用十进制数表示的话是多少？<br>    5. 补码形式表示的8位二进制数10101010，用16位的二进制数表示的话是多少？<br>    6. 反转部分图形模式时，使用的是什么逻辑运算？<br>答案：<br>    1. 4字节<br>    2. 92<br>    3. 4<br>    4. -1<br>    5. 1111111110101010<br>    6. XOR运算</p>
+<p> 解析：<br>4、负数的反码 = 符号位不变，其余位取反；其补码 = 反码 + 1<br>5、100000000（9bit）- 10101010 = 01010110（原码的绝对值），原码的绝对值+补码 = 2^n，n为位数。<br>6、异或运算只反转与1相对应的位。</p>
+<blockquote>
+<p>要想对程序的运行机制形成一个大致印象，就要了解信息（数据）在计算机内的是以怎样的形式来表现的，又是以怎样的方法进行运算的。</p>
+</blockquote>
+<p>C语言中，数值、字符串和图像等信息在计算机内部都是以二进制数值的形式来表现的。</p>
+<p>2.1 用二进制数表示计算机信息的原因<br>    计算机内部是由IC这种电子部件构成。之前介绍的CPU和内存也是IC的一种。而IC中所有引脚只有高电平和低电平两种状态（暂不考虑不接收电流信号的高阻抗状态），这个特性决定了计算机信息数据只能用二进制数来处理。</p>
+<figure class="image-box">
+                <a rel=chapter2: 数据是用二进制数表示的 href="https://file.moetu.org/images/2020/04/01/4a6a711299f748f438f245a81cabd199c2f6f7e79b8dcd44.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/01/4a6a711299f748f438f245a81cabd199c2f6f7e79b8dcd44.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>IC是集成电路（Integrated Circuit）的简称，有模拟IC和数字IC两种；本章指的是数字IC。</p>
+<p>计算机信息处理的最小单位是位（bit）；二进制数的位数一般是8位、16位、32位，，，也就是8的倍数，这是因为计算机所处理的信息的基本单位是8位二进制数（一个字节）。内存和磁盘都使用字节单位来存储和读写数据，使用位单位则无法读写数据，因此，字节是信息的基本单位。</p>
+<p>用字节单位处理数据时，如果数字小于存储数据的字节数（=二进制数的位数），那么高位上就用0填补。</p>
+<figure class="image-box">
+                <a rel=chapter2: 数据是用二进制数表示的 href="https://file.moetu.org/images/2020/04/01/cb24b4b9d230927c0b51902a4b192d44a9beaf5a57b1358b.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/01/cb24b4b9d230927c0b51902a4b192d44a9beaf5a57b1358b.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>程序中，即使是用十进制数和文字等记述信息，在编译后也会转换成二进制数的值。对于二进制数表示的信息，计算机不会区分它是数值、文字不是某种图片的模式，而是根据编写程序的各位对计算机发出指令来进行信息的处理（运算）。</p>
+<p>2.2 什么是二进制数<br>    数值表示的就是构成数值的各数位的数值和位权相乘后再相加的结果。例如39这个十进制数，表示的就是3与9两个数值分别和它们的位权10与1相乘再相加的结果。</p>
+<p>数字的位数不同，位权也不同，第一位（最右边的一位）是xx的0次幂，第二位是xx的1次幂，，，依此类推；其中xx称为基数，十进制的基数是10，二进制的基数是2.<br>故用二进制数00100111表示十进制数39，是因为(0x128)+(0x64)+(1x32)+(0x16)+(0x8)+(1x4)+(1x2)+(1x1)=39。</p>
+<p>2.3 移位运算和乘除运算的关系<br>    十进制数左移后会变成原来的10倍，100倍，1000倍，，，同样，二进制数左移后就会变成原来的2倍，4倍，8倍，，，反之二进制数右移后则会变成原来的1/2，1/4，1/8，，，因此，移位运算能代替乘法运算和除法运算。</p>
+<p>2.4 便于计算机处理的“补数”<br>    二进制表示负数值时，最高位作为符号来使用，符号位是0时表示正数，为1时表示负数。负数补码求解：反码+1。</p>
+<figure class="image-box">
+                <a rel=chapter2: 数据是用二进制数表示的 href="https://file.moetu.org/images/2020/04/01/f53ba4229106832c611ba8a82cbaa1a4e1db917ee7296684.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/01/f53ba4229106832c611ba8a82cbaa1a4e1db917ee7296684.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>法则：将二进制数的值取反加1的结果和原来的值相加，结果为0。<br>例如：求-12的8位二进制数的补码表示为 1 1110011 + 1 = 11110100（加上0000 1100 = 0）</p>
+<p>char占一个字节（8位），unsigned char的数值范围为0<del>255共256位；而char的范围为[-128，127]，其中-1 ~ -128负数部分有128位，占一半；而0</del>127包含在另一半（虽然0不是正数）。</p>
+<blockquote>
+<p>char a = -129;<br>printf(“%d”,a);//打印127<br>//为什么 —127 + |-129| = 2^8<br>//同理，a赋值为128，打印得-128</p>
+</blockquote>
+<p>2.5 逻辑右移和算术右移的区别<br>逻辑右移：移位后在最高位补0；<br>算术右移：移位后在最高位填充移位前符号位的值；</p>
+<blockquote>
+<p>11001011 逻辑右移2位得到00110010，算术右移2位得到11110010<br>补充：只有右移时才必须区分逻辑位移和算术位移。</p>
+</blockquote>
+<p>如果数值是用实数表示的负数值，那么右移后在空出来的最高位补1，就可以正确地实现1/2，1/4，1/8等的数值运算，如果是正数，只需在最高位补0即可。(即，补符号位的值)</p>
+<p>符号扩充：在保持值不变的前提下，扩充位数。<br>—用符号位的值（1或0）填充高位即可。</p>
+<figure class="image-box">
+                <a rel=chapter2: 数据是用二进制数表示的 href="https://file.moetu.org/images/2020/04/01/62e9e5845ad2ddf065fd25c46e9d09cc70d07f405ab28291.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/01/62e9e5845ad2ddf065fd25c46e9d09cc70d07f405ab28291.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>2.6 掌握逻辑运算的窍门<br>    将二进制数表示的信息作为四则运算的数值来处理就是算术；而像图形模式那样，将数值处理为单纯的0和1的罗列就是逻辑。<br>    计算机能处理的运算，大体可分为算术运算和逻辑运算。算术运算是指加减乘除四则运算；<strong>逻辑运算是指对二进制数各数字位的0和1分别进行处理的运算，包括逻辑非NOT，逻辑与AND，逻辑或OR和逻辑异或XOR四种</strong>。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-01T13:14:00.865Z" itemprop="dateUpdated">2020-04-01 21:14:00</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/01/Untitled/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/01/Untitled/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84/" rel="tag">程序是怎么跑起来的</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/01/Untitled/&title=《chapter2: 数据是用二进制数表示的》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/01/Untitled/&title=《chapter2: 数据是用二进制数表示的》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/01/chapter3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BF%9B%E8%A1%8C%E5%B0%8F%E6%95%B0%E8%BF%90%E7%AE%97%E6%97%B6%E5%87%BA%E9%94%99%E7%9A%84%E5%8E%9F%E5%9B%A0/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">chapter3: 计算机进行小数运算时出错的原因</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/03/28/%E3%80%90%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%E3%80%91-day01/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">chapter1: 对程序员来说CPU是什么？</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/01/Untitled/&title=《chapter2: 数据是用二进制数表示的》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/01/Untitled/&title=《chapter2: 数据是用二进制数表示的》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aQW7jMAwF0Nz/0pltgamdT1L0ZICnVVC7Mp8CWAzF1yse7x8juefq/p9/+fuedzBeGwMPDw9vEPrVdHPe/eerq72FwMPDw3uGdxVuElB1sarbyX08Hyx4eHh4X8C7Dy553SebQbIx4OHh4f1fvGoifl+YqC4BHh4e3jfwqqWEXoqcU/9BrQUPDw9v4RTpez6vnO/h4eHhjU/VJwlxb6voNRNczoCHh4e3wMtfuPfI5Gqy2STlj3KceHh4eI/wkpJE75G9g7G8NPxLVHh4eHhHeb3UdlJgrbYgJBtMdLKHh4eHd5SXv6zzB+QLl7cpVLcxPDw8vGd4VUw+Q680XF3Kcoh4eHh4RV7+Qs9T23mg1S2kcACGh4eHN+ZtH1DlqXmvFFIoRuDh4eEd5SU/8vPSbbIx9Bai3L6Ah4eHt8DrwTYaAnpLUC5G4OHh4Y15vbCeSbt7rQm/NF3h4eHhHeVVR7Ic1Xny4JKGrddk4OHh4bV4eQNBHtC8BWFUjMDDw8M7ysvLAZOCRTJDdYGi+/Hw8PAe4b3jkQddXcRkY4iSezw8PLw1Xi+BTvC95Lu6GXxousLDw8Nb4G3UgPNGgd6dUYR4eHh4C7xe6SEvp+aFhgMJ9OSbxMPDwxvwknLtJOWtBt2D4eHh4W3z8jXYAFRnzuPBw8PD2+ZVmwPy0kBvM7hnFIrFeHh4eGu8asE0LyX0WgqODTw8PLwFWK/RqtpAcP/cXin5w1U8PDy8Bd7kHZskxNWr+Yl/XsjAw8PD2+BVy6/HGqGK/5WXmC9rLXh4eHhHeXt7Ti91nhRTCt8AHh4e3iO8pFA7T7J7x12X3WR4eHh4X8OrznOPrDawlnvK8PDw8I7yeq0AyaJsHIkVnoKHh4e3wKv+4M+nniTTjzZs4eHh4aW8PxwRSt+MRFcWAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>chapter8: 从源文件到可执行文件 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="程序是怎么跑起来的">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>chapter8: 从源文件到可执行文件</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">chapter8: 从源文件到可执行文件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-15T14:38:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-chapter8"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">chapter8: 从源文件到可执行文件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-15 22:38:00" datetime="2020-04-15T14:38:00.000Z"  itemprop="datePublished">2020-04-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E8%AF%AD%E8%A8%80%E7%B1%BB/">语言类</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/04/15/chapter8/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/04/15/chapter8/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>问题：<br>    &emsp;1. CPU可以解析和运行的程序形式称为什么代码？<br>    &emsp;2. 将多个目标文件结合生成exe文件的工具称为什么？<br>    &emsp;3. 扩展名为.obj的目标文件的内容，是源代码还是本地代码？<br>    &emsp;4. 把多个目标文件收录在一起的文件称为什么？<br>    &emsp;5. 仅包含Windows的DLL文件中存储的函数信息的文件称为什么？<br>    &emsp;6. 在程序运行时，用来动态申请分配的数据和对象的内存区域形式称为什么？</p>
+<p>答案：<br>    &emsp;1. 本地代码<br>    &emsp;2. 链接工具<br>    &emsp;3. 本地代码<br>    &emsp;4. 库文件（链接器会从库文件中抽取出必要的目标文件并将其结合到exe文件中）<br>    &emsp;5. 导入库（把导入库信息结合到exe文件，这样程序在运行时就可以利用dll内的函数了）<br>    &emsp;6. 堆</p>
+<p>8.1 计算机只能运行本地代码</p>
+<figure class="image-box">
+                <a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/1f0a752133a68c883086cb54ca013148add9caeda021c75e.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/1f0a752133a68c883086cb54ca013148add9caeda021c75e.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>8.3 编译器负责转换源代码<br>    &emsp;编译器首先读入代码的内容，然后再把源代码转换成本地代码。编译器中就有一个源代码同本地代码的对应表，但这还不够，读入的源代码还要经过语法解析、句法解析、语义解析等，才能生成本地代码。</p>
+<figure class="image-box">
+                <a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/3aa867fa746d41fb36567d5dd97566e8ead9766fbbb89252.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/3aa867fa746d41fb36567d5dd97566e8ead9766fbbb89252.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>有一种编译器，<u>它生成的是和运行环境中CPU不同的CPU所使用的本地代码</u>，这种编译器叫做<em>交叉编译器</em>。</p>
+<figure class="image-box">
+                <a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/97d81ac058f9a3dd32ea386388b3a43ab147c3a6aebd853b.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/97d81ac058f9a3dd32ea386388b3a43ab147c3a6aebd853b.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p><strong>编写源代码的语言、编译器程序本身运行的环境、编译输出要在哪种CPU运行的本地代码</strong></p>
+<p>8.4 仅造编译是无法得到可执行文件的<br>    &emsp;编译器转换源代码后，就会生成本地文件（<em>编译后生成的是扩展名为.obj的目标文件</em>）。不过，本地文件是无法直接运行的（因为当前程序还处于未完成状态）。为了得到可以运行的EXE文件，编译之后还需要进行“链接”处理。</p>
+<p>8.5 启动及库文件<br>    &emsp;即使程序不调用其他目标文件的函数，也必须要进行链接，并和启动结合起来。<br>    &emsp;库文件（扩展名为.lib）指的是把多个目标文件集成保存到一个文件中的形式。链接器指定库文件后，就会从中把需要的目标文件抽取出来，并同其他目标文件结合生成exe文件。<br>    &emsp;spintf()等函数，不是通过源代码形式而是库文件形式和编译器一起提供的。这样的函数叫做标准函数。如此一来，编译器厂商也不用公开标准函数的源代码内容，避免了代码被其它公司任意转用而造成的损失。</p>
+<p>8.6 dll文件及导入库<br>    &emsp;Windows以函数的形式为应用提供了各种功能。这些形式的函数称为API。如MessageBox()，它还是C语言的标准函数而Windows提供的API的一种，它提供了显示消息框的功能。<br>   &emsp;windows中，API的目标文件，并不是存储在通常的库文件中，而是存储在名为DLL文件的特殊库文件中。import32.lib是导入库，它存储着两个信息，一是MessageBox()在user32.dll这个dll文件中，另一个是存储着dll文件的文件夹信息。<br>    &emsp;存储着目标文件的实体，并直接和exe文件结合的库文件形式称为静态链接库。<br><a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/89f5bcf86aebc56763c00526a6b33b3b8b36a89d7f38bd1a.md.png" target="_blank" title=" " data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/89f5bcf86aebc56763c00526a6b33b3b8b36a89d7f38bd1a.md.png" alt=" "></a></p>
+<p>8.7 可执行文件运行时的必要条件<br>    &emsp;每次运行，程序内的变量和函数被分配到的内存地址都是不同的。  exe文件中，变量和函数的内存地址的值是如何来表示的？<br>   &emsp;exe文件中给变量及函数分配了虚拟的内存地址。在程序运行时，虚拟的内存地址会转换成实际的内存地址。链接器会在exe文件的开头，追加转换内存地址所需的必要信息，这个信息称为再配置信息。</p>
+<figure class="image-box">
+                <a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/f67ac31a3a98e29ccb36c408837bb663b05d9a41e598dfb5.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/f67ac31a3a98e29ccb36c408837bb663b05d9a41e598dfb5.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+
+<p>8.8 程序加载时会生成栈和堆<br>    &emsp;exe文件中并不存在栈和堆的组，栈和堆需要的内存空间是在exe文件加载到内存后开始运行时得到分配的。</p>
+<figure class="image-box">
+                <a rel=chapter8: 从源文件到可执行文件 href="https://file.moetu.org/images/2020/04/15/f9555108668af540654e71bce8010917266b24641898673b.md.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/04/15/f9555108668af540654e71bce8010917266b24641898673b.md.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<p>   &emsp;栈和堆的内存空间都是在程序运行时得到申请分配的，不过在内存的使用方法上，二者存在不同。栈中对数据进行存储和清理的代码，是由编译器自动生成的，不需要程序员的参与。而堆的内存空间则要根据程序员定的程序来明确进行申请分配或释放（<em>堆的内存空间不及时释放，会造成内存泄露，如果内存泄露一直存在，就有可能会造成内存不足而导致宕机</em>）。</p>
+<p>8.9 有点难度的Q&amp;A</p>
+<p>Q：编译器和解释器有什么不同？<br>A：编译器是在<u>运行前</u>对所有源代码进行解释处理，而解释器则是在<u>运行时</u>对源代码的内容一行一行地进行解释处理的。</p>
+<p>Q：”分割编译”指的是什么？<br>A：<u>将整个程序分为多个源代码来编写，然后分别进行编译，最后链接成一个exe文件</u>。这样每个源代码都相对变短，便于程序管理。</p>
+<p>Q：”build”指的是什么？<br>A：根据开发工具种类的不同，有的编译器可以通过选择”build”菜单来生成exe文件，这种情况下，<u>build指的是连续执行编译和链接</u>。</p>
+<p>Q：使用dll文件的好处是什么？<br>A：dll文件中的函数可以被多个程序共用，因此<strong>可以节约内存和磁盘。此外，在对函数内容进行修正时，还不需要重新链接（静态链接）使用这个函数的程序</strong>。</p>
+<p>Q：不链接导入库的话就无法调用dll文件中的函数吗？<br>A：通过LoadLibrary()及GetProcAddress这些API，即使不链接导入库，也可以在程序运行时调用DLL文件中的函数。不过使用导入库更简单一些。</p>
+<p>Q：”叠加链接”这个术语指的是什么？<br>A：<u>将不会同时执行的函数，交替加载到同一个地址中运行</u>。通过“叠加链接器”这一特殊的链接器即可实现。在内存容量不多的MS-DOS时代，经常使用叠加链接。</p>
+<p>Q：和内存管理相关的“垃圾回收机制”指的是什么呢？<br>A：垃圾回收机制指的是对处理完毕后不再需要的堆内存空间的数据和对象进行清理，释放它们所使用的内存空间。这里把不需要的数据比喻为了垃圾。C和C++要手动调用函数释放内存，而<strong>在C++基础上开发出来的Java和C#编程语言中，程序运行环境会自动进行垃圾回收。这样就可以避免由于程序的疏忽（忘了释放内存）而造成内存泄露了</strong>。    </p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-04-15T14:52:19.735Z" itemprop="dateUpdated">2020-04-15 22:52:19</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/04/15/chapter8/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/15/chapter8/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84/" rel="tag">程序是怎么跑起来的</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/15/chapter8/&title=《chapter8: 从源文件到可执行文件》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/15/chapter8/&title=《chapter8: 从源文件到可执行文件》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/04/17/Dijkstra%E7%AE%97%E6%B3%95/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Dijkstra算法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/04/14/chapter7-%E7%A8%8B%E5%BA%8F%E6%98%AF%E5%9C%A8%E4%BD%95%E7%A7%8D%E7%8E%AF%E5%A2%83%E4%B8%AD%E8%BF%90%E8%A1%8C%E7%9A%84/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">chapter7: 程序是在何种环境中运行的</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/15/chapter8/&title=《chapter8: 从源文件到可执行文件》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/04/15/chapter8/&title=《chapter8: 从源文件到可执行文件》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3aS27DMAwFwNz/0u22QWH38aMkBcarwHEsjRaiQvLxiK+vH9fv+/ef75+/unN1PU5ceHh4eIOpX70u5/UW4n5pqguBh4eH9xpesonnjGRp7ieaz+cPCx4eHt4H8JID9/12nwSD5P14eHh4/4WXpwyqqYTqAuHh4eG9l5dMdJ6YSH5bDTxruRY8PDy8A1Wkz/l8pL6Hh4eHN66q9w7E94nd/JneDJ/egIeHh3eAl2+4+cAJeNJAUF5iPDw8vGO8aqNAHjaqzQEJO184PDw8vF1ePsxWgrXXppAvYqGyh4eHhzfgbW3E1VaDKi/BRxEPDw8Pb4mXtw5U27ASZLXwHxXG8PDw8A7wklJ9PolemX8eQgoFMDw8PLwxL8ryxgWqfLGq5f8juRY8PDy8Fq+63VdTD9VgUA1UUboEDw8Pb5WX/GDSBFBNDfeSueWQgIeHh7fEq2678+TvVtPV5bh4eHh4B3i9Kw8kCaMXbCaj4+Hh4W3xeqnVnNELBgu5Fjw8PLxVXjXZmicsqm+obvrR83h4eHgv4U3+9veOyHnTVXUmeHh4eCd41TpRchCfBJheMmKtDIaHh4cXfDs58k7aquZPRikPPDw8vAO8fJg8Fds7UlcDRnKsx8PDwzvH6w2Tb+hbqY0choeHh/caXpJg3W046AWe/FiPh4eH9xpetclpt6x1v9z5ncvAgIeHh3eA1yt3Ve9EidetCw8PD+8ArHcs3k1MbBXknr7Fw8PDO8Dr7bG9o20VkycvFgIMHh4eXpFXTb+uNUIVf5UEhstkBB4eHt4BXq9y1Ev77katKDDg4eHhvZU3AfcO2dWDOx4eHt7n86rH7mpSeFRCw8PDwzvGm7dG5QEjX+788+UoeHh4eAd48yGrqdVqi+rxhi08PDy8lPcNEKaSl3XQtbkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

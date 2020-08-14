@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】线程介绍 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="pthread">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】线程介绍</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】线程介绍</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-29T10:23:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】线程基础"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】线程介绍</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-29 18:23:00" datetime="2020-07-29T10:23:00.000Z"  itemprop="datePublished">2020-07-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p><strong>会话承载进程组，进程组承载进程，进程承载线程。</strong></p>
+<p>1、线程的概念<br>    <strong>一个正在运行的函数<br>    多个线程的地址空间是共享的（代码段是共用的，栈是独立的）</strong><br>    posix线程是一套标准，而不是实现<br>    openmp线程<br>    线程标识：pthread_t（p是指posix标准）<br>    线程消耗进程号(ps ax -L 查看线程，LWP)<br>    编译和链接都要带-pthread。<br>    线程的调度取决于调度器的调度策略</p>
+<p>pthread_equal();//比较两个线程<br>pthread_self();//返回当前线程标识</p>
+<p>2、线程的创建<br>    pthread_create();<br>    //参数：pthread_t的地址，指定属性，入口函数地址，函数参数<br>    //返回值，成为返回0；失败返回error number，用strerror辅助报错</p>
+<p>   线程的终止：<br>    3种方式：<br>&emsp;1）线程从启动例程返回，返回值就是线程的退出码<br>&emsp;2）线程可以被同一进程中的其它线程取消<br>&emsp;3）线程调用pthread_exit()</p>
+<p>回收线程：pthread_join（类似进程中的wait）</p>
+<p>   栈的清理<br>    pthread_cleanup_push();<br>    pthread_cleanup_pop();<br>    //比钩子函数多了主动权，pthread_cleanup_pop可以选择压栈的函数是否被调用<br>    //要成对出现，pop操作一定要有，如果放到pthread_exit后面，则都当成1。</p>
+<p>简单例程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;pthread.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line">static void *func(void *p)</span><br><span class="line">&#123;</span><br><span class="line">    puts(<span class="string">"thread is working."</span>);</span><br><span class="line">    pthread_exit(NULL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    pthread_t tid;</span><br><span class="line">    int err;</span><br><span class="line"></span><br><span class="line">    puts(<span class="string">"begin."</span>);</span><br><span class="line"></span><br><span class="line">    err = pthread_create(&amp;tid,NULL,func,NULL);</span><br><span class="line">    <span class="keyword">if</span>(err)</span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,<span class="string">"pthread_create():%s\n"</span>,strerror(err));</span><br><span class="line">    &#125;</span><br><span class="line">    pthread_join(tid,NULL); //  等待线程终止</span><br><span class="line">    puts(<span class="string">"end."</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);    //进程结束</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>线程的取消选项：<br>pthread_cancel();<br>&emsp;取消有两种状态：允许和不允许；<br>&emsp;允许取消又分为异步cancel和推迟cancel(默认)，推迟至cancel点再响应<br>&emsp;cancel点：POSIX定义的cancel点，都是<strong>可能引发阻塞的系统调用</strong><br>            pthread_setcancelstate()：设置是否允许取消    pthread_setcanceltype()：设置取消方式<br><strong>pthread_testcancel()：本函数什么都不做，就是一个cancel点(人为设置cancel点)</strong></p>
+<p>   线程分离<br>    pthread_detach(); 设置线程的分离属性，其它线程不能对它回收。</p>
+<br>
+4、线程属性:
+
+<p><strong>80%的问题用默认属性就可以解决</strong>。</p>
+<p>&emsp;pthread_attr_init();<br>    &emsp;pthread_attr_destroy();<br>    &emsp;pthread_attr_setstacksize();<br>    &emsp;pthread_attr_setdetachstate();<br>&emsp;其它见man pthread_attr_init中的see also</p>
+<p>   线程同步的属性<br>    互斥量属性：<br>        &emsp;pthread_mutexattr_init();<br>        &emsp;pthread_mutexattr_destroy();<br>        是否跨进程起作用：<br>        &emsp;pthread_mutexattr_getpshared();<br>        &emsp;pthread_mutexattr_setpshared();<br>&emsp;clone();//<em>可自定义地创建所需要的线程或进程</em><br>        互斥量类型：<br>        &emsp;pthread_mutexattr_gettype();<br>        &emsp;pthread_mutexattr_settype();<br>    条件变量属性：<br>        &emsp;pthread_condattr_init();<br>        &emsp;pthread_condattr_destroy();<br>        。。。。<br>    读写锁属性：<br>        。。。。</p>
+<p>5、重入<br>   ①多线程中的IO<br>        <em>stdio默认都是支持多线程并发的</em>，先lock缓冲区，东西放进去，unlock。<br>        （<em>也有不加锁的版本</em>，可以尝试man getchar_unlocked查看）</p>
+<p>   ②线程与信号<br>            <strong>每个线程都有mask和pending位图，而进程只有一个pending位图。每个线程从内核态<br>        退出时，先用mask与进程的pending按位与，再与线程的pending按位与</strong>。<br>                pthread_sigmask();<br>sigwait();<br>pthread_kill();</p>
+<p>   ③线程与fork</p>
+<p>6、openmp线程标准<br>    <a href="http://www.OpenMP.org" target="_blank" rel="noopener">www.OpenMP.org</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-30T02:27:03.008Z" itemprop="dateUpdated">2020-07-30 10:27:03</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/pthread/" rel="tag">pthread</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】线程介绍》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】线程介绍》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%90%8C%E6%AD%A5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】线程竞争与同步</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/25/%E3%80%90apue%E3%80%91%E4%BF%A1%E5%8F%B7%E8%BF%9B%E9%98%B6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】信号进阶</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】线程介绍》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/29/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】线程介绍》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD4UlEQVR42u3aS5KjQAwEUO5/6Z4DeGwypaI/EY+Vw42BeiyyJdV1xcfXy/H6/btf5Vf4fM67K797kndPdeDAgQMHDhzlUmfLThb/mSz5Jv/couPAgQMHjrMcSUzmIZpAfIZOojR5nnyNOHDgwIHjZzmSQN2UVbPgnD0/Dhw4cOD4WY7i0kFAtgGc3BEHDhw4cPwGjnzw81xY5uGdl5EP9kpx4MCBA8ck71aDn9/z+ZH9HThw4MCBI2jttZsb2iJqdp2k9PpaHzhw4MCBY8+RB9IGaJb/+UCr3fpwcyYOHDhw4DjE0W4XaMdOyaO09529pJsr48CBAweOQxyzzQ1nR0Fts68t/5I74sCBAweOUxzJkvIiKi+Zzi6mLSaLEg4HDhw4cAQc+8hsl7f51awITJ7/OvUfBA4cOHDgCMKy/Wvb8pu1CHPQInpx4MCBA8eaox0XtQtr24XFtoP4CfNCFAcOHDhwnOLYtOHyAi8fJuUty835RWsSBw4cOHDEHG3sJdG1aQLm8dy+kiiwceDAgQPHIY5NUZSMr2aNyFONv7pXigMHDhw4FhxtfLaNwrbhOGsRbu5y0yvFgQMHDhwjjtlo5+wegLbYa4dbV3vgwIEDB44Rx6xtN9vusHk9m3guJm84cODAgeMBjjyuNgVV0grMm4mbdiQOHDhw4HiCIyneErhZMLdXyMdd9ZAMBw4cOHB8C0e74Wx2nbMF5INBiwMHDhw41mOnWXAm8TwrLKM236ZFiAMHDhw4Fhyb9tzZxuKMMt8YkZyJAwcOHDj2HO2IKH+Is0xtm68liLY44MCBAweOmCP/8awB126GaMdas5EVDhw4cOB4gqPO4bIAy8uwNtTzoE2uebWPiAMHDhw4Rhz5o8xKr007cv8vwn++x4EDBw4cD3C04bRfcDL+yc/PX0lUwuHAgQMHjpJjNtrJt77tm4ltw7GI1WTDHA4cOHDgKDlmRVp+s2SRM5TZxoWbNiIOHDhw4DjKcWrzwWxLQVuw5QTJ6lbzNBw4cODAMapZ2k1p7fCpXfYskm9eEg4cOHDgOMQxa+21sdo2CvOXkTPdnIkDBw4cONYc7eVOhesVH1+jo73yUBcHDhw4cLycP7tN+zkfHeWvJ4/PfBiGAwcOHDj2HPvAmxVjM9Y2wmfXxIEDBw4ce459uM4GV6eag7MYHlaNOHDgwIEj5miD8NRWttn4arXgz7g4cODAgePbOZJaMGHKtykkRWP7AnDgwIEDx1/kaJeXh3q7Pa4YkuHAgQMHjkMcs2B7Yox0qsmYxy0OHDhw4DjLsZ/F5PG2Kc/au89eGA4cOHDgWHD8A4S3IIL+wu5aAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

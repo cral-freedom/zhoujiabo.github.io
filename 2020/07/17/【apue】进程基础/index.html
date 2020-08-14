@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>【apue】进程基础 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="mysh简单例程,父子进程">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>【apue】进程基础</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">【apue】进程基础</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-17T15:32:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-【apue】进程基础"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">【apue】进程基础</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-17 23:32:00" datetime="2020-07-17T15:32:00.000Z"  itemprop="datePublished">2020-07-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">Linux系统编程</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>进程基本知识</p>
+<p>1、进程标识符pid<br>    pid_t （int16_t，3w多个进程），虚拟机技术，有可能不够用<br>    命令ps,  man ps 查找组合用法， ps axf<br>    <strong>进程号是顺次向下使用。（与fd有区别）</strong><br>    getpid();     //获取当前进程的Pid<br>    getppid();</p>
+<p>2、进程的产生<br>    fork();</p>
+<blockquote>
+<p>①关键字：duplicating，复制，拷贝，一模一样，连运行到的位置都相同<br>②fork后父子进程的区别：fork的返回值不一样，pid不同，ppid也不同，<br>未决信号（还没来得及去响应的信号）和文件锁不继承，资源利用量归零<br>③Init进程：1号，是所有进程的祖先进程。<br>④fork成功，父进程中返回的是子进程的Pid，子进程中返回0；fork失败，父进程中返回-1，设置errno。    </p>
+</blockquote>
+<p>永远不要猜测父子进程哪先被调度，这是由调度器的调试策略决定的。<br>非常重要！！！<strong>fork前fflush(NULL),刷新所有成功打开的流</strong>。</p>
+<p>zombie态在进程关系中是正常的（但通常是短暂性存在的），谁打开谁关闭，谁申请谁释放，子进程是父进程创建的，而如果<strong>父进程在忙，子进程终止后无人”收尸”，子进程就呈现Z+态</strong>。</p>
+<p><strong>父进程终止，而子进程没有终止，子进程变成孤儿进程，最后会被Init进程接管（ps axf可以看到子进程的父进程为init进程）；孤儿进程占用的资源一般是比较少的，但进程号比较宝贵</strong>。</p>
+<p>了解：vfork();<br>用vfork创建的子进程，实际和父进程指向的是同一块物理内存；但vfork创建的子进程，只能调用_exit()或exec()，其它行为（如关闭一个文件）是未定义的。</p>
+<p><strong>fork()是写时拷贝，只读时父子进程指向同一块空间</strong>。父子进程谁想写，谁去复制一份内存到其它空间。fork通过定时拷贝技术，基本将过去vfork的功能糅合进来了，所以vfork逐渐被废弃。    </p>
+<p><strong>fork函数例程</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//fork：duplicating，拷贝，一模一样，连运行到的位置都相同；</span><br><span class="line">//区别：fork返回值不同，pid,ppid不同，未决信号和文件锁不继承，资源清零。</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[%d]:begin.\n"</span>,getpid());</span><br><span class="line">    //加了\n，因为默认输出设备是stdout，行缓冲，会刷新缓冲区；</span><br><span class="line">    //所以命令./fork，打印一次begin</span><br><span class="line"></span><br><span class="line">    //命令./fork1 &gt; /tmp/out，输出设备是文件，默认是全缓冲，还来得及没写到文件中，马上fork了，&gt;父子进程缓冲区都有存在一句“begin.”。    </span><br><span class="line"></span><br><span class="line">    fflush(NULL);//正确的做法是fork之前刷新所有打开的流。</span><br><span class="line"></span><br><span class="line">    pid = fork();</span><br><span class="line">    <span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">"fork()"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pid == 0)    //child</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[%d]:child is working\n"</span>,getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>            //parent</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"[%d]:parent is working\n"</span>,getpid());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"[%d]:end.\n"</span>,getpid());</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>考点：打印结果，与缓冲区有关。比较下列三种结果</p>
+<figure class="image-box">
+                <a rel=【apue】进程基础 href="https://file.moetu.org/images/2020/07/17/b5bd6cb7296c206db816587de4590a4c2fc74b08cbe7a875.png" target="_blank" title="终端输出，行缓冲" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/17/b5bd6cb7296c206db816587de4590a4c2fc74b08cbe7a875.png" alt="终端输出，行缓冲" title="" class=""></a>
+                <p>终端输出，行缓冲</p>
+            </figure>
+
+<figure class="image-box">
+                <a rel=【apue】进程基础 href="https://file.moetu.org/images/2020/07/17/01ca2d5a69d91f2054cd9c756413a7117fc0f585c91d506b.png" target="_blank" title="文件是全缓冲，fflush刷新缓冲区" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/17/01ca2d5a69d91f2054cd9c756413a7117fc0f585c91d506b.png" alt="文件是全缓冲，fflush刷新缓冲区" title="" class=""></a>
+                <p>文件是全缓冲，fflush刷新缓冲区</p>
+            </figure>
+
+<figure class="image-box">
+                <a rel=【apue】进程基础 href="https://file.moetu.org/images/2020/07/17/52f5638cb6e6652d39c1b77f3b4be09b7ac5e0b36eedf89d.png" target="_blank" title="文件是全缓冲，无fflush" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/17/52f5638cb6e6652d39c1b77f3b4be09b7ac5e0b36eedf89d.png" alt="文件是全缓冲，无fflush" title="" class=""></a>
+                <p>文件是全缓冲，无fflush</p>
+            </figure>
+
+
+<p>3、进程的消亡及释放资源<br>    wait();    和 waitpid();    等待进程状态发生变化</p>
+<p>pid_t wait(int *status);//成功返回终止子进程的pid，将子进程的状态存储到status指向的内存。死等，是阻塞的。</p>
+<p>pid_t waitpid(pid_t pid, int *status, int options);</p>
+<p>@params:<br>    options是位图，如果有WNOHANG参数，函数变成非阻塞的。<br>    pid: &lt;-1，收进程组id为|-n|中的任何一个子进程<br>          -1，收任何一个子进程<br>           0，收与当前进程同组的一个子进程<br>          &gt;0，收指定pid号的子进程 </p>
+<p>wait(&amp;status)    equal to     waitpid(-1,&amp;status,0)<br>如果只是要回收而不关心子进程的状态，也可以wait(NULL)。</p>
+<p>了解：waitid(); wait3(); wait4();</p>
+<p>进程分配：<br>①分块法<br>②交叉分配（有可能进程拿到的数永远是某个数的倍数）<br>③池（涉及到竞争）</p>
+<p><strong>计算出某区间内所有的质数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define LEFT    30000000</span></span><br><span class="line"><span class="comment">#define RIGHT   30000200</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int i,j,mark;</span><br><span class="line">    pid_t pid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = LEFT; i &lt;= RIGHT; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        //父进程不断创建子进程</span><br><span class="line">        pid = fork();</span><br><span class="line">        <span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            perror(<span class="string">"fork()"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //质数的计算交给子进程</span><br><span class="line">        <span class="keyword">if</span>(pid == 0)        //child</span><br><span class="line">        &#123;</span><br><span class="line">            mark = 1;</span><br><span class="line">            <span class="keyword">for</span>(j = 2; j &lt; i/2; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(i % j == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                    mark = 0;</span><br><span class="line">                    <span class="built_in">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(mark)</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d is primer\n"</span>,i);</span><br><span class="line"></span><br><span class="line">            //如果没有<span class="built_in">exit</span>，子进程还会去fork。</span><br><span class="line">            <span class="built_in">exit</span>(0);//子进程正常终止</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(i = LEFT; i &lt;= RIGHT; i++)</span><br><span class="line">        <span class="built_in">wait</span>(NULL);//只是要回收，不关心回收的子进程的状态</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/***************没必要每次计算都创建进程，可以创建N个进程交叉分配计算任务，作出如下优化***********************/</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int i,j,n,mark;</span><br><span class="line">    pid_t pid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(n = 0; n &lt; N; n++)</span><br><span class="line">    &#123;</span><br><span class="line">        pid = fork();</span><br><span class="line">        <span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">        &#123;</span><br><span class="line">            perror(<span class="string">"fork()"</span>);</span><br><span class="line">            <span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //父进程连续创建N个子进程后等待N个子进程完成计算，子进程交叉分配任务</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(pid == 0)	//child</span><br><span class="line">        &#123;</span><br><span class="line">            //第一个进程分配的数总是3的倍数</span><br><span class="line">            <span class="keyword">for</span>(i = LEFT + n; i &lt;= RIGHT; i += N)</span><br><span class="line">            &#123;</span><br><span class="line">                    mark = 1;</span><br><span class="line">                    <span class="keyword">for</span>(j = 2; j &lt; i/2; j++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(i % j == 0)</span><br><span class="line">                        &#123;</span><br><span class="line">                            mark = 0;</span><br><span class="line">                            <span class="built_in">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(mark)</span><br><span class="line">                        <span class="built_in">printf</span>(<span class="string">"[%d]:%d is primer\n"</span>,n,i);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">             <span class="built_in">exit</span>(0);//子进程正常终止</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(n = 0; n &lt; N; n++)</span><br><span class="line">        <span class="built_in">wait</span>(NULL);//只是要回收，不关心回收的子进程的状态</span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>4、exec函数族<br>bash<br>&emsp;./primer2<br>&emsp;&emsp;./primer2<br>&emsp;&emsp;./primer2<br>&emsp;&emsp;…<br>&emsp;&emsp;201个</p>
+<p>所谓的父进程是bash创建的，为什么bash创建的子进程不叫bash。</p>
+<p>exec函数族：用一个新的进程镜像替换当前的进程镜像<br>//execl(“/bin/date”,”date”,”+%s”,NULL);//如果成功，不会返回</p>
+<p>变参：<br>    execl();<br>    execlp();<br>    execle();</p>
+<p>定参：<br>    execv();<br>    execvp();    //例：execvp(globres.gl_pathv[0],globres.gl_pathv);</p>
+<p>int execl(const char <em>path, const char *arg, …<br>                       /</em> (char  *) NULL */);<br>int execvp(const char *file, char *const argv[]);//文件名，和argv</p>
+<p>char <em>strsep(char *</em>stringp, const char *delim);//根据指定分隔符（可以是” \t\n”）将串分隔</p>
+<p><strong>简单实现mysh，只处理外部命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;glob.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/wait.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define DELIMS  " \t\n"     //定义分隔符</span></span><br><span class="line">struct cmd_t</span><br><span class="line">&#123;</span><br><span class="line">    glob_t globres;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static void prompt(void)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"mysh-0.1$"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void pharse(char *line, struct cmd_t  *res)</span><br><span class="line">&#123;</span><br><span class="line">    char *tok;</span><br><span class="line">    int i = 0;</span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        tok = strsep(&amp;line,DELIMS);//根据分隔符将串分隔</span><br><span class="line">        <span class="keyword">if</span>(tok == NULL) //有问题</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(tok[0] == <span class="string">'\0'</span>)//多个分隔符连续时，会解析出空串</span><br><span class="line">            <span class="built_in">continue</span>;</span><br><span class="line"></span><br><span class="line">        glob(tok,GLOB_NOCHECK|GLOB_APPEND*i,NULL,&amp;res-&gt;globres);</span><br><span class="line">        i = 1;//i的作用，第一次GLOB_APPEND参数失效</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main(int argc, char **argv)</span><br><span class="line">&#123;</span><br><span class="line">    pid_t pid;</span><br><span class="line">    char *linebuf = NULL;</span><br><span class="line">    size_t linebuf_size = 0;</span><br><span class="line">    struct cmd_t cmd;</span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        prompt();   //提示符</span><br><span class="line">        <span class="keyword">if</span>(getline(&amp;linebuf,&amp;linebuf_size,stdin) &lt; 0)//从标准输入获取一行</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line"></span><br><span class="line">        pharse(linebuf,&amp;cmd);//解析命令行</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(0)   //内部命令</span><br><span class="line">        &#123;&#125;</span><br><span class="line">        <span class="keyword">else</span>    //只处理外部命令</span><br><span class="line">        &#123;</span><br><span class="line">            pid = fork();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(pid &lt; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                perror(<span class="string">"fork()"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(1);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(pid == 0) //child</span><br><span class="line">            &#123;</span><br><span class="line">                execvp(cmd.globres.gl_pathv[0],cmd.globres.gl_pathv);</span><br><span class="line">                perror(<span class="string">"execvp()"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(1);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>        //parent</span><br><span class="line">                <span class="built_in">wait</span>(NULL);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=【apue】进程基础 href="https://file.moetu.org/images/2020/07/18/ed32e9cbf7be0bc62402c27fc7d698fe8093e95de24854d0.png" target="_blank" title="mysh例程测试" data-fancybox="images"><img src="https://file.moetu.org/images/2020/07/18/ed32e9cbf7be0bc62402c27fc7d698fe8093e95de24854d0.png" alt="mysh例程测试" title="" class=""></a>
+                <p>mysh例程测试</p>
+            </figure>
+
+
+
+
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-17T16:14:37.417Z" itemprop="dateUpdated">2020-07-18 00:14:37</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/mysh%E7%AE%80%E5%8D%95%E4%BE%8B%E7%A8%8B/" rel="tag">mysh简单例程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B/" rel="tag">父子进程</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】进程基础》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】进程基础》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/07/18/%E3%80%90apue%E3%80%91%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E4%B8%8E%E7%BB%84%E6%9D%83%E9%99%90/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">【apue】用户权限与组权限</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/08/%E3%80%90apue%E3%80%91%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】命令行参数分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】进程基础》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/17/%E3%80%90apue%E3%80%91%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/&title=《【apue】进程基础》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAAD6UlEQVR42u3aSW4jCRADQP//0z3XBgzJZLI07UPoJAhSLVEG6Fy+vuLXn79e3z959Xp1hPw4f3/n+9GSK/z6xAsHDhw4cMS3mlz095Mtl5Lfavu+RceBAwcOHM9yvL/QPNiKE784Tn7G91ebPB4cOHDgwPF7ONrCbAngnP52/Thw4MCB499y5NGYBGTejoxuBgcOHDhw/BqOdvCTh24elvlx3j+k/6lXigMHDhw4Lnk3DX5+z/uP7HfgwIEDB44gGm9Do3wslAfqbQ1ieeHAgQMHjp3jVp4lHHv+5wVhu/rwwzdx4MCBA8fAkS/D5SVTu6bWrikk4Zo3H4s5FQ4cOHDgSGuraQ36NuxZuJdVieiB4cCBAweOgWMphPJyLgF96tnmyxAvSzgcOHDgwDFw3G6jPWWd/AF9O8oqxmk4cODAgWPgyFt47SLdrZDLW4S3FuQPDw8HDhw4cMwcexMwuaxlsLS0L28lJQ4cOHDg2DnaQms/zbLu0D7C/d8IHDhw4MCRc+Qjn7xUW5qAeTznEV48Thw4cODA8QGO28Cpbee1jbyl8XfsleLAgQMHjhNHjvJs865uz52+mV9h/TeCAwcOHDiCY7alUQLXxvZ+5DzU6woSBw4cOHAMBO1v26FUG95LPBeTNxw4cODA8SjHpy/otta2LEbUcYsDBw4cOGaOvLWXw73/ZIn55Zj5r3DgwIEDx8JxC9qcr12D+FwB+cH/O3DgwIEDR1m5LL+6NQrzXx0nbMlvceDAgQPHiWNZXL4F8FKMPbsgXuwM4sCBAweOmONWtiUHupVtbZPxtoqXPDAcOHDgwPEURxJy79+3UX0bL7WF3FQK4sCBAweOmKMNvPZmlgIvCfi2vPwh7HHgwIEDx0Mc+S21CwQ56K3Qyku16MHjwIEDB46ZI2m35RH4bNy2w7C2+Hx5dhw4cODA8RBHHrp74deuMiQNwWOs4sCBAweORzmWiL0F8O2Gn1pc+GDxhgMHDhw44kA6pnf8ya1ga+M/uh4cOHDgwPEoR7su0EbyMmrabzganuHAgQMHjoc48iInicl2CLTEdh78UWmHAwcOHDhmjvZwt5FPcSnl0KttCEbxjAMHDhw4Bo79NHnBltzqrfl4a3EWzUEcOHDgwBFz3AKvjcNbGzGP8Dz+b48NBw4cOHC0HMnNJId7trRrlyFuQft1e7Y4cODAgSNuk7WLAi3W0hychkl58YYDBw4cOP4RR/6dpBWYx/8n2po4cODAgeM3cNxKrL1E3IvGaL8DBw4cOHDMHLdge3bksxz/tqI3jZ1w4MCBA8e80NAOe/KB0K2luIyy8uITBw4cOHDEHP8BbbVyFLNJ4IwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>虚拟机和电脑能相互ping通，但使用putty远程连接 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="虚拟机">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>虚拟机和电脑能相互ping通，但使用putty远程连接</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">虚拟机和电脑能相互ping通，但使用putty远程连接</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-31T14:52:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E9%97%AE%E9%A2%98%E9%9B%86/">Linux问题集</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-虚拟机和电脑能相互ping通，但使用putty远程连接"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">虚拟机和电脑能相互ping通，但使用putty远程连接</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-31 22:52:00" datetime="2020-07-31T14:52:00.000Z"  itemprop="datePublished">2020-07-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/Linux%E9%97%AE%E9%A2%98%E9%9B%86/">Linux问题集</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>用filezilla，putty或xshell无法连接虚拟机！！！！</p>
+<p>找好两天，在某篇文章中的评论找到了正解。</p>
+<blockquote>
+<p>设置的静态ip不要和电脑中的适配网卡ip相同！！！<br>如果VMnet8中网关为192.168.174.2，则电脑适配网卡可以设置为192.168.174.1<br>最后虚拟机中静态ip设置192.168.174.3</p>
+</blockquote>
+<p>我的问题就是：将静态Ip设置成192.168.174.1，后果就是<br>虚拟机和电脑能相互Ping通，但无法用putty远程连接.</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-07-31T15:03:26.271Z" itemprop="dateUpdated">2020-07-31 23:03:26</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag">虚拟机</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/&title=《虚拟机和电脑能相互ping通，但使用putty远程连接》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/&title=《虚拟机和电脑能相互ping通，但使用putty远程连接》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/08/03/Xshell%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Xshell设置与使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/07/30/%E3%80%90apue%E3%80%91%E7%BA%BF%E7%A8%8B%E5%AE%9E%E4%BE%8B/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">【apue】线程实例</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/&title=《虚拟机和电脑能相互ping通，但使用putty远程连接》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/07/31/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E7%94%B5%E8%84%91%E8%83%BD%E7%9B%B8%E4%BA%92ping%E9%80%9A%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8putty%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/&title=《虚拟机和电脑能相互ping通，但使用putty远程连接》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,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" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>

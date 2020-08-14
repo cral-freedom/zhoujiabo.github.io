@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>操作系统学习之Linux文件系统 | Zhou&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="操作系统,linux">
+    <link rel="shortcut icon" href="https://i.loli.net/2020/02/12/5oNk3WDtxXbymYI.jpg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/zhoujiabo.github.io/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false}'),
+            v: JSON.parse('{"enable":true,"appid":"ryu5gppP7IkOwtkX6qHMcct2-gzGzoHsz","appkey":"cROffFABz0EqQwYOsqfhJtex","notify":false,"verify":false,"visit_counter":true,"placeholder":"you can comment here","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/zhoujiabo.github.io/atom.xml" title="Zhou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="https://i.loli.net/2020/02/12/or1sdw4mkOEgLTS.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/zhoujiabo.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">zhoujiabo</h5>
+          <a href="mailto:2632213328@qq.com" title="2632213328@qq.com" class="mail">
+            
+              <span>2</span>
+            
+              <span>6</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>2</span>
+            
+              <span>1</span>
+            
+              <span>3</span>
+            
+              <span>3</span>
+            
+              <span>2</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/cral-freedom" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/zhoujiabo.github.io/custom"  >
+                <i class="icon icon-lg icon-plus-square"></i>
+                CUSTOM
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>操作系统学习之Linux文件系统</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="https://i.loli.net/2020/02/12/9JrZUIzeSGMnbu7.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">操作系统学习之Linux文件系统</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-21T12:42:00.000Z" itemprop="datePublished" class="page-time">
+  2020-02-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-操作系统学习之Linux文件系统"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统学习之Linux文件系统</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-21 20:42:00" datetime="2020-02-21T12:42:00.000Z"  itemprop="datePublished">2020-02-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/zhoujiabo.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></li></ul>
+
+
+
+            
+
+            
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/#comment">
+            <span class="valine-comment-count" data-xid="/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/"></span>
+        </a>
+    </span>
+
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>Linux文件系统概述<br>&emsp;1. Linux文件系统采用了多级目录的树型层次结构管理文件。树型结构的最上层是根目录，用/表示，在根目录下是各层目录和文件。<br>    &emsp;2. Linux系统中的文件系统，不管是什么类型，都安装到一个目录下，并隐藏掉目录中原有的内容。这个目录叫做安装目录或者安装点。当文件系统制裁掉时，目录中的原有内容将再一次的显示出来。<br>    &emsp;3. Linux通过使用一级通用的API函数，可以在许多种存储设备上支持许多种文件系统。<br>    &emsp;4. Linux缺省的文件系统（ext2, ext3, ext4）继承了UINX，把文件名和文件控制信息分开管理，文件控制信息单独组成一个称为索引节点（inode，一个数据结构）。每个文件对应一个inode，它们有唯一的编号，称为inode号。<br>    &emsp;5. 目录项主要由文件名和inode号组成。<br></p>
+<p>文件的类型<br>    &emsp;1. 普通文件<br>        &emsp;&emsp;a. 文件名最长不能超过255个字符<br>        &emsp;&emsp;b. 可以用除保留字符以外的任何字符给文件命名<br>        &emsp;&emsp;c. 强烈建议不要使用非打印字符、空白字符（空格和制表符）和shell命令保留字符。<br>        &emsp;&emsp;d. 扩展名对Linux系统来说没有任何意义<br>        &emsp;&emsp;e. 可以任意给文件名加上你自己或应用程序定义的扩展名<br>    &emsp;2. 目录文件：是文件系统中一个目录所包含的目录项组成的文件。<strong>目录文件只允许系统修改。用户进程可以读取目录文件，但不能对它进行修改。两个特殊的目录项”.”表示目录本身，”..”表示父目录</strong>。<br>    &emsp;3. 字符设备文件和块设备文件。Linux把对设备的I/O作为对文件的读取/写入操作内核提供了对设备处理和对文件处理的统一接口。<br>        &emsp;&emsp;a. fd0(for floppy drive 0)<br>        &emsp;&emsp;b. had(for harddisk a)<br>        &emsp;&emsp;c. lp0(for line printer 0)<br>        &emsp;&emsp;d. tty(for teletype terminal)<br>    &emsp;4. 管道（FIFO）文件：用于在进程间传递数据。Linux对管道的操作与文件操作相同，它把管道作为文件进行处理<br>    &emsp;5. 链接文件：又称符号链接文件，它提供了共享文件的一种方法。<br>    &emsp;6. socket文件<br></p>
+<p>文件系统类型<br>    &emsp;1. 三类文件系统：<br>        &emsp;&emsp;a. 基于磁盘的文件系统，如ext2/ext3/ext4，VFAT、NTFS等<br>        &emsp;&emsp;b. 网络文件系统，如NFS等<br>        &emsp;&emsp;c. 特殊文件系统，如proc文件系统、devfs、sysfs等<br>    &emsp;2. 支持多种不同类型的文件系统是Linux操作系统的一大特色。Linux在标准内核中已支持的文件系统超过50种<br>    &emsp;3. Linux的标准文件系统是ext系列，系统把它的磁盘分区作为系统的根文件系统。<br><br><br>VFS虚拟文件系统<br>    &emsp;1. Linux把各种不同的物理文件系统的所有特性进行抽象，建立起一个面向各种物理文件系统的转换机制，通过这个转换机制，把各种不同物理文件系统转换为一个具有统一共性的虚拟文件系统。这种转换机制称为虚拟文件系统转换VFS（Virtual Filesystem Switch）<br>    &emsp;2. VFS并不是一种实际的文件系统。ext2等物理文件系统是存在于外存空间的，而<strong>VFS仅存在于内存</strong>。<br>    &emsp;3. 在VFS上面，是对诸如open, close, read和write之类的函数的一个通过API抽象。在VFS下面是文件系统抽象，它定义了上层函数的实现方式。文件系统的源代码可以在linux/fs中找到。<br></p>
+<p>目录项对象dentry object<br>    &emsp;a. 每个文件除了有一个索引节点inode数据结构外，还有一个目录项dentry数据结构<br>    &emsp;b. 每个dentry代表路径中的一个特定部分。/、bin、vi都属于目录 对象<br>    &emsp;c. 目录项也可包括安装点。如：/mnt/cdrom/foo，/、mnt、cdrom、foo都属于目录项对象<br>    &emsp;d. 目录项对象作用是帮助实现文件的快速定位，还起到缓冲作用</p>
+<figure class="image-box">
+                <a rel=操作系统学习之Linux文件系统 href="https://file.moetu.org/images/2020/02/21/fdfe79ce229bdf4180bbb5b10caf269889b739f3553cca25.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/21/fdfe79ce229bdf4180bbb5b10caf269889b739f3553cca25.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure>
+<br>
+文件管理和操作:<br>
+&emsp;a. 对于系统中打开的文件，主要从两个方面进行管理，一是由系统通过系统打开文件表进行统一管理，另一是由进程通过私有数据结构进行管理。文件打开后要进行各种操作，VFS提供了面向文件操作的统一接口。
+&emsp;b. 系统打开文件表：
+&emsp;&emsp;a. Linux系统内核把所有进程打开的文件集中管理，把它们组成“系统打开文件表”
+&emsp;&emsp;b. 系统打开文件表是一个双向链表，每个节点是一个file结构。
+&emsp;&emsp;c. 进程打开一个文件就建立一个file结构，并把它加入到系统打开文件链表中
+&emsp;&emsp;d. 全局变量first_file指向系统打开文件表的表头。
+
+<figure class="image-box">
+                <a rel=操作系统学习之Linux文件系统 href="https://file.moetu.org/images/2020/02/21/1db553458a4a48ad9de18d039350d1a85ae194f988b93688.png" target="_blank" title="" data-fancybox="images"><img src="https://file.moetu.org/images/2020/02/21/1db553458a4a48ad9de18d039350d1a85ae194f988b93688.png" alt="" title="" class=""></a>
+                <p></p>
+            </figure><br>
+
+<p><strong>ext2文件系统</strong><br>    &emsp;a. ext2的绝大多数的数据结构和系统调用与经典的UNIX一致<br>    &emsp;b. 能够管理少量存储介质，支持多达4TB的数据，即一个分区的容量最大可达4TB<br>    &emsp;c. 允许通过文件属性改变内核的行为；目录下的文件继承目录的属性<br>    &emsp;d. 允许文件系统数据“即时同步”特性，即内存中的数据一旦改变，立即更新上的数据使之一致<br>    &emsp;e. 实现了“符号连接”（symbolic links）的方式，使得连接文件只需要存放inode的空间<br>    &emsp;f. 允许用户定制文件系统的数据单元（block）的大小，可以是1kb, 2kb, 或4kb，使之适应不同环境的要求<br>    &emsp;g. 使用专用文件记录文件系统的状态和错误信息，供下一次系统启动时决定是否需要检查文件系统</p>
+<p>ext2在磁盘上的物理布局<br>    &emsp;ext2分区的第一个磁盘块用于引导，其余的部分被分成组。所有的组大小相同并且顺序存放，所以由级的序号可以确定组在磁盘的位置。<br>组的构成：<br>    &emsp;a. 文件系统的超级块 - 描述整个文件系统的信息<br>    &emsp;b. 所有组的描述符 - 记录所有块组的信息，如块组中的空闲块数，空闲节点数等。<br>    &emsp;c. 数据块的位图<br>    &emsp;d. inode位图<br>    &emsp;e. inode表 - 用来存放文件及目录的Inode数据，每个文件用一个Inode表示<br>    &emsp;f. 数据块</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-02-21T12:54:37.700Z" itemprop="dateUpdated">2020-02-21 20:54:37</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank" rel="external">https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</a>
+        
+    </div>
+    <footer>
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io">
+            <img src="https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" alt="zhoujiabo">
+            zhoujiabo
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/zhoujiabo.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之Linux文件系统》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之Linux文件系统》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            
+    <div id="comment"></div>
+
+
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%A3%81%E7%9B%98%E4%B8%8EI-O%E5%AD%90%E7%B3%BB%E7%BB%9F/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">操作系统学习之磁盘与I/O子系统</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/zhoujiabo.github.io/2020/02/20/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">操作系统学习之文件系统</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/zhoujiabo.github.io/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/zhoujiabo.github.io/img/reward-wechat.jpg" data-alipay="/zhoujiabo.github.io/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://cral-freedom.github.io/zhoujiabo.github.io/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                zhoujiabo &copy; 2020
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之Linux文件系统》 — Zhou's Blog&pic=https://i.loli.net/2020/02/12/vtkHuf7DyOIhaST.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://cral-freedom.github.io/zhoujiabo.github.io/2020/02/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/&title=《操作系统学习之Linux文件系统》 — Zhou's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAFV0lEQVR42u3a0WorRxAEUP//TyeQJ19iyVXVKwjh6MnItnb2rME9VfP1Fb/++uf1/evvr+233v/uq8/59/vJ2t5/3a6nfuHDhw8fPnwvFtFefiN+v9xXn/Pq6sk776+bPIaXa8aHDx8+fPgmvuQ2kttrR4qEoB1x8lf+kF6+jw8fPnz48H2ML7l8PpQk729xxiU+wIcPHz58+P47fM8OKxe+y6DTEuPDhw8fPnyf4Ns21cnI0m7+L2t4drh5uOvAhw8fPnz4HtqW//++fviFDx8+fPjwTaXy5V9+Pspsg8I2SJ0qdnz48OHDh29x+NoWmt/wGIJPg1T+mQlitDZ8+PDhw4cv5ksukHzcJdRu6/Z8bXm13/5Z/DH34cOHDx8+fAe+tqJu+ZIY4tnivP1uHkzgw4cPHz58LV++4U8i7+242PYzeSi/lQ1FsIIPHz58+PCVfO0GeyvR87o6H5XymCB/nGPlgA8fPnz48C1t9ddTccBWSOe1d/swLj/Txgr48OHDhw/fq+u2h7TaSnsL2fNyfYvaL1HI1/Z3gQ8fPnz48E2hdj4KXIaVrWLPo417bPFLTY4PHz58+PC90NhucltEG0nkt53H8e3Bu18eMD58+PDhwzdl3Zeaua2rnxpTkuD+HgpEDwkfPnz48OGL+doLb2PHJc/YCoP2jh6ryfHhw4cPH77phFWyzd5GkLYUv1BegoAoBMGHDx8+fPhKvrx+TsLuS8h+H0ra726V/8vEBR8+fPjw4Zv47tX1ZWhoD661Q1U+jhQHAvDhw4cPH76YL9/MX8rsbVteR+fTz+cr+eGO8OHDhw8fvokvHwu2KL8dd/KjaQlcGxzUYQE+fPjw4cN34LtU1xvr/WbauP8pUHz48OHDh+9ZvgvEfYnJ2JSMPp8YxfDhw4cPH76Nb6uo81B+W1Ab7t+5TwEKPnz48OHDF/MlS2+Po23LvXDkkf0levilJseHDx8+fPjOfPewPqHZIvtt4GiPx/0igw8fPnz48E18l/A6WcoYgpeffxmq2vLgj8EFHz58+PDhK6eFeqtc1tX3sWYLIC6IxbiDDx8+fPjwHXbKOUG7jc8L7KfK7LwYyOOJr9OMgw8fPnz48C2/kNAkh9hyxO0hbZXAJRzBhw8fPnz43vNt2/JLvd2OSttjyKOK/JPx4cOHDx++p/jacaT9mXxIukcDWxyfBCI//BY+fPjw4cNX8uWLa+P7Z7fxeSWfXHH7o/nlgBo+fPjw4cMX8BVHr+Lsfzualg8N+XiUvz8OYfjw4cOHD9+ZLxlT2jr5TpmvIa8EtrL8l7AeHz58+PDhO/NdFtoOKEkwsT22vIDPr4UPHz58+PC1fFsokIwClwI+WWFbA+SF/ekQGz58+PDhw/d2/dumPf+X344jecm9BfFtiV7U5Pjw4cOHD1+3Hy9i63wzn2zU86ChrcC3GGL7HHz48OHDh6/ly8vj+iDXFNlvlXl7hK4dgOrniQ8fPnz48H2grm435/lg1B47iw6WTSVBFNbjw4cPHz58Ad+26I9PUiVWPsq0r5ePAR8+fPjw4TvztbX0Vq6340gbMdwDkSiYwIcPHz58+Eq+7Z/3JYhvB6M8fL88sORz8OHDhw8fvqf4kmElj9Tbm8kDiLaMv0QMRcCBDx8+fPjwTXzb5j+P758NIz4x6IxRAj58+PDhw/dhvvfb/nYoaSOALYZoC4biQBs+fPjw4cP3Mb5tfMnHgnxV97jhQv9DWI8PHz58+PCVfElYfz8u1gb6+ea/rcy3QwAvBxd8+PDhw4evS7xPQXl+tKvda+fb+PaRt3e0FQz48OHDhw/ft9ffDTNhuaMGNXoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/zhoujiabo.github.io/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/zhoujiabo.github.io/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+    
+</body>
+</html>
